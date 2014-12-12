@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" template="../szablonApp.xhtml">
+	<ui:define name="content">
+		<h:form>
+
+			<p:panel id="panel" styleClass="editprofile">
+				<h:outputLabel value="Zmiana hasła" style="font-size:20px; " />
+				<p:separator />
+				<p:growl id="growl" for="globalmessage" showDetail="true"
+					autoUpdate="true" life="2000" />
+				<h:panelGrid columns="3" columnClasses="label, value">
+					<h:outputText value="Stare hasło: *" />
+					<p:password id="starehaslo" value="#{editBean.stareHaslo}"
+						required="true" requiredMessage="Pole wymagane" />
+					<p:message id="mstarehaslo" for="starehaslo" />
+					<h:outputText value="Nowe hasło: " />
+					<p:password id="nowehaslo" feedback="true"
+						value="#{editBean.noweHaslo1}" required="true"
+						requiredMessage="Pole wymagane" />
+					<p:message id="mnowehaslo" for="nowehaslo" />
+					<h:outputText value="Potwierdz nowe hasło: " />
+					<p:password id="nowehaslo1" feedback="true"
+						value="#{editBean.noweHaslo2}" required="true"
+						requiredMessage="Pole wymagane" />
+					<p:message id="mnowehaslo1" for="nowehaslo1" />
+				</h:panelGrid>
+				<p:commandButton id="zapiszhaslo" value="Zmień hasło"
+					action="#{editBean.edithaslo}"
+					update="growl, mstarehaslo, mnowehaslo, mnowehaslo1"
+					styleClass="button_zmien" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

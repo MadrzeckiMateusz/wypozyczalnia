@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" template="./szablonApp.xhtml">
+	<ui:define name="content">
+		<h:form>
+		#{LogingBean.readCookieMessage()}
+		<p:outputPanel>
+			<p:growl id="growl" for="globalmessage" showDetail="true" autoUpdate="true"
+				life="2500" />
+				<center>
+			<p:messages id="text-message" />
+			</center>
+			<p:separator style="width:290px ;margin-top:100px" />
+			<center>
+				<h:panelGrid columns="3" cellpadding="5" style="width:210px">
+					<h:outputLabel value="Email:" style="width:30px" />
+					<p:inputText id="input_login" value="#{LogingBean.email}"
+						style="width:200px" />
+					<p:tooltip id="toolTipFocus" for="input_login"
+						value="Podaj nazwe użytkownika, lub e-mail" />
+					<h:outputText value="Hasło:" style="width:65px" />
+					<p:password id="input_haslo" value="#{LogingBean.haslo}"
+						style="width:200px" />
+					<p:tooltip id="toolTipFocus1" for="input_haslo" value="Podaj hasło" />
+				</h:panelGrid>
+				<h:panelGrid columns="2" cellspacing="10px">
+				<h:commandLink value="przypomnij hasło" style=" font-size:11px" />
+					<p:commandButton id="zaloguj_bt" value="Zaloguj"
+						actionListener="#{LogingBean.LogIn}" 
+						style="height:25px; width:132px; font-size:12px; text-align:center;" />
+				</h:panelGrid>
+			</center>
+			<p:separator style="width:290px" />
+			<center>
+				<h:panelGrid>
+					<h:form>
+
+						<h:outputLink id="utworzkonto" value="nowyuser.xhtml"
+							style="font-size:14px">Utwórz nowe konto</h:outputLink>
+
+					</h:form>
+				</h:panelGrid>
+			</center>
+</p:outputPanel>
+		</h:form>
+	</ui:define>
+</ui:composition>

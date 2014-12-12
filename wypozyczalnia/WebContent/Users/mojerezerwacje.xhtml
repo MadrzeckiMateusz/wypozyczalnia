@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" template="../szablonApp.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:dataTable id="basicDt" var="rezerwacjeList"
+				value="#{RezerwacjeKlientaBean.getklientbyid()}">
+				<p:column headerText="Numer rezerwacji">
+					<h:outputText value="#{rezerwacjeList.nr_rezerwacji}" />
+				</p:column>
+				<p:column headerText="Data rezerwacji">
+					<h:outputText value="#{rezerwacjeList.data_rezerwacji}" />
+				</p:column>
+				<p:column headerText="Status rezerwacji">
+					<h:outputText value="#{rezerwacjeList.status_rezerwacji}" />
+				</p:column>
+				<p:column headerText="Data odbioru">
+					<h:outputText value="#{rezerwacjeList.data_odbioru}" />
+				</p:column>
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton  oncomplete="PF('carDialog').show()" icon="ui-icon-search"	title="Wyświetl szczegóły">
+						<f:setPropertyActionListener value="#{rezerwacjeList}" target="#{RezerwacjeKlientaBean.zaznaczonaRezerwacja}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:dialog  header="Szczegóły rezerwacji" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="80%">
+				<p:outputPanel id="carDetail" style="text-align: center;" autoUpdate="true">
+					<p:dataTable var="kopiefilmy" value="#{RezerwacjeKlientaBean.zaznaczonaRezerwacja.kopieFilmus}">
+						<p:column headerText="Numer filmu">
+							<h:outputText value="#{kopiefilmy.filmy.nr_filmu}" />
+						</p:column>
+						<p:column headerText="Tytuł">
+							<h:outputText value="#{kopiefilmy.filmy.tytul}" />
+						</p:column>
+						<p:column headerText="Rezyseria">
+							<h:outputText value="#{kopiefilmy.filmy.rezyseria}" />
+						</p:column>
+
+						<p:column headerText="Data premiery">
+							<h:outputText value="#{kopiefilmy.filmy.premiera}" />
+						</p:column>
+					</p:dataTable>
+
+				</p:outputPanel>
+			</p:dialog>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

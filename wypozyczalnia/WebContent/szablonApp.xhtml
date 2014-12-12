@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Wypożyczalnia DVD</title>
+</h:head>
+<h:outputStylesheet library="css" name="default.css" />
+<h:outputStylesheet library="css" name="cssLayout.css" />
+<f:view id="view">
+	<h:form id="form">
+		<h:body>
+			<div id="top">
+				<center>
+					<p:panel styleClass="header">
+						<p:panelGrid columns="4">
+							<p:graphicImage value="/resources/image/header.png" />
+							<p:outputLabel value="WYPOŻYCZALNIA FILMÓW"
+								style="color:white; font-size:40px; font-align:center;" />
+							<p:graphicImage value="/resources/image/header.png" />
+						</p:panelGrid>
+						<p:separator />
+					</p:panel>
+				</center>
+			</div>
+
+			<div id="page">
+				<div id="left">
+					<p:menu styleClass="menu">
+						<p:submenu label="Filmy" style=" background-color: #A4BDEF;">
+							<p:menuitem value="Strona główna" url="/index.xhtml" />
+							<p:menuitem value="Katalog" url="/katalogFilmow.xhtml" />
+							<p:menuitem value="Koszyk" url="/Users/koszykrezerwacje.xhtml"
+								icon="ui-icon-cart" />
+						</p:submenu>
+						<p:submenu label="Logowanie" style=" background-color: #A4BDEF;">
+							<p:menuitem value="Zaloguj" url="/zaloguj.xhtml" />
+							<p:menuitem value="Wyloguj" action="#{LoginBean.LogOut}" />
+							<p:menuitem value="Utwórz konto" url="/nowyuser.xhtml" />
+						</p:submenu>
+						<p:submenu label="Profil" style=" background-color: #A4BDEF;">
+							<p:menuitem value="Edytuj Dane" url="/Users/editprofile.xhtml" />
+							<p:menuitem value="Zmień Hasło" url="/Users/zmianahasla.xhtml" />
+							<p:menuitem value="Moje rezerwacje"
+								url="/Users/mojerezerwacje.xhtml" />
+						</p:submenu>
+					</p:menu>
+
+				</div>
+				<div id="content" class="center_content">
+					<ui:insert name="content"></ui:insert>
+				</div>
+
+
+			</div>
+			<div id="footer">
+				<center>
+					<p:panel styleClass="header">
+						<p:separator />
+
+						<h:outputLabel
+							value="Wszelkie prawa zastrzeżone ©Wypożyczalnia DVD"
+							style="font-size:15px; color:white;" />
+
+					</p:panel>
+				</center>
+			</div>
+
+
+
+		</h:body>
+	</h:form>
+</f:view>
+</html>

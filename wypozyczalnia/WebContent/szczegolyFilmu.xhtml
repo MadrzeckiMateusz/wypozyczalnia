@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	template="./szablonApp.xhtml"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:define name="content">
+		<p:fieldset legend="#{FilmyBean.filmSzczegoly.tytul}"
+			toggleable="false" collapsed="false"
+			style="font-size: 15px ; margin-bottom: 10px">
+
+			<p:commandButton action="#{koszyk.dodajDoKoszyka(lista.id_filmu)}"
+				title="Dodaj do koszyka" rendered="#{LogingBean.userLoged}" icon="ui-icon-cart"
+				style="margin-left: 90%" />
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:graphicImage value="#{image.image}" width="140px" height="200px">
+					<f:param name="id" value="#{FilmyBean.filmSzczegoly.id_filmu}" />
+				</p:graphicImage>
+				<h:panelGrid>
+					<h:outputText value="Tytul: #{FilmyBean.filmSzczegoly.tytul}" />
+					<h:outputText
+						value="Reżyseria: #{FilmyBean.filmSzczegoly.rezyseria}" />
+					<h:outputText value="Gatunek:  " />
+					<h:outputText value="Premiera: #{FilmyBean.filmSzczegoly.premiera}" />
+					<h:outputText
+						value="Produkcja: #{FilmyBean.filmSzczegoly.produkcja}" />
+					<h:outputText value="Opis: " />
+					<h:outputText value="#{FilmyBean.filmSzczegoly.opis}" />
+					<h:outputText value="Produkcja:" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>

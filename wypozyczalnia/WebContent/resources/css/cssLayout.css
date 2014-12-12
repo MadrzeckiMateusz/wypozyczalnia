@@ -1,0 +1,155 @@
+
+#top {
+    position: relative;
+    background-color: #D0E0FF;
+    color: white;
+    padding: 0px;
+    height: auto;
+    margin: 0px 0px 10px 0px ;
+  
+    
+}
+.header.ui-panel{
+	background-color:#3A6BCD;
+	border: none;
+	width: 95%;
+	
+}
+ .ui-icon-myAddFilm {
+	background-image: url(#{resource['images:shop-cart-16.png']});
+}
+.editprofile.ui-panel{
+	background-color:#E3E5E7;
+	border: none;
+	width: 60%;
+	margin-bottom:10px;
+	margin-left:20%
+	
+}
+.nowyUserPanel.ui-panel{
+	background-color:#D0E0FF;
+	color: white;
+	text-size:20px;
+	border:none;
+	margin-bottom:10px;
+	margin-left:20%
+	
+}
+.naglowek.ui-panel{
+	background-color:#3A6BCD;
+	border: none;
+	margin-bottom:10px;
+	color:white;
+}
+.ermsg.ui-message-error{
+	height: 5px;
+}
+.button_zapisz.ui-button{
+	width: 100px;
+	margin-left: 80%	;
+	background-color: #A4BDEF;
+}
+.button_zarezerwuj.ui-button{
+	width: 100px;
+	margin-left: 80%	;
+	background-color: #A4BDEF;
+}
+
+.cartbnt {
+   background-image: url('resources/image/shop-cart-16.png') !important;
+   background-position: 0 0 !important;
+}
+.button_zmien.ui-button{
+	width: 140px;
+	margin-left: 70%;	
+	background-color: #A4BDEF;
+}
+.ui-fieldset{
+	background-color:#E3E5E7;
+}
+.ui-fieldset .ui-fieldset-legend{
+	background-color:#799DE3;
+	font-family: monospace;
+	
+}
+.ui-panelgrid tr,
+.ui-panelgrid td{
+	border-style:none !important;
+	border:none;
+	background: none;
+	
+}
+.menu{
+	background-color: #A4BDEF;
+	position: relative;
+	height: 400px;
+	
+	margin-top: 10px;
+	
+	
+}
+.ui-menu-list{
+	background-color: #A4BDEF;
+}
+.menu .ui-menuitem-text {
+	color:black;
+}
+.ui-datatable table{
+	margin-top:5px;
+	}
+.ui-datatable th  {
+	background-color: #A4BDEF !important;
+}
+.ui-datatable .ui-datatable-data td{
+	
+	background-color: #E3E5E7 !important;
+}
+#page{
+    background-color:#D0E0FF;
+	position: relative;
+    margin: Auto;
+    width: 95%;
+    min-height: 80%;
+   
+}
+#bottom {
+    position: relative;
+    background-color: #D0E0FF;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    
+}
+
+#footer{
+	position: relative;
+	background-color:#D0E0FF;
+	margin:none;
+	min-height:70px;
+	color: white;
+	}
+
+.center_content {
+  
+    background-color: #D0E0FF;
+    padding: 5px;
+    margin-left:250px;
+    margin-right:100px;
+}
+
+#top a:link, #top a:visited {
+  color: white;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  color: black;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+
