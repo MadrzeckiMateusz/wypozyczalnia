@@ -4,24 +4,27 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" 
-	template="./szablonApp.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" template="./szablonApp.xhtml"
 	xmlns:f="http://java.sun.com/jsf/core">
 
 	<ui:define name="content">
+
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
 		<p:fieldset legend="#{SzczegolyFilmu.filmSzczegoly.tytul}"
 			toggleable="false" collapsed="false"
-			style="font-size: 15px ; margin-bottom: 10px">
-
-			<p:commandButton action="#{koszyk.dodajDoKoszyka(lista.id_filmu)}"
-				title="Dodaj do koszyka" rendered="#{LogingBean.userLoged}"
-				icon="ui-icon-cart" style="margin-left: 90%" />
-
+			style="font-size: 15px ; margin-bottom: 10px" widgetVar="">
+			
+				<p:commandButton action="#{koszyk.dodajDoKoszyka(SzczegolyFilmu.id)}"
+					title="Dodaj do koszyka" rendered="#{LogingBean.userLoged}"
+					icon="ui-icon-cart" style="margin-left: 90%" ajax="false" />
+			
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:graphicImage value="#{image.image}" width="140px" height="200px">
 					<f:param name="id" value="#{SzczegolyFilmu.filmSzczegoly.id_filmu}" />
 				</p:graphicImage>
 				<h:panelGrid>
+					<h:outputText value="Numer filmu: #{SzczegolyFilmu.id}" />
 					<h:outputText
 						value="Numer filmu: #{SzczegolyFilmu.filmSzczegoly.nr_filmu}" />
 					<h:outputText value="Tytul: #{SzczegolyFilmu.filmSzczegoly.tytul}" />
@@ -37,26 +40,31 @@
 
 				</h:panelGrid>
 			</h:panelGrid>
-			<h:outputText value="Opis: " />
-			<h:outputText value="#{SzczegolyFilmu.filmSzczegoly.opis}" />
+			<h:outputText value="#{SzczegolyFilmu.filmSzczegoly.opis}"
+				style="font-size:16px; color:black; margin-left:160px" />
 
 
 
 		</p:fieldset>
 		<p:fieldset legend="Proponowane filmy" toggleable="false"
-			collapsed="false" style="font-size: 15px ; margin-bottom: 10px">
+			collapsed="false" style="font-size: 15px ; margin-bottom: 10px"
+			rendered="#{SzczegolyFilmu.listaProponowanychFilmow}">
 			<center>
 				<p:panelGrid columns="3">
-					<p:row>
-						<ui:repeat var="filmyPodobne"
-							value="#{SzczegolyFilmu.proponowaneFilmy}">
+
+					<ui:repeat var="filmyPodobne"
+						value="#{SzczegolyFilmu.filmyProponowane}">
+						<h:commandLink title="#{filmyPodobne.tytul}"
+							action="szczegolyFilmu.xhtml">
+							<f:param name="id_filmu" value="#{filmyPodobne.id_filmu}" />
 							<p:graphicImage value="#{image.image}" width="140px"
 								height="200px" style="margin-left:10px">
 								<f:param name="id" value="#{filmyPodobne.id_filmu}" />
 							</p:graphicImage>
-						</ui:repeat>
-					</p:row>
+						</h:commandLink>
+					</ui:repeat>
 				</p:panelGrid>
+
 			</center>
 		</p:fieldset>
 	</ui:define>

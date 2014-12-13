@@ -24,9 +24,8 @@
 						icon="ui-icon-cart" />
 
 					<p:commandButton title="Szczegóły filmu"
-						action="szczegolyFilmu.xhtml" includeViewParams="true"
+						action="#{FilmyBean.przekierowanieSzczegoly(lista.id_filmu)}" includeViewParams="true"
 						icon="ui-icon-video" ajax="false">
-						<f:param name="id_filmu" value="#{lista.id_filmu}" />
 					</p:commandButton>
 				</h:panelGrid>
 

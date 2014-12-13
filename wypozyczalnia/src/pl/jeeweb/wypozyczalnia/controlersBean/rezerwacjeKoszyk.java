@@ -39,7 +39,7 @@ public class rezerwacjeKoszyk implements Serializable {
 	}
 
 	public void dodajDoKoszyka(int id_filmu) {
-
+		
 		EntityManager em = DBManager.getManager().createEntityManager();
 		filmDoKoszyka = em.find(Filmy.class, id_filmu);
 		filmDoKoszyka.getKopieFilmus().size();// Lazy init
@@ -50,7 +50,9 @@ public class rezerwacjeKoszyk implements Serializable {
 				"globalmessage", "Film dodano do koszyka !!!", 1);
 
 	}
-
+	public int parseStringToInt(String text) {
+		return Integer.parseInt(text);
+	}
 	public String usunFilm(Filmy film) {
 		rezerwowaneFilmy.remove(film);
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
@@ -59,7 +61,7 @@ public class rezerwacjeKoszyk implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String setNumerRezerwacji() {
+	private String setNumerRezerwacji() {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		List<Integer> id = em.createNativeQuery(
 				"Select id_rezerwacji from rezerwacje").getResultList();
@@ -140,7 +142,7 @@ public class rezerwacjeKoszyk implements Serializable {
 		this.rezerwacja = new Rezerwacje();
 	}
 
-	public Date nextDate(int days) {
+	private Date nextDate(int days) {
 		final long ONE_DAY_MILLIS = 86400 * 1000;
 		Date now = new Date();
 		Date date = new Date(now.getTime() + (3 * ONE_DAY_MILLIS));
@@ -148,7 +150,7 @@ public class rezerwacjeKoszyk implements Serializable {
 		return date;
 	}
 
-	public Date currentDate() {
+	private Date currentDate() {
 		Date date = new Date();
 		return date;
 	}

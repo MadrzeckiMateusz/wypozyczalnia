@@ -1,5 +1,6 @@
 package pl.jeeweb.wypozyczalnia.controlersBean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
@@ -46,6 +48,15 @@ public class FilmyBean implements Serializable {
 
 		return top5ListaFilmy;
 
+	}
+	public void przekierowanieSzczegoly(int id) {
+		try {
+			
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/wypozyczalnia/szczegolyFilmu.xhtml?id_filmu=" +id );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

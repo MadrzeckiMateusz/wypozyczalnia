@@ -121,7 +121,8 @@ public class klienciBean {
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage",
 					"Niepoprawny E-mail. E-mail istnie juz w bazie", 3);
-			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),"emailer", "b³¹d", 3);
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"emailer", "b³¹d", 3);
 		}
 
 	}
@@ -139,20 +140,5 @@ public class klienciBean {
 		else
 			return false;// nie istnieje
 	}
-
-//	public String flowListener(FlowEvent event) {
-//		String returned = event.getNewStep();
-//		System.out.println("Flow Event Happened :: New Step :: "
-//				+ event.getNewStep() + " :: Old Step :: " + event.getOldStep());
-//		if (event.getNewStep().equals(new String("confirm"))) {
-//			if (ifExistEmail(this.klient.getE_mail())) {
-//				InfoMessage("E-mail istnieje");
-//				returned = event.getOldStep();
-//			} else {
-//				returned = event.getNewStep();
-//			}
-//		}
-//		return returned;
-//	}
 
 }
