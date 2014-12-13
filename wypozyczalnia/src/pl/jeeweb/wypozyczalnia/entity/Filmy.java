@@ -73,7 +73,7 @@ public class Filmy implements Serializable {
 	private String tytul;
 
 	//bi-directional many-to-many association to KlasyfikacjaGatunku
-	@ManyToMany
+	@ManyToMany(fetch= FetchType.LAZY)
 	@JoinTable(
 		name="klasyfikator"
 		, joinColumns={
