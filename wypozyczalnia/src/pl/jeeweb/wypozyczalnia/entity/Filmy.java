@@ -32,7 +32,7 @@ import org.primefaces.model.DefaultStreamedContent;
 @Entity
 @Table(name="filmy")
 @NamedQuery(name="Filmy.findAll", query="SELECT f FROM Filmy f")
-public class Filmy implements Serializable {
+public class Filmy implements Serializable ,Comparable<Filmy> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -73,7 +73,7 @@ public class Filmy implements Serializable {
 	private String tytul;
 
 	//bi-directional many-to-many association to KlasyfikacjaGatunku
-	@ManyToMany(fetch= FetchType.LAZY)
+	@ManyToMany(fetch= FetchType.EAGER)
 	@JoinTable(
 		name="klasyfikator"
 		, joinColumns={
@@ -207,6 +207,14 @@ public class Filmy implements Serializable {
 		kopieFilmus.setFilmy(null);
 
 		return kopieFilmus;
+	}
+
+	@Override
+	public int compareTo(Filmy o) {
+		if (this.id_filmu != o.id_filmu) {
+			return -1;
+		}
+		return 0;
 	}
 	
 

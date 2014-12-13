@@ -9,31 +9,56 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 	<ui:define name="content">
-		<p:fieldset legend="#{FilmyBean.filmSzczegoly.tytul}"
+		<p:fieldset legend="#{SzczegolyFilmu.filmSzczegoly.tytul}"
 			toggleable="false" collapsed="false"
 			style="font-size: 15px ; margin-bottom: 10px">
 
 			<p:commandButton action="#{koszyk.dodajDoKoszyka(lista.id_filmu)}"
-				title="Dodaj do koszyka" rendered="#{LogingBean.userLoged}" icon="ui-icon-cart"
-				style="margin-left: 90%" />
+				title="Dodaj do koszyka" rendered="#{LogingBean.userLoged}"
+				icon="ui-icon-cart" style="margin-left: 90%" />
 
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:graphicImage value="#{image.image}" width="140px" height="200px">
-					<f:param name="id" value="#{FilmyBean.filmSzczegoly.id_filmu}" />
+					<f:param name="id" value="#{SzczegolyFilmu.filmSzczegoly.id_filmu}" />
 				</p:graphicImage>
 				<h:panelGrid>
-					<h:outputText value="Tytul: #{FilmyBean.filmSzczegoly.tytul}" />
 					<h:outputText
-						value="Reżyseria: #{FilmyBean.filmSzczegoly.rezyseria}" />
-					<h:outputText value="Gatunek:  " />
-					<h:outputText value="Premiera: #{FilmyBean.filmSzczegoly.premiera}" />
+						value="Numer filmu: #{SzczegolyFilmu.filmSzczegoly.nr_filmu}" />
+					<h:outputText value="Tytul: #{SzczegolyFilmu.filmSzczegoly.tytul}" />
 					<h:outputText
-						value="Produkcja: #{FilmyBean.filmSzczegoly.produkcja}" />
-					<h:outputText value="Opis: " />
-					<h:outputText value="#{FilmyBean.filmSzczegoly.opis}" />
-					<h:outputText value="Produkcja:" />
+						value="Reżyseria: #{SzczegolyFilmu.filmSzczegoly.rezyseria}" />
+					<h:outputText
+						value="Scenariusz: #{SzczegolyFilmu.filmSzczegoly.scenariusz}" />
+					<h:outputText
+						value="Produkcja: #{SzczegolyFilmu.filmSzczegoly.produkcja}" />
+					<h:outputText value="Gatunek:  #{SzczegolyFilmu.gatunek}" />
+					<h:outputText
+						value="Premiera: #{SzczegolyFilmu.filmSzczegoly.premiera}" />
+
 				</h:panelGrid>
 			</h:panelGrid>
+			<h:outputText value="Opis: " />
+			<h:outputText value="#{SzczegolyFilmu.filmSzczegoly.opis}" />
+
+
+
+		</p:fieldset>
+		<p:fieldset legend="Proponowane filmy" toggleable="false"
+			collapsed="false" style="font-size: 15px ; margin-bottom: 10px">
+			<center>
+				<p:panelGrid columns="3">
+					<p:row>
+						<ui:repeat var="filmyPodobne"
+							value="#{SzczegolyFilmu.proponowaneFilmy}">
+							<p:graphicImage value="#{image.image}" width="140px"
+								height="200px" style="margin-left:10px">
+								<f:param name="id" value="#{filmyPodobne.id_filmu}" />
+							</p:graphicImage>
+						</ui:repeat>
+					</p:row>
+				</p:panelGrid>
+			</center>
 		</p:fieldset>
 	</ui:define>
+
 </ui:composition>

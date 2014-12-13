@@ -1,7 +1,9 @@
 package pl.jeeweb.wypozyczalnia.controlersBean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -11,16 +13,17 @@ import javax.persistence.EntityManager;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
+import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
 
 @ManagedBean(name = "FilmyBean")
 @RequestScoped
 public class FilmyBean implements Serializable {
-	
-	@ManagedProperty("#{param.id_filmu}")
-	private int id;
-	
-	private Filmy filmSzczegoly;
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public FilmyBean() {
 
 	}
@@ -32,6 +35,7 @@ public class FilmyBean implements Serializable {
 		em.close();
 		return list;
 	}
+
 	public List<Filmy> getTop5filmy() {
 
 		EntityManager em = DBManager.getManager().createEntityManager();
@@ -42,33 +46,6 @@ public class FilmyBean implements Serializable {
 
 		return top5ListaFilmy;
 
-	}
-	
-	@PostConstruct
-	public void getFilmById() {
-		if(id!=0) {
-		EntityManager em = DBManager.getManager().createEntityManager();
-		filmSzczegoly = em.find(Filmy.class, id);
-		em.close();
-		filmSzczegoly.getKlasyfikacjaGatunkus().size();
-		}
-		System.out.print("nicd");
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Filmy getFilmSzczegoly() {
-		return filmSzczegoly;
-	}
-
-	public void setFilmSzczegoly(Filmy filmSzczegoly) {
-		this.filmSzczegoly = filmSzczegoly;
 	}
 
 }

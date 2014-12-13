@@ -4,7 +4,8 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="./szablonApp.xhtml" xmlns:p="http://primefaces.org/ui"
+	template="./szablonApp.xhtml" 
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 
@@ -24,7 +25,7 @@
 
 					<p:commandButton title="Szczegóły filmu"
 						action="szczegolyFilmu.xhtml" includeViewParams="true"
-						icon="ui-icon-video">
+						icon="ui-icon-video" ajax="false">
 						<f:param name="id_filmu" value="#{lista.id_filmu}" />
 					</p:commandButton>
 				</h:panelGrid>
@@ -34,7 +35,7 @@
 						<f:param name="id" value="#{lista.id_filmu}" />
 					</p:graphicImage>
 					<h:panelGrid>
-						<h:inputHidden id="id_hidden" value="#{lista.id_filmu}" />
+
 						<h:outputText value="Tytul: #{lista.tytul}" />
 						<h:outputText value="Reżyseria: #{lista.rezyseria}" />
 						<h:outputText value="Premiera: #{lista.premiera}" />

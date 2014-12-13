@@ -11,7 +11,9 @@ import java.util.List;
  */
 @Entity
 @Table(name="klasyfikacja_gatunku")
-@NamedQuery(name="KlasyfikacjaGatunku.findAll", query="SELECT k FROM KlasyfikacjaGatunku k")
+@NamedQueries({
+	@NamedQuery(name="KlasyfikacjaGatunku.findAll", query="SELECT k FROM KlasyfikacjaGatunku k"),
+	@NamedQuery(name="KlasyfikacjaGatunku.getbygatunek",query="SELECT k FROM KlasyfikacjaGatunku k where k.gatunek = :gatunek")})
 public class KlasyfikacjaGatunku implements Serializable {
 	private static final long serialVersionUID = 1L;
 
