@@ -69,8 +69,8 @@ public class editProfilKlient implements Serializable {
 		if (!zaladowanodoedycji)
 			Zaladujdoedycji();
 		String hashhaslo = SHA256hash.HashText(this.stareHaslo);
-		System.out.println("starehas這  " + hashhaslo);
-		System.out.println("has這zbazy" + this.klient.getHaslo());
+//		System.out.println("starehas這  " + hashhaslo);
+//		System.out.println("has這zbazy" + this.klient.getHaslo());
 		if (hashhaslo.equals(this.klient.getHaslo())) {
 			if (this.noweHaslo1.equals(this.noweHaslo2)) {
 				klient.setHaslo(SHA256hash.HashText(this.noweHaslo1));

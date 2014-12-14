@@ -1,6 +1,8 @@
 package pl.jeeweb.wypozyczalnia.controlersBean;
 
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -9,6 +11,7 @@ import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Klienci;
@@ -22,6 +25,7 @@ public class LogingBean {
 	private String Haslo;
 	private Klienci klient = new Klienci();
 	private klientLoginBean klBean;
+	private boolean islogin=false;
 
 	public void readCookieMessage() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
@@ -47,9 +51,9 @@ public class LogingBean {
 			klient = (Klienci) lista.get(0);
 
 			String hashweb = SHA256hash.HashText(this.Haslo);
-			System.out.print(hashweb + "\n \n" + "baza ");
-			System.out.print(klient.getHaslo());
-
+//			System.out.print(hashweb + "\n \n" + "baza ");
+//			System.out.print(klient.getHaslo());
+//
 			if (hashweb.equals(klient.getHaslo())) {
 
 				klBean = new klientLoginBean();
@@ -72,9 +76,10 @@ public class LogingBean {
 	}
 
 	public boolean isUserLoged() {
-
-		if (FacesContext.getCurrentInstance().getExternalContext()
-				.getSessionMap().isEmpty())
+		Map<String, Object> mapasesji = FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap();
+		
+		if (!mapasesji.containsKey("user_id"))
 			return false;
 		else
 			return true;

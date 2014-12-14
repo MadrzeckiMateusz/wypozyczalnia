@@ -1,16 +1,12 @@
 package pl.jeeweb.wypozyczalnia.controlersBean;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
@@ -33,26 +29,27 @@ public class rezerwacjeKoszyk implements Serializable {
 	private List<Filmy> rezerwowaneFilmy = new ArrayList<>();
 	private Rezerwacje rezerwacja = new Rezerwacje();
 	private Filmy filmDoKoszyka = new Filmy();
-	
 
 	public rezerwacjeKoszyk() {
 	}
 
 	public void dodajDoKoszyka(int id_filmu) {
-		
+
 		EntityManager em = DBManager.getManager().createEntityManager();
 		filmDoKoszyka = em.find(Filmy.class, id_filmu);
 		filmDoKoszyka.getKopieFilmus().size();// Lazy init
 		rezerwowaneFilmy.add(filmDoKoszyka);
 		em.close();
-		filmDoKoszyka = new Filmy(); 
+		filmDoKoszyka = new Filmy();
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 				"globalmessage", "Film dodano do koszyka !!!", 1);
 
 	}
+
 	public int parseStringToInt(String text) {
 		return Integer.parseInt(text);
 	}
+
 	public String usunFilm(Filmy film) {
 		rezerwowaneFilmy.remove(film);
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
@@ -103,7 +100,7 @@ public class rezerwacjeKoszyk implements Serializable {
 			this.rezerwacja.setData_rezerwacji(currentDate());
 			this.rezerwacja.setData_odbioru(nextDate(3));
 			this.rezerwacja.setStatus_rezerwacji("W REALIZACJI");
-			
+
 			em.getTransaction().begin();
 			em.persist(rezerwacja);
 			em.getTransaction().commit();
@@ -126,7 +123,7 @@ public class rezerwacjeKoszyk implements Serializable {
 		this.rezerwacja = em.find(Rezerwacje.class, maxID);
 
 		for (Filmy film : rezerwowaneFilmy) {
-			
+
 			for (KopieFilmu kf : film.getKopieFilmus()) {
 				if (kf.getRezerwacje() == null) {
 					kf.setRezerwacje(rezerwacja);
@@ -162,7 +159,5 @@ public class rezerwacjeKoszyk implements Serializable {
 	public void setRezerwowaneFilmy(List<Filmy> rezerwowaneFilmy) {
 		this.rezerwowaneFilmy = rezerwowaneFilmy;
 	}
-
-	
 
 }

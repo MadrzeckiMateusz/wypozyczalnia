@@ -4,8 +4,7 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="./szablonApp.xhtml" 
-	xmlns:p="http://primefaces.org/ui"
+	template="./szablonApp.xhtml" xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 
@@ -24,8 +23,8 @@
 						icon="ui-icon-cart" />
 
 					<p:commandButton title="Szczegóły filmu"
-						action="#{FilmyBean.przekierowanieSzczegoly(lista.id_filmu)}" includeViewParams="true"
-						icon="ui-icon-video" ajax="false">
+						action="#{FilmyBean.przekierowanieSzczegoly(lista.id_filmu)}"
+						includeViewParams="true" icon="ui-icon-video" ajax="false">
 					</p:commandButton>
 				</h:panelGrid>
 

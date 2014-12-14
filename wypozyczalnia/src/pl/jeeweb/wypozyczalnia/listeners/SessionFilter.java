@@ -55,7 +55,7 @@ public class SessionFilter implements Filter {
 
 	String timeoutUrl = httpServletRequest.getContextPath() 
 	           + "/" + getTimeoutPage();
-	Cookie cokie = new Cookie("message", "Nie jestes zalogowany");
+	Cookie cokie = new Cookie("message", "Twoja sesja wygas³a!! Nie jesteœ zalogowany");
 	cokie.setMaxAge(3);
 	cokie.setPath("/");
 	System.out.println("Session is invalid! redirecting to timeoutpage : " + timeoutUrl);

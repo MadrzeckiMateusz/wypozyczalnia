@@ -1,5 +1,6 @@
 package pl.jeeweb.wypozyczalnia.controlersBean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,13 +20,12 @@ import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
 
 @ManagedBean(name = "SzczegolyFilmu")
 @ViewScoped
-public class SzczegolyFilmuBean {
+public class SzczegolyFilmuBean implements Serializable {
 
-//	@ManagedProperty("#{param.id_filmu}")
 	private int id;
 
 	private Filmy filmSzczegoly = new Filmy();
-    private List<Filmy> listszczegolyfilm = new ArrayList<>();
+	private List<Filmy> listszczegolyfilm = new ArrayList<>();
 	private List<Filmy> filmyWedlugGatunkow = new ArrayList<>();
 	private List<Filmy> filmyProponowane = new ArrayList<>();
 
@@ -33,7 +33,8 @@ public class SzczegolyFilmuBean {
 
 	@PostConstruct
 	public void getFilmById() {
-		id = Integer.valueOf(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id_filmu"));
+		id = Integer.valueOf(FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("id_filmu"));
 		if (id != 0) {
 			EntityManager em = DBManager.getManager().createEntityManager();
 			filmSzczegoly = em.find(Filmy.class, id);
@@ -43,9 +44,9 @@ public class SzczegolyFilmuBean {
 			if (isListaProponowanychFilmow()) {
 				this.setFilmyProponowane(losujFilmy(this.filmyWedlugGatunkow));
 				this.listszczegolyfilm.add(filmSzczegoly);
-			} 
+			}
 		}
-		System.out.print("huj ");
+
 	}
 
 	public boolean isListaProponowanychFilmow() {
@@ -97,9 +98,7 @@ public class SzczegolyFilmuBean {
 					&& !filmyWylosowane.contains(film)) {
 				filmyWylosowane.add(film);
 			} else {
-				// if (filmyDolosowania.size() 3) {
-				// i--;
-				// }
+
 			}
 		}
 		return filmyWylosowane;

@@ -14,17 +14,17 @@
 		<p:fieldset legend="#{SzczegolyFilmu.filmSzczegoly.tytul}"
 			toggleable="false" collapsed="false"
 			style="font-size: 15px ; margin-bottom: 10px" widgetVar="">
-			
-				<p:commandButton action="#{koszyk.dodajDoKoszyka(SzczegolyFilmu.id)}"
-					title="Dodaj do koszyka" rendered="#{LogingBean.userLoged}"
-					icon="ui-icon-cart" style="margin-left: 90%" ajax="false" />
-			
+
+			<p:commandButton action="#{koszyk.dodajDoKoszyka(SzczegolyFilmu.id)}"
+				title="Dodaj do koszyka" rendered="#{LogingBean.userLoged}"
+				icon="ui-icon-cart" style="margin-left: 90%" ajax="false" />
+
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:graphicImage value="#{image.image}" width="140px" height="200px">
 					<f:param name="id" value="#{SzczegolyFilmu.filmSzczegoly.id_filmu}" />
 				</p:graphicImage>
 				<h:panelGrid>
-					<h:outputText value="Numer filmu: #{SzczegolyFilmu.id}" />
+
 					<h:outputText
 						value="Numer filmu: #{SzczegolyFilmu.filmSzczegoly.nr_filmu}" />
 					<h:outputText value="Tytul: #{SzczegolyFilmu.filmSzczegoly.tytul}" />

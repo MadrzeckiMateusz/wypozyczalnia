@@ -33,21 +33,30 @@
 				<div id="left">
 					<p:menu styleClass="menu">
 						<p:submenu label="Filmy" style=" background-color: #A4BDEF;">
-							<p:menuitem value="Strona główna" url="/index.xhtml" />
-							<p:menuitem value="Katalog" url="/katalogFilmow.xhtml" />
+							<p:menuitem value="Strona główna" url="/index.xhtml"
+								icon="ui-icon-home" />
+							<p:menuitem value="Katalog" url="/katalogFilmow.xhtml"
+								icon="ui-icon-image" />
 							<p:menuitem value="Koszyk" url="/Users/koszykrezerwacje.xhtml"
-								icon="ui-icon-cart" />
+								icon="ui-icon-cart" rendered="#{LogingBean.userLoged}" />
 						</p:submenu>
-						<p:submenu label="Logowanie" style=" background-color: #A4BDEF;">
-							<p:menuitem value="Zaloguj" url="/zaloguj.xhtml" />
-							<p:menuitem value="Wyloguj" action="#{LoginBean.LogOut}" />
-							<p:menuitem value="Utwórz konto" url="/nowyuser.xhtml" />
+						<p:submenu label="Dostęp" style=" background-color: #A4BDEF;">
+							<p:menuitem value="Zaloguj" url="/zaloguj.xhtml"
+								icon="ui-icon-key" />
+							<p:menuitem value="Wyloguj" action="#{LoginBean.LogOut}"
+								icon="ui-icon-power" />
+							<p:menuitem value="Utwórz konto" url="/nowyuser.xhtml"
+								icon="ui-icon-person" />
 						</p:submenu>
-						<p:submenu label="Profil" style=" background-color: #A4BDEF;">
-							<p:menuitem value="Edytuj Dane" url="/Users/editprofile.xhtml" />
-							<p:menuitem value="Zmień Hasło" url="/Users/zmianahasla.xhtml" />
+						<p:submenu label="Profil" style=" background-color: #A4BDEF;"
+							rendered="#{LogingBean.userLoged}">
+							<p:menuitem value="Edytuj Dane" url="/Users/editprofile.xhtml"
+								icon="ui-icon-pencil" />
+							<p:menuitem value="Zmień Hasło" url="/Users/zmianahasla.xhtml"
+								icon="ui-icon-wrench" />
 							<p:menuitem value="Moje rezerwacje"
-								url="/Users/mojerezerwacje.xhtml" />
+								url="/Users/mojerezerwacje.xhtml" icon="ui-icon-folder-open
+ " />
 						</p:submenu>
 					</p:menu>
 
