@@ -35,13 +35,12 @@ public class RezerwacjeKlientaBean implements Serializable{
 		int user_id = (int) session.getAttribute("user_id");
 		List lista;
 		EntityManager em = DBManager.getManager().createEntityManager();
-//		List<Rezerwacje> rezerwacje = em.createNamedQuery("Rezerwacje.findAll").getResultList();
-		 //klient = em.find(Klienci.class, session.getAttribute("user_id"));
-		lista = em.createQuery("Select r from Klienci k join k.rezerwacjes r where k.id_klienta=:id").setParameter("id", user_id).getResultList();		
+		klient = (Klienci) em.createQuery("Select k from Klienci k where k.id_klienta=:id").setParameter("id", user_id).getSingleResult();		
+        List<Rezerwacje> rezerwacje = klient.getRezerwacjes();
 		em.close();
 		 
 
-		 return lista;
+		 return klient.getRezerwacjes();
 		 
 	}
 
