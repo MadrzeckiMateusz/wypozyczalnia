@@ -6,46 +6,49 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html" template="./szablonApp.xhtml">
 	<ui:define name="content">
-		<h:form>
-		#{LogingBean.readCookieMessage()}
-		<p:outputPanel>
-			<p:growl id="growl" for="globalmessage" showDetail="true" autoUpdate="true"
-				life="2500" />
+		<h:form name="loginForm">
+			#{LogingBean.readCookieMessage()}
+			<p:outputPanel>
+				<p:growl id="growl" for="globalmessage" showDetail="true"
+					autoUpdate="true" life="2500" />
 				<center>
-			<p:messages id="text-message" />
-			</center>
-			<p:separator style="width:290px ;margin-top:100px" />
-			<center>
-				<h:panelGrid columns="3" cellpadding="5" style="width:210px">
-					<h:outputLabel value="Email:" style="width:30px" />
-					<p:inputText id="input_login" value="#{LogingBean.email}"
-						style="width:200px" />
-					<p:tooltip id="toolTipFocus" for="input_login"
-						value="Podaj nazwe użytkownika, lub e-mail" />
-					<h:outputText value="Hasło:" style="width:65px" />
-					<p:password id="input_haslo" value="#{LogingBean.haslo}"
-						style="width:200px" />
-					<p:tooltip id="toolTipFocus1" for="input_haslo" value="Podaj hasło" />
-				</h:panelGrid>
-				<h:panelGrid columns="2" cellspacing="10px">
-				<h:commandLink value="przypomnij hasło" style=" font-size:11px" />
-					<p:commandButton id="zaloguj_bt" value="Zaloguj"
-						actionListener="#{LogingBean.LogIn}" 
-						style="height:25px; width:132px; font-size:12px; text-align:center;" />
-				</h:panelGrid>
-			</center>
-			<p:separator style="width:290px" />
-			<center>
-				<h:panelGrid>
-					<h:form>
+					<p:messages id="text-message" />
+				</center>
+				<p:separator style="width:290px ;margin-top:100px" />
+				<center>
+					<h:panelGrid columns="3" cellpadding="5" style="width:210px">
+						<h:outputLabel value="Login:" for="usernameinput" style="width:30px" />
 
-						<h:outputLink id="utworzkonto" value="nowyuser.xhtml"
-							style="font-size:14px">Utwórz nowe konto</h:outputLink>
+						<h:inputText id="usernameinput" value="#{LogingBean.username}"
+							style="width:200px" />
+						<p:tooltip id="toolTipFocus" for="usernameinput"
+							value="Podaj nazwe użytkownika, lub e-mail" />
+						<h:outputText value="Hasło:" for="passwordinput"
+							style="width:65px" />
+						<h:inputSecret id="passwordinput" value="#{LogingBean.password}"
+							style="width:200px" />
+						<p:tooltip id="toolTipFocus1" for="passwordinput"
+							value="Podaj hasło" />
+					</h:panelGrid>
+					<h:panelGrid columns="2" cellspacing="10">
+						<h:commandLink value="przypomnij hasło" style=" font-size:11px" />
+						<p:commandButton id="zaloguj_bt" value="Zaloguj"
+							actionListener="#{LogingBean.LogIn}"
+							style="height:25px; width:132px; font-size:12px; text-align:center;" />
+					</h:panelGrid>
+				</center>
+				<p:separator style="width:290px" />
+				<center>
+					<h:panelGrid>
+						<h:form>
 
-					</h:form>
-				</h:panelGrid>
-			</center>
-</p:outputPanel>
+							<h:outputLink id="utworzkonto" value="nowyuser.xhtml"
+								style="font-size:14px">Utwórz nowe konto</h:outputLink>
+
+						</h:form>
+					</h:panelGrid>
+				</center>
+			</p:outputPanel>
 		</h:form>
 	</ui:define>
 </ui:composition>

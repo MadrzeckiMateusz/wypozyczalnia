@@ -3,17 +3,17 @@ package pl.jeeweb.wypozyczalnia.controlersBean;
 import java.io.IOException;
 import java.io.Serializable;
 
-
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.servlet.http.HttpSession;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Klienci;
+import pl.jeeweb.wypozyczalnia.entity.User;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 import pl.jeeweb.wypozyczalnia.tools.SHA256hash;
 
@@ -27,7 +27,7 @@ public class editProfilKlient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Klienci klient = new Klienci();
-	
+	private User user = new User();
 
 	private String stareHaslo;
 	private String noweHaslo1;
@@ -45,6 +45,8 @@ public class editProfilKlient implements Serializable {
 		int user_id = (int) session.getAttribute("user_id");
 		EntityManager em = DBManager.getManager().createEntityManager();
 		this.klient = em.find(Klienci.class, user_id);
+		// this.user = (User) em.createNamedQuery("User.findByEmail")
+		// .setParameter("email", klient.getE_mail()).getSingleResult();
 		em.close();
 		this.zaladowanodoedycji = true;
 
@@ -69,22 +71,27 @@ public class editProfilKlient implements Serializable {
 		if (!zaladowanodoedycji)
 			Zaladujdoedycji();
 		String hashhaslo = SHA256hash.HashText(this.stareHaslo);
-//		System.out.println("starehas³o  " + hashhaslo);
-//		System.out.println("has³ozbazy" + this.klient.getHaslo());
+		// System.out.println("starehas³o  " + hashhaslo);
+		// System.out.println("has³ozbazy" + this.klient.getHaslo());
 		if (hashhaslo.equals(this.klient.getHaslo())) {
 			if (this.noweHaslo1.equals(this.noweHaslo2)) {
 				klient.setHaslo(SHA256hash.HashText(this.noweHaslo1));
+				user.setUsername(this.klient.getE_mail());
+				user.setPassword(SHA256hash.HashText(this.noweHaslo1));
 				EntityManager em = DBManager.getManager().createEntityManager();
 				em.getTransaction().begin();
 				em.merge(klient);
+				em.merge(user);
 				em.getTransaction().commit();
 				em.close();
+
 				this.noweHaslo1 = "";
 				this.noweHaslo2 = "";
 				this.stareHaslo = "";
 				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 						"globalmessage", "Has³o zmienione pomyœlnie", 1);
-				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+				FacesContext.getCurrentInstance().getExternalContext()
+						.getFlash().setKeepMessages(true);
 				try {
 					FacesContext.getCurrentInstance().getExternalContext()
 							.redirect("/wypozyczalnia/Users/zmianahasla.xhtml");

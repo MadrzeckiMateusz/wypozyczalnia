@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,7 +32,9 @@ import org.primefaces.model.DefaultStreamedContent;
  */
 @Entity
 @Table(name="filmy")
-@NamedQuery(name="Filmy.findAll", query="SELECT f FROM Filmy f")
+@NamedQueries({
+@NamedQuery(name="Filmy.findAll", query="SELECT f FROM Filmy f"),
+@NamedQuery(name="Filmy.findById", query="SELECT F FROM Filmy F where F.id_filmu = :idFilmu")})
 public class Filmy implements Serializable ,Comparable<Filmy> {
 	private static final long serialVersionUID = 1L;
 

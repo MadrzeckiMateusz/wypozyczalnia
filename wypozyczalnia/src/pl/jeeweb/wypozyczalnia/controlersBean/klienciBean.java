@@ -8,21 +8,20 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
-
-import org.primefaces.event.FlowEvent;
+import javax.transaction.TransactionalException;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Klienci;
+import pl.jeeweb.wypozyczalnia.entity.Role;
+import pl.jeeweb.wypozyczalnia.entity.RolePK;
+import pl.jeeweb.wypozyczalnia.entity.User;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 import pl.jeeweb.wypozyczalnia.tools.RandomAlphaNum;
 import pl.jeeweb.wypozyczalnia.tools.SHA256hash;
@@ -32,6 +31,9 @@ import pl.jeeweb.wypozyczalnia.tools.SendMail;
 @RequestScoped
 public class klienciBean {
 	private Klienci klient = new Klienci();
+	private User user = new User();
+	private Role user_role = new Role();
+	private RolePK rolePK = new RolePK();
 
 	public Klienci getKlient() {
 		return klient;
@@ -85,11 +87,29 @@ public class klienciBean {
 			this.klient.setData_rejestracji(currentDate());
 			String tmpPassword = rand.RandomPass();
 			this.klient.setHaslo(SHA256hash.HashText(tmpPassword));
+			
+			this.user.setUsername(this.klient.getE_mail());
+			this.user.setPassword(this.klient.getHaslo());
+			this.rolePK.setRolename("klient");
+			this.rolePK.setUsername(this.klient.getE_mail());
+			this.user_role.setId(this.rolePK);
 			EntityManager em = DBManager.getManager().createEntityManager();
-			em.getTransaction().begin();
-			em.persist(this.klient);
-			em.getTransaction().commit();
-			em.close();
+			try {
+				em.getTransaction().begin();
+				em.persist(this.klient);
+				em.persist(this.user);
+				em.persist(this.user_role);
+				em.getTransaction().commit();
+				em.close();
+			} catch (TransactionalException e) {
+				DisplayMessage
+				.InfoMessage(
+						FacesContext.getCurrentInstance(),
+						"globalmessage",
+						"B³¹d danych",
+						3);
+			}
+			
 
 			try {
 				new SendMail(

@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="./SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+	<p:outputPanel>
+	<p:commandButton action="#{FilmyBean.przekierowanieEdycjaFilmu()}"  />
+	</p:outputPanel>
+		<p:dataTable var="filmy" styleClass="zarzadzaj"
+			value="#{FilmyBean.listaFilmy}" widgetVar="filmTables" filteredValue="#{FilmyBean.filetredFilmy}" emptyMessage="Brak wyników dla wyszukiwania" 
+			selectionMode="single" selection="#{FilmyBean.selectedFilm}" rowKey="#{filmy.id_filmu}"  >
+			
+			<f:facet name="header" >
+            <p:outputPanel >
+                <h:outputText value="Wyszukiwanie globalne:" />
+                <p:inputText id="globalFilter" onkeyup="PF('filmTables').filter()" style="width:150px" placeholder="Wpisz frazę"/>
+            </p:outputPanel>
+        </f:facet>
+			<p:column headerText="Numer filmu" filterBy="#{filmy.nr_filmu}" filterMatchMode="contains" >
+				<h:outputText value="#{filmy.nr_filmu}" />
+			</p:column>
+			
+			<p:column headerText="Tytuł" filterBy="#{filmy.tytul}" filterMatchMode="contains">
+				<h:outputText value="#{filmy.tytul}" />
+			</p:column>
+			
+			<p:column headerText="Rezyseria" filterBy="#{filmy.rezyseria}" filterMatchMode="contains">
+				<h:outputText value="#{filmy.rezyseria}" />
+			</p:column>
+			
+			<p:column headerText="Scenariusz" filterBy="#{filmy.scenariusz}" filterMatchMode="contains">
+				<h:outputText value="#{filmy.scenariusz}" />
+			</p:column>
+
+			<p:column headerText="Produkcja" filterBy="#{filmy.produkcja}" filterMatchMode="contains">
+				<h:outputText value="#{filmy.produkcja}" />
+			</p:column>
+
+			<p:column headerText="Data premiery" filterBy="#{filmy.premiera}" filterMatchMode="contains" >
+				<h:outputText value="#{filmy.premiera}" />
+			</p:column>
+
+			<p:column headerText="Gatunek" filterBy="#{FilmyBean.klasyfikacjaGatunkuToString(filmy)}" filterMatchMode="contains">
+				<h:outputText
+					value="#{FilmyBean.klasyfikacjaGatunkuToString(filmy)}" />
+			</p:column>
+			<p:column headerText="Data wprowadzenia" filterBy="#{filmy.data_dodania}" filterMatchMode="contains" >
+				<h:outputText value="#{filmy.data_dodania}" />
+			</p:column>
+			<p:column headerText="Ilość kopii filmu" filterBy="#{FilmyBean.iloscKopiiFilmu(filmy)}" filterMatchMode="contains" >
+				<h:outputText value="#{FilmyBean.iloscKopiiFilmu(filmy)}" />
+			</p:column>
+			<p:column style="width:32px;text-align: center">
+				<p:commandButton icon="ui-icon-minus" />
+			</p:column>
+		</p:dataTable>
+
+	</ui:define>
+
+</ui:composition>

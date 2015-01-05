@@ -94,15 +94,21 @@
 .menu .ui-menuitem-text {
 	color:black;
 }
-.ui-datatable table{
+.ui-datatable table , {
 	margin-top:5px;
 	}
 .ui-datatable th  {
 	background-color: #A4BDEF !important;
+	font-size: 14px !important;
 }
 .ui-datatable .ui-datatable-data td{
 	
 	background-color: #E3E5E7 !important;
+	font-size: 14px !important;
+}
+.zarzadzaj .ui-datatable .ui-datatable-data td{
+	background-color: red !important;
+	font-size: 14px !important;
 }
 #page{
     background-color:#D0E0FF;
@@ -138,6 +144,13 @@
     padding: 5px;
     margin-left:250px;
     margin-right:100px;
+}
+.center_content_zarzadzanie {
+  
+    background-color: #D0E0FF;
+    padding: 5px;
+    margin-left:180px;
+    
 }
 
 #top a:link, #top a:visited {

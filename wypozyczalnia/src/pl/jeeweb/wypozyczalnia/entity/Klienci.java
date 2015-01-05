@@ -33,7 +33,7 @@ public class Klienci implements Serializable {
 
 	private String kod_pocztowy;
 
-	private String login;
+
 
 	private String miasto;
 
@@ -114,14 +114,6 @@ public class Klienci implements Serializable {
 
 	public void setKod_pocztowy(String kod_pocztowy) {
 		this.kod_pocztowy = kod_pocztowy;
-	}
-
-	public String getLogin() {
-		return this.login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
 	}
 
 	public String getMiasto() {

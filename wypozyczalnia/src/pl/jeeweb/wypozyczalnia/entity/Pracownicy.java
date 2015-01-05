@@ -35,8 +35,8 @@ public class Pracownicy implements Serializable {
 	@Column(nullable=false, length=50)
 	private String e_mail;
 
-	@Column(length=1024)
-	private String haslo_dostepu;
+	@Column(length=64)
+	private String haslo;
 
 	@Column(nullable=false, length=30)
 	private String imie;
@@ -105,11 +105,11 @@ public class Pracownicy implements Serializable {
 	}
 
 	public String getHaslo_dostepu() {
-		return this.haslo_dostepu;
+		return this.haslo;
 	}
 
 	public void setHaslo_dostepu(String haslo_dostepu) {
-		this.haslo_dostepu = haslo_dostepu;
+		this.haslo = haslo_dostepu;
 	}
 
 	public String getImie() {

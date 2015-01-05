@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="./SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:panel styleClass="editprofile">
+			<h:outputLabel value="Dane Osobowe" style="font-size:20px; " />
+			<p:separator />
+			<p:messages />
+			<h:panelGrid columns="2" columnClasses="label, value"
+				style="height:80px">
+				<h:outputText value="Numer filmu: *" />
+				<p:outputLabel value="#{editFilmBean.film.nr_filmu}" />
+
+				<h:outputText value="Tytuł: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{editFilmBean.film.tytul}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Data wprowadzenia: *" />
+				<p:inputText value="#{editFilmBean.film.data_dodania}"
+					required="true" requiredMessage="Pole wymagane" readonly=" true" />
+
+				<h:outputText value="Gatunek: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{editFilmBean.gatunek}" required="true"
+					requiredMessage="Pole wymagane" readonly=" true" ondblclick=""/>
+
+				<h:outputText value="Produkcja: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{editFilmBean.film.produkcja}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Premiera: *" />
+				<p:inputText value="#{editFilmBean.film.premiera}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Rezyseria: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{editFilmBean.film.rezyseria}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Scenariusz: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{editFilmBean.film.scenariusz}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Opis: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{editFilmBean.film.opis}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Plakat: *" />
+				<p:graphicImage value="#{image.image}" width="140px" height="200px">
+					<f:param name="id" value="#{editFilmBean.film.id_filmu}" />
+				</p:graphicImage>
+
+
+
+
+			</h:panelGrid>
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>
