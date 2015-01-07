@@ -34,7 +34,8 @@ import org.primefaces.model.DefaultStreamedContent;
 @Table(name="filmy")
 @NamedQueries({
 @NamedQuery(name="Filmy.findAll", query="SELECT f FROM Filmy f"),
-@NamedQuery(name="Filmy.findById", query="SELECT F FROM Filmy F where F.id_filmu = :idFilmu")})
+@NamedQuery(name="Filmy.findById", query="SELECT F FROM Filmy F where F.id_filmu = :idFilmu"),
+@NamedQuery(name="Filmy.findByNumer", query="SELECT F FROM Filmy F where F.nr_filmu = :numer")})
 public class Filmy implements Serializable ,Comparable<Filmy> {
 	private static final long serialVersionUID = 1L;
 

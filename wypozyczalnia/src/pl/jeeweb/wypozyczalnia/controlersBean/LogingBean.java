@@ -88,7 +88,7 @@ public class LogingBean {
 				FacesContext.getCurrentInstance().getExternalContext().getFlash()
 						.setKeepMessages(true);
 				FacesContext.getCurrentInstance().getExternalContext()
-						.redirect("/wypozyczalnia/Zarzadzanie/zarzadzaj.xhtml");
+						.redirect("/wypozyczalnia/Zarzadzanie/listafilmow.xhtml");
 				sessiondate.put("role-name", "pracownik");
 			}
 			else if ( request.isUserInRole("admin")) {

@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
+import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
 @ManagedBean(name = "FilmyBean")
 @RequestScoped
@@ -23,7 +24,7 @@ public class FilmyBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Filmy> filteredFilmy = new ArrayList<>();
-	private Filmy selectedFilm;
+	private Filmy selectedFilm = null;
 
 	public FilmyBean() {
 
@@ -74,18 +75,39 @@ public class FilmyBean implements Serializable {
 
 	public void przekierowanieEdycjaFilmu() {
 		try {
+			if(selectedFilm == (null)) 
+			{
+				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(), "globalmessage", "Nie wybra³es filmu!!!", 3);
+
+			}
+				else {
 			FacesContext
 					.getCurrentInstance()
 					.getExternalContext()
 					.redirect(
 							"/wypozyczalnia/Zarzadzanie/editFilmy.xhtml?id_filmu="
 									+ selectedFilm.getId_filmu());
+			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.print("ssadsdassd");
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(), "globalmessage", "Nie wybra³es filmu!!!", 3);
 		}
 	}
-
+	public void przekierowanieDodajFilm() {
+		try {
+			
+				
+			FacesContext
+					.getCurrentInstance()
+					.getExternalContext()
+					.redirect(
+							"/wypozyczalnia/Zarzadzanie/addFilm.xhtml");
+			
+		} catch (IOException e) {
+			System.out.print("ssadsdassd");
+			
+		}
+	}
 	public void przekierowanieSzczegoly(int id) {
 		try {
 

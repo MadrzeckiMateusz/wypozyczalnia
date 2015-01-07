@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="./SzablonZarzadzanie.xhtml">
+
+
+	<ui:define name="content">
+		<script type="text/javascript">
+			//<![CDATA[
+			PrimeFaces.locales['pl'] = {
+				closeText : 'Zamknij',
+				prevText : 'Poprzedni',
+				nextText : 'Następny',
+				monthNames : [ 'Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj',
+						'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień',
+						'Październik', 'Listopad', 'Grudzień' ],
+				monthNamesShort : [ 'Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze',
+						'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru' ],
+				dayNames : [ 'Niedziela', 'Poniedziałek', 'Wtorek', 'Środa',
+						'Czwartek', 'Piątek', 'Sobota' ],
+				dayNamesShort : [ 'Nie', 'Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'So' ],
+				dayNamesMin : [ 'N', 'P', 'W', 'Ś', 'Cz', 'P', 'S' ],
+				weekHeader : 'Tydzień',
+				firstDay : 1,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : 'r',
+				timeOnlyTitle : 'Tylko czas',
+				timeText : 'Czas',
+				hourText : 'Godzina',
+				minuteText : 'Minuta',
+				secondText : 'Sekunda',
+				currentText : 'Teraz',
+				ampm : false,
+				month : 'Miesiąc',
+				week : 'Tydzień',
+				day : 'Dzień',
+				allDayText : 'Cały dzień'
+			};
+			//]]>
+		</script>
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:panel id="panel_edit" styleClass="editprofile">
+			<h:outputLabel value="Nowy Film" style="font-size:20px; " />
+			<p:separator />
+			
+			<p:panelGrid id="panel_grid" columns="2" columnClasses="label, value"
+				style="height:80px">
+				<h:outputText value="Numer filmu: *" />
+				<h:outputText value="#{addFilmBean.film.nr_filmu}" />
+
+				<h:outputText value="Tytuł: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{addFilmBean.film.tytul}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Data wprowadzenia: *" />
+				<p:calendar value="#{addFilmBean.film.data_dodania}"
+					pattern="yyyy-MM-dd" mask="true" locale="pl" lang="pl"
+					required="true" requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Gatunek: *" />
+				<p:selectManyCheckbox id="grid" value="#{addFilmBean.gatunkiFilm}"
+					layout="grid" columns="3" required="true"
+					requiredMessage="Pole wymagane">
+					<f:selectItems value="#{addFilmBean.gatunki}" var="gatunek"
+						itemLabel="#{gatunek.gatunek}"
+						itemValue="#{gatunek.id_klasyfikacji}" />
+				</p:selectManyCheckbox>
+
+
+
+				<h:outputText value="Produkcja: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{addFilmBean.film.produkcja}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Premiera: *" />
+
+				<p:calendar value="#{addFilmBean.film.premiera}"
+					pattern="yyyy-MM-dd" mask="true" locale="pl" required="true"
+					requiredMessage="Pole wymagane" />
+
+
+				<h:outputText value="Rezyseria: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{addFilmBean.film.rezyseria}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Scenariusz: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{addFilmBean.film.scenariusz}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Opis: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{addFilmBean.film.opis}" required="true"
+					requiredMessage="Pole wymagane" />
+				<h:outputText value="Ilość kopii: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{addFilmBean.iloscKopii}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Plakat: " style="text-align:right" />
+				<p:graphicImage cache="false" id="image1" value="#{image.image}"
+						width="140px" height="200px" ondblclick="PF('dlg2').show();">
+						<f:param name="id" value="#{addFilmBean.film.id_filmu}" />
+					</p:graphicImage>
+
+			</p:panelGrid>
+			<p:separator />
+			<p:commandButton action="#{addFilmBean.dodajFilm()}" styleClass="button_zapisz" value="Dodaj"
+				 ajax="false" />
+		</p:panel>
+		<p:dialog header="Załaduj plik" widgetVar="dlg2" modal="true"
+				height="300px" width="500px"  closeOnEscape="true"
+				minHeight="200" minWidth="800" >
+
+				<p:fileUpload fileUploadListener="#{addFilmBean.handleFileUpload}"
+					mode="advanced" dragDropSupport="false" sizeLimit="100000"
+					fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+					update="form_sz" uploadLabel="Wczytaj" cancelLabel="Anuluj"
+					label="Wybierz" />
+
+				<p:growl id="messages" showDetail="true" />
+
+			</p:dialog>
+		
+	</ui:define>
+
+</ui:composition>

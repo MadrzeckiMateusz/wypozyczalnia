@@ -38,6 +38,7 @@ public class Image {
         
     		EntityManager em = DBManager.getManager().createEntityManager();
     		Filmy film_by_id = em.find(Filmy.class, id);
+    		
             image = new DefaultStreamedContent(new ByteArrayInputStream(film_by_id.getPlakat()));
         }
     }

@@ -9,9 +9,12 @@
 	template="./SzablonZarzadzanie.xhtml">
 
 	<ui:define name="content">
-	<p:outputPanel>
-	<p:commandButton action="#{FilmyBean.przekierowanieEdycjaFilmu()}"  />
+	<p:outputPanel style="margin-bottom:15px">
+	<p:commandButton action="#{FilmyBean.przekierowanieEdycjaFilmu()}" image="button_icon" style="height:50px; width:50px; margin-right:5px" />
+	<p:commandButton  action="#{FilmyBean.przekierowanieDodajFilm()}" image="button_dodaj" style="height:50px; width:50px; margin-right:5px" />
 	</p:outputPanel>
+	<p:growl id="growl" for="globalmessage" showDetail="true"
+				autoUpdate="true" life="2000" />
 		<p:dataTable var="filmy" styleClass="zarzadzaj"
 			value="#{FilmyBean.listaFilmy}" widgetVar="filmTables" filteredValue="#{FilmyBean.filetredFilmy}" emptyMessage="Brak wyników dla wyszukiwania" 
 			selectionMode="single" selection="#{FilmyBean.selectedFilm}" rowKey="#{filmy.id_filmu}"  >
@@ -56,9 +59,7 @@
 			<p:column headerText="Ilość kopii filmu" filterBy="#{FilmyBean.iloscKopiiFilmu(filmy)}" filterMatchMode="contains" >
 				<h:outputText value="#{FilmyBean.iloscKopiiFilmu(filmy)}" />
 			</p:column>
-			<p:column style="width:32px;text-align: center">
-				<p:commandButton icon="ui-icon-minus" />
-			</p:column>
+			
 		</p:dataTable>
 
 	</ui:define>
