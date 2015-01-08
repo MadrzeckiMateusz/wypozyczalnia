@@ -20,6 +20,7 @@ import org.primefaces.model.UploadedFile;
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
+import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
 @ManagedBean(name = "editFilmBean")
 @ViewScoped
@@ -62,17 +63,16 @@ public class editFilmBean implements Serializable {
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
+		uploadedFile = event.getFile();
+		byte[] file = new byte[uploadedFile.getContents().length];
+		file = uploadedFile.getContents();
+		film.setPlakat(file);
 		System.out.println("Powodzenie" + event.getFile().getFileName()
 				+ " zosta³ za³adowny.");
 		FacesMessage message = new FacesMessage("Powodzenie", event.getFile()
 				.getFileName() + " zosta³ za³adowny.");
 		FacesContext.getCurrentInstance().addMessage("globalmessage", message);
-		uploadedFile = event.getFile();
-		byte[] file = new byte[uploadedFile.getContents().length];
-		file = uploadedFile.getContents();
-		film.setPlakat(file);
-
-//		RequestContext.getCurrentInstance().update("panel_edit");
+		RequestContext.getCurrentInstance().update("image1");
 	}
 
 	private void ustawZaznaczonegatunki() {
@@ -98,6 +98,8 @@ public class editFilmBean implements Serializable {
 		em.merge(this.film);
 		em.getTransaction().commit();
 		em.close();
+		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(), "globalmessage", "Film zapisany pomyœlnie", 1);
+		
 		return null;
 	}
 

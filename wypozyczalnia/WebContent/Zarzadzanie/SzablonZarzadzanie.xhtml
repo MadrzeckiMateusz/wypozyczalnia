@@ -32,12 +32,21 @@
 			<div id="page">
 				<div id="left">
 					<p:menu styleClass="menu">
-						<p:submenu label="Menu" style=" background-color: #A4BDEF;">
-						<p:menuitem value="Lista filmów" url="/Zarzadzanie/listafilmow.xhtml"
+						<p:submenu label="Filmy" style=" background-color: #A4BDEF;">
+							<p:menuitem value="Lista filmów"
+								url="/Zarzadzanie/listafilmow.xhtml" icon="list-icon" />
+							<p:menuitem value="Dodaj film" url="/Zarzadzanie/addFilm.xhtml"
 								icon="ui-icon-home" />
-							<p:menuitem value="Dodaj Film" url="/Zarzadzanie/addFilm.xhtml"
+							<p:menuitem value="Edytuj film"
+								action="#{FilmyBean.przekierowanieEdycjaFilmu}"
 								icon="ui-icon-home" />
-							<p:menuitem value="Wyszukaj" url="/index.xhtml"
+						</p:submenu>
+						<p:submenu label="Gatunki" style=" background-color: #A4BDEF;">
+							<p:menuitem value="Lista gatunki" url="/Zarzadzanie/listaGatunki.xhtml"
+								icon="ui-icon-home" />
+							<p:menuitem value="Dodaj gatunek" action="#{gatunkiBean.przekierowanieDodajGatunek}"
+								icon="ui-icon-home" />
+							<p:menuitem value="Edytuj gatunek" action="#{gatunkiBean.przekierowanieEdycjaGatunku}"
 								icon="ui-icon-home" />
 						</p:submenu>
 						<p:submenu label="Dostęp" style=" background-color: #A4BDEF;">

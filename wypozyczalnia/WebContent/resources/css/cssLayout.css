@@ -101,15 +101,25 @@
 }
 
 .ui-datatable
+
  
+
 table
 ,
 {
 margin-top
+
+
 :
-5px;
+
+
+5
+px
+;
+
 
 	
+
 }
 .ui-datatable th {
 	background-color: #A4BDEF !important;
@@ -186,13 +196,20 @@ margin-top
 	height: 35px;
 	width: 35px;
 	background-image: url("#{resource['image/film-edit.png']}") !important;
-	top: 39% !important ;
+	top: 39% !important;
 	left: 40% !important;
 }
+
 .button_dodaj {
 	height: 35px;
 	width: 35px;
 	background-image: url("#{resource['image/film-add.png']}") !important;
-	top: 39% !important ;
+	top: 39% !important;
 	left: 40% !important;
+}
+
+.list_icon {
+	background: url("#{resource['image/list16.png']}") !important;
+	height: 16px;
+	width: 16px;
 }

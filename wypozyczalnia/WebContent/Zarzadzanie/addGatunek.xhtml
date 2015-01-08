@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="./SzablonZarzadzanie.xhtml">
+
+
+	<ui:define name="content">
+
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:panel id="panel_edit" styleClass="editprofile">
+			<h:outputLabel value="Nowy Gatunek" style="font-size:20px; " />
+			<p:separator />
+			<p:messages />
+			<p:panelGrid id="panel_grid" columns="2" columnClasses="label, value"
+				style="height:80px">
+				
+
+				<h:outputText value="Nazwa Gatunk: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{addGatunek.gatunek.gatunek}" required="true"
+					requiredMessage="Pole wymagane" />
+
+
+
+			</p:panelGrid>
+			<p:separator />
+			<p:commandButton styleClass="button_zapisz" value="Zapisz"
+				action="#{addGatunek.saveGatunek}" ajax="false" />
+		</p:panel>
+
+
+	</ui:define>
+
+</ui:composition>

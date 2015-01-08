@@ -20,8 +20,8 @@
 			selectionMode="single" selection="#{FilmyBean.selectedFilm}" rowKey="#{filmy.id_filmu}"  >
 			
 			<f:facet name="header" >
-            <p:outputPanel >
-                <h:outputText value="Wyszukiwanie globalne:" />
+            <p:outputPanel style="margin-right:67%">
+                <h:outputText value="Wyszukiwanie globalne:" style="margin-right:15px"/>
                 <p:inputText id="globalFilter" onkeyup="PF('filmTables').filter()" style="width:150px" placeholder="Wpisz frazę"/>
             </p:outputPanel>
         </f:facet>

@@ -14,6 +14,7 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="KlasyfikacjaGatunku.findAll", query="SELECT k FROM KlasyfikacjaGatunku k"),
 	@NamedQuery(name="KlasyfikacjaGatunku.getbygatunek",query="SELECT k FROM KlasyfikacjaGatunku k where k.gatunek = :gatunek"),
+	@NamedQuery(name="KlasyfikacjaGatunku.getMaxId",query="SELECT MAX(k.id_klasyfikacji) FROM KlasyfikacjaGatunku k"),
 	@NamedQuery(name="KlasyfikacjaGatunku.getById",query="SELECT k FROM KlasyfikacjaGatunku k where k.id_klasyfikacji = :id")})
 public class KlasyfikacjaGatunku implements Serializable {
 	private static final long serialVersionUID = 1L;

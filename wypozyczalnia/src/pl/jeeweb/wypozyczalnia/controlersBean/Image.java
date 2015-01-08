@@ -20,35 +20,36 @@ import pl.jeeweb.wypozyczalnia.entity.Filmy;
 @RequestScoped
 public class Image {
 
-    private StreamedContent image;
+	private StreamedContent image;
 
-    @ManagedProperty("#{param.id}")
-    private int id;
+	@ManagedProperty("#{param.id}")
+	private int id = 0;
 
-    
+	@PostConstruct
+	public void init() {
+		if (FacesContext.getCurrentInstance().getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+			// So, we're rendering the view. Return a stub StreamedContent so
+			// that it will generate right URL.
+			image = new DefaultStreamedContent();
+		} else {
+			// So, browser is requesting the image. Return a real
+			// StreamedContent with the image bytes.
+			if (id != 0) {
+				EntityManager em = DBManager.getManager().createEntityManager();
+				Filmy film_by_id = em.find(Filmy.class, id);
 
-    @PostConstruct
-    public void init() {
-        if (FacesContext.getCurrentInstance().getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
-            image = new DefaultStreamedContent();
-        }
-        else {
-            // So, browser is requesting the image. Return a real StreamedContent with the image bytes.
-        
-    		EntityManager em = DBManager.getManager().createEntityManager();
-    		Filmy film_by_id = em.find(Filmy.class, id);
-    		
-            image = new DefaultStreamedContent(new ByteArrayInputStream(film_by_id.getPlakat()));
-        }
-    }
+				image = new DefaultStreamedContent(new ByteArrayInputStream(
+						film_by_id.getPlakat()));
+			}
+		}
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public StreamedContent getImage() {
-        return image;
-    }
+	public StreamedContent getImage() {
+		return image;
+	}
 
 }

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" template="./SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+	<p:outputPanel style="margin-bottom:15px">
+	<p:commandButton  action="#{gatunkiBean.przekierowanieEdycjaGatunku()}" image="button_icon" style="height:50px; width:50px; margin-right:5px" />
+	<p:commandButton  action="#{gatunkiBean.przekierowanieDodajGatunek()}" image="button_dodaj" style="height:50px; width:50px; margin-right:5px" />
+	</p:outputPanel>
+	<p:growl id="growl" for="globalmessage" showDetail="true"
+				autoUpdate="true" life="2000" />
+		<p:dataTable var="gatunki" styleClass="zarzadzaj"
+			value="#{gatunkiBean.loadAllGatunki}" widgetVar="gatunkiTabela" filteredValue="#{gatunkiBean.filteredGatunki}" emptyMessage="Brak wyników dla wyszukiwania" 
+			selectionMode="single" selection="#{gatunkiBean.selectedGatunek}" rowKey="#{gatunki.id_klasyfikacji}"  >
+			
+			<f:facet name="header" >
+            <p:outputPanel style="margin-right:67%">
+                <h:outputText value="Wyszukiwanie globalne:" style="margin-right:15px"/>
+                <p:inputText id="globalFilter" onkeyup="PF('gatunkiTabela').filter()" style="width:150px" placeholder="Wpisz frazę"/>
+            </p:outputPanel>
+        </f:facet>
+			<p:column headerText="Numer gatunku" filterBy="#{gatunki.id_klasyfikacji}" filterMatchMode="contains" >
+				<h:outputText value="#{gatunki.id_klasyfikacji}" />
+			</p:column>
+			
+			<p:column headerText="Nazwa gatunku" filterBy="#{gatunki.gatunek}" filterMatchMode="contains">
+				<h:outputText value="#{gatunki.gatunek}" />
+			</p:column>
+			
+		</p:dataTable>
+	</ui:define>
+
+</ui:composition>

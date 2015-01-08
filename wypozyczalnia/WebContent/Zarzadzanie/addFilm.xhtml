@@ -108,10 +108,10 @@
 					requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Plakat: " style="text-align:right" />
-				<p:graphicImage cache="false" id="image1" value="#{image.image}"
-						width="140px" height="200px" ondblclick="PF('dlg2').show();">
-						<f:param name="id" value="#{addFilmBean.film.id_filmu}" />
-					</p:graphicImage>
+				<p:panel>
+				<p:commandButton value="Wybierz plakat" onclick="PF('dlg2').show();"/>
+				<p:outputLabel id="labelPlakat" value="#{addFilmBean.labelPlakat}"/>
+				</p:panel>	
 
 			</p:panelGrid>
 			<p:separator />
@@ -125,8 +125,8 @@
 				<p:fileUpload fileUploadListener="#{addFilmBean.handleFileUpload}"
 					mode="advanced" dragDropSupport="false" sizeLimit="100000"
 					fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-					update="form_sz" uploadLabel="Wczytaj" cancelLabel="Anuluj"
-					label="Wybierz" />
+					uploadLabel="Wczytaj" cancelLabel="Anuluj"
+					label="Wybierz" update="labelPlakat" />
 
 				<p:growl id="messages" showDetail="true" />
 

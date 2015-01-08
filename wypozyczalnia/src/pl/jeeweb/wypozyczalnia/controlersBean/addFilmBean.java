@@ -24,6 +24,8 @@ import org.primefaces.model.UploadedFile;
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
+import pl.jeeweb.wypozyczalnia.entity.Klasyfikator;
+import pl.jeeweb.wypozyczalnia.entity.KlasyfikatorPK;
 import pl.jeeweb.wypozyczalnia.entity.KopieFilmu;
 import pl.jeeweb.wypozyczalnia.entity.KopieFilmuPK;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
@@ -32,35 +34,41 @@ import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 @SessionScoped
 public class addFilmBean implements Serializable {
 
-	private Filmy film = new Filmy();
+	private Filmy film;
 	private List<KlasyfikacjaGatunku> Gatunki;
-	private List<String> GatunkiFilm = new ArrayList<>();
+	private List<String> GatunkiFilm;
 	private UploadedFile uploadedFile;
 	private String iloscKopii;
+	private String labelPlakat;
 
 	@PostConstruct
 	public void initBeanMethod() {
 		klasyfikacjaGatunkuAll();
+		this.film = new Filmy();
 		this.film.setNr_filmu(setNumerFilmu());
 		this.film.setData_dodania(currentDate());
+		this.iloscKopii = "";
+		this.labelPlakat = "";
+		this.GatunkiFilm = new ArrayList<>();
 	}
 
 	public void dodajFilm() {
-		ustawZaznaczonegatunki();
+
 		EntityManager em = DBManager.getManager().createEntityManager();
 		em.getTransaction().begin();
-		em.persist(this.film);
+		Filmy film = em.merge(this.film);
+		ustawZaznaczonegatunki(em, film);
+		ustawKopieFilmu(em, film);
 		em.getTransaction().commit();
 		em.close();
-		ustawKopieFilmu();
-		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(), "globalmessage", "Film dodany poprawnie", 1);
-		this.film = new Filmy();
+		initBeanMethod();
+		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+				"globalmessage", "Film dodany poprawnie", 1);
+		
 	}
+	
 
-	private void ustawKopieFilmu() {
-		EntityManager em = DBManager.getManager().createEntityManager();
-		Filmy film = (Filmy) em.createNamedQuery("Filmy.findByNumer")
-				.setParameter("numer", this.film.getNr_filmu());
+	private void ustawKopieFilmu(EntityManager em, Filmy film) {
 
 		int kopieInt = Integer.parseInt(iloscKopii);
 		for (int i = 1; i <= kopieInt; i++) {
@@ -69,27 +77,24 @@ public class addFilmBean implements Serializable {
 			kopiefilmupk.setId_filmu(film.getId_filmu());
 			kopiefilmupk.setId_kopii(i);
 			kopia.setId(kopiefilmupk);
-			this.film.addKopieFilmus(kopia);
+			em.merge(kopia);
 		}
-		em.getTransaction().begin();
-		em.merge(this.film);
-		em.getTransaction().commit();
-		em.close();
+
 	}
 
-	private void ustawZaznaczonegatunki() {
-		this.film.getKlasyfikacjaGatunkus().clear();
-		EntityManager em = DBManager.getManager().createEntityManager();
+	private void ustawZaznaczonegatunki(EntityManager em, Filmy film) {
+
 		List<KlasyfikacjaGatunku> listaKlasyfikacja = null;
 		for (int i = 0; i < GatunkiFilm.size(); i++) {
 			int id_kla = Integer.parseInt(GatunkiFilm.get(i));
-			KlasyfikacjaGatunku klasyf = (KlasyfikacjaGatunku) em
-					.createNamedQuery("KlasyfikacjaGatunku.getById")
-					.setParameter("id", id_kla).getSingleResult();
-			this.film.getKlasyfikacjaGatunkus().add(klasyf);
+			KlasyfikatorPK kasyfikatorPk = new KlasyfikatorPK();
+			kasyfikatorPk.setId_filmu(film.getId_filmu());
+			kasyfikatorPk.setId_klasyfikacji(id_kla);
+			Klasyfikator klasyfikator = new Klasyfikator();
+			klasyfikator.setId(kasyfikatorPk);
+			em.merge(klasyfikator);
 		}
 
-		em.close();
 	}
 
 	private void klasyfikacjaGatunkuAll() {
@@ -109,8 +114,8 @@ public class addFilmBean implements Serializable {
 		byte[] file = new byte[uploadedFile.getContents().length];
 		file = uploadedFile.getContents();
 		film.setPlakat(file);
-
-		// RequestContext.getCurrentInstance().update("panel_edit");
+		this.labelPlakat = uploadedFile.getFileName();
+	
 	}
 
 	private Date currentDate() {
@@ -186,5 +191,13 @@ public class addFilmBean implements Serializable {
 
 	public void setIloscKopii(String iloscKopii) {
 		this.iloscKopii = iloscKopii;
+	}
+
+	public String getLabelPlakat() {
+		return labelPlakat;
+	}
+
+	public void setLabelPlakat(String labelPlakat) {
+		this.labelPlakat = labelPlakat;
 	}
 }
