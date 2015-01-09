@@ -37,6 +37,7 @@ public class editProfilKlient implements Serializable {
 	public editProfilKlient() {
 
 	}
+	
 
 	public String Zaladujdoedycji() {
 
@@ -73,6 +74,7 @@ public class editProfilKlient implements Serializable {
 		String hashhaslo = SHA256hash.HashText(this.stareHaslo);
 		// System.out.println("starehas³o  " + hashhaslo);
 		// System.out.println("has³ozbazy" + this.klient.getHaslo());
+		
 		if (hashhaslo.equals(this.klient.getHaslo())) {
 			if (this.noweHaslo1.equals(this.noweHaslo2)) {
 				klient.setHaslo(SHA256hash.HashText(this.noweHaslo1));

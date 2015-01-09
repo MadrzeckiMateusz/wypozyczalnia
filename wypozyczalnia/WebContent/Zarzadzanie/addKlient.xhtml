@@ -3,7 +3,8 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="./szablonApp.xhtml" xmlns:p="http://primefaces.org/ui"
+	template="./SzablonZarzadzanie.xhtml" 
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 	<ui:define name="content">
@@ -25,7 +26,7 @@
 					required="true" label="Imie" requiredMessage="Pole wymagane"
 					validatorMessage="Maksymalna długość pola 30 znaków">
 					<f:validateLength maximum="30" />
-					<p:ajax update=":form:ermsg" />
+					<p:ajax update=":form_sz:ermsg" />
 				</p:inputText>
 				<p:message id="ermsg" styleClass="ermsg" for="imie"
 					autoUpdate="true" severity="error" />
@@ -35,7 +36,7 @@
 					required="true" label="Nazwsiko" requiredMessage="Pole wymagane"
 					validatorMessage="Maksymalna długość pola 30 znaków">
 					<f:validateLength maximum="45" />
-					<p:ajax update=":form:ermsg2" />
+					<p:ajax update=":form_sz:ermsg2" />
 				</p:inputText>
 				<p:message id="ermsg2" styleClass="ermsg" for="nazwisko"
 					autoUpdate="true" severity="error" />
@@ -63,7 +64,7 @@
 				<p:inputText id="Ulica" value="#{klienciBean.klient.ulica}"
 					validatorMessage="Pole może mieć max. 45 znaków">
 					<f:validateLength maximum="45" />
-					<p:ajax update=":form:ermsgUl" />
+					<p:ajax update=":form_sz:ermsgUl" />
 				</p:inputText>
 				<p:message id="ermsgUl" styleClass="ermsg" for="Ulica"
 					autoUpdate="true" severity="error" />
@@ -77,7 +78,7 @@
 				<p:inputText id="Miasto" value="#{klienciBean.klient.miasto}"
 					validatorMessage="Pole może mieć max. 45 znaków">
 					<f:validateLength maximum="45" />
-					<p:ajax update=":form:ermsgMiasto" />
+					<p:ajax update=":form_sz:ermsgMiasto" />
 				</p:inputText>
 				<p:message id="ermsgMiasto" styleClass="ermsg" for="Miasto"
 					autoUpdate="true" severity="error" />
@@ -102,8 +103,8 @@
 					requiredMessage="Pole wymagane" />
 				<p:message for="telefon" />
 			</h:panelGrid>
-			<p:commandButton value="Zapisz" actionListener="#{klienciBean.save(user)}"
-				styleClass="button_zapisz" update="form" ajax="false" />
+			<p:commandButton value="Zapisz" actionListener="#{klienciBean.save(admin)}"
+				styleClass="button_zapisz" update="form_sz" />
 		</p:panel>
 
 

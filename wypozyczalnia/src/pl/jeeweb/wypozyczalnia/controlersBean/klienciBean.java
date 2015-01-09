@@ -12,9 +12,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.TransactionalException;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
@@ -25,7 +25,6 @@ import pl.jeeweb.wypozyczalnia.entity.User;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 import pl.jeeweb.wypozyczalnia.tools.RandomAlphaNum;
 import pl.jeeweb.wypozyczalnia.tools.SHA256hash;
-import pl.jeeweb.wypozyczalnia.tools.SendMail;
 
 @ManagedBean(name = "klienciBean")
 @RequestScoped
@@ -34,6 +33,7 @@ public class klienciBean {
 	private User user = new User();
 	private Role user_role = new Role();
 	private RolePK rolePK = new RolePK();
+
 
 	public Klienci getKlient() {
 		return klient;
@@ -78,8 +78,13 @@ public class klienciBean {
 		return date;
 	}
 
-	public void save(ActionEvent ae) {
+	public void save(String miejsceWywolania) {
 		if (!ifExistEmail(this.klient.getE_mail())) {
+			FacesContext ctx = FacesContext.getCurrentInstance();
+			HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
+			// returns something like "/myapplication/home.faces"
+			String fullURI = servletRequest.getRequestURI();
+			System.out.print(fullURI);
 			RandomAlphaNum rand = new RandomAlphaNum();
 			ExternalContext context = FacesContext.getCurrentInstance()
 					.getExternalContext();
@@ -93,14 +98,14 @@ public class klienciBean {
 			this.rolePK.setRolename("klient");
 			this.rolePK.setUsername(this.klient.getE_mail());
 			this.user_role.setId(this.rolePK);
-			EntityManager em = DBManager.getManager().createEntityManager();
+//			EntityManager em = DBManager.getManager().createEntityManager();
 			try {
-				em.getTransaction().begin();
-				em.persist(this.klient);
-				em.persist(this.user);
-				em.persist(this.user_role);
-				em.getTransaction().commit();
-				em.close();
+//				em.getTransaction().begin();
+//				em.persist(this.klient);
+//				em.persist(this.user);
+//				em.persist(this.user_role);
+//				em.getTransaction().commit();
+//				em.close();
 			} catch (TransactionalException e) {
 				DisplayMessage
 				.InfoMessage(
@@ -111,28 +116,33 @@ public class klienciBean {
 			}
 			
 
-			try {
-				new SendMail(
-						this.klient.getE_mail(),
-						"Rejestracja w serwisie Wypo篡czalnia DVD",
-						this.klient.getImie()
-								+ " witaj  w serwisie Wypo篡czalniaDVD. Tw鎩 e-mail jest loginem. \n "
-								+ "Twoje has這 to: " + tmpPassword
-								+ " Zmien je przy pierwszym logowaniu").send();
-			} catch (MessagingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				new SendMail(
+//						this.klient.getE_mail(),
+//						"Rejestracja w serwisie Wypo篡czalnia DVD",
+//						this.klient.getImie()
+//								+ " witaj  w serwisie Wypo篡czalniaDVD. Tw鎩 e-mail jest loginem. \n "
+//								+ "Twoje has這 to: " + tmpPassword
+//								+ " Zmien je przy pierwszym logowaniu").send();
+//			} catch (MessagingException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			try {
 				DisplayMessage
-						.InfoMessage(
-								FacesContext.getCurrentInstance(),
-								"text-message",
-								"Uzytkownik zarejestrowany. Has這 pierwszego logowania zosta這 wys豉ne w e-mailu podanym przy rejestracji",
-								2);
-				context.getFlash().setKeepMessages(true);
-				context.redirect(context.getRequestContextPath()
-						+ "/zaloguj.xhtml");
+				.InfoMessage(
+						FacesContext.getCurrentInstance(),
+						"text-message",
+						"Uzytkownik zarejestrowany. Has這 pierwszego logowania zosta這 wys豉ne w e-mailu podanym przy rejestracji",
+						2);
+				if(miejsceWywolania.equals("user"))
+				{
+					context.getFlash().setKeepMessages(true);
+					context.redirect(context.getRequestContextPath()
+							+ "/zaloguj.xhtml");
+				}
+				
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -147,7 +157,7 @@ public class klienciBean {
 
 	}
 
-	public boolean ifExistEmail(String email) {
+	private boolean ifExistEmail(String email) {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		List results = null;
 		results = em.createNativeQuery(

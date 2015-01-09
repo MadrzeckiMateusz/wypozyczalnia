@@ -49,6 +49,14 @@
 							<p:menuitem value="Edytuj gatunek" action="#{gatunkiBean.przekierowanieEdycjaGatunku}"
 								icon="ui-icon-home" />
 						</p:submenu>
+						<p:submenu label="Klienci" style=" background-color: #A4BDEF;">
+							<p:menuitem value="Lista klienci" url="/Zarzadzanie/addKlient.xhtml"
+								icon="ui-icon-home" />
+							<p:menuitem value="Dodaj klienta" action="#{gatunkiBean.przekierowanieDodajGatunek}"
+								icon="ui-icon-home" />
+							<p:menuitem value="Edytuj klienta" action="#{gatunkiBean.przekierowanieEdycjaGatunku}"
+								icon="ui-icon-home" />
+						</p:submenu>
 						<p:submenu label="Dostęp" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Zaloguj" url="/zaloguj.xhtml"
 								icon="ui-icon-key" />
