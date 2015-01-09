@@ -3,12 +3,14 @@ package pl.jeeweb.wypozyczalnia.controlersBean;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaUpdate;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
@@ -28,6 +30,8 @@ public class editProfilKlient implements Serializable {
 
 	private Klienci klient = new Klienci();
 	private User user = new User();
+	
+	private Klienci selectedKlient = null; 
 
 	private String stareHaslo;
 	private String noweHaslo1;
@@ -38,20 +42,28 @@ public class editProfilKlient implements Serializable {
 
 	}
 	
-
-	public String Zaladujdoedycji() {
-
+	@PostConstruct
+	public void Zaladujdoedycji() {
+		int id;
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
+		String fullURI = servletRequest.getRequestURI();
+		if(fullURI.equals("/wypozyczalnia/Zarzadzanie/editKlient.xhtml")) {
+		id = Integer.valueOf(FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("id_klient"));
+		}else {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(true);
-		int user_id = (int) session.getAttribute("user_id");
+		id = (int) session.getAttribute("user_id");
+		}
 		EntityManager em = DBManager.getManager().createEntityManager();
-		this.klient = em.find(Klienci.class, user_id);
+		this.klient = em.find(Klienci.class, id);
 		// this.user = (User) em.createNamedQuery("User.findByEmail")
 		// .setParameter("email", klient.getE_mail()).getSingleResult();
 		em.close();
 		this.zaladowanodoedycji = true;
 
-		return "";
+		
 	}
 
 	public String editOsobowe() {
@@ -98,7 +110,6 @@ public class editProfilKlient implements Serializable {
 					FacesContext.getCurrentInstance().getExternalContext()
 							.redirect("/wypozyczalnia/Users/zmianahasla.xhtml");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 

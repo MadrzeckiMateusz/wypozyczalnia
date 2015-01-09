@@ -11,6 +11,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.parser.Entity;
 
 import org.primefaces.context.RequestContext;
@@ -35,6 +36,7 @@ public class editFilmBean implements Serializable {
 
 	@PostConstruct
 	public void getFilmById() {
+		
 		id = Integer.valueOf(FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap().get("id_filmu"));
 		if (id != 0) {

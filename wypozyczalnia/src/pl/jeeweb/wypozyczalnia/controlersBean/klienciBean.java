@@ -25,6 +25,7 @@ import pl.jeeweb.wypozyczalnia.entity.User;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 import pl.jeeweb.wypozyczalnia.tools.RandomAlphaNum;
 import pl.jeeweb.wypozyczalnia.tools.SHA256hash;
+import pl.jeeweb.wypozyczalnia.tools.SendMail;
 
 @ManagedBean(name = "klienciBean")
 @RequestScoped
@@ -33,7 +34,8 @@ public class klienciBean {
 	private User user = new User();
 	private Role user_role = new Role();
 	private RolePK rolePK = new RolePK();
-
+	private Klienci selectedKlient = null;
+	private List<Klienci> filteredKlienci = new ArrayList<>();
 
 	public Klienci getKlient() {
 		return klient;
@@ -42,7 +44,12 @@ public class klienciBean {
 	public void setKlient(Klienci klient) {
 		this.klient = klient;
 	}
-
+	public List<Klienci> getAllKlienci(){
+		EntityManager em = DBManager.getManager().createEntityManager();
+		List<Klienci> klienci = em.createNamedQuery("Klienci.findAll").getResultList();
+		em.close();
+		return  klienci;
+	}
 	public String setNumerKlienta() {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		List<Integer> id = em.createNativeQuery(
@@ -78,11 +85,11 @@ public class klienciBean {
 		return date;
 	}
 
-	public void save(String miejsceWywolania) {
+	public void save() {
 		if (!ifExistEmail(this.klient.getE_mail())) {
 			FacesContext ctx = FacesContext.getCurrentInstance();
-			HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
-			// returns something like "/myapplication/home.faces"
+			HttpServletRequest servletRequest = (HttpServletRequest) ctx
+					.getExternalContext().getRequest();
 			String fullURI = servletRequest.getRequestURI();
 			System.out.print(fullURI);
 			RandomAlphaNum rand = new RandomAlphaNum();
@@ -92,57 +99,54 @@ public class klienciBean {
 			this.klient.setData_rejestracji(currentDate());
 			String tmpPassword = rand.RandomPass();
 			this.klient.setHaslo(SHA256hash.HashText(tmpPassword));
-			
+
 			this.user.setUsername(this.klient.getE_mail());
 			this.user.setPassword(this.klient.getHaslo());
 			this.rolePK.setRolename("klient");
 			this.rolePK.setUsername(this.klient.getE_mail());
 			this.user_role.setId(this.rolePK);
-//			EntityManager em = DBManager.getManager().createEntityManager();
+			EntityManager em = DBManager.getManager().createEntityManager();
 			try {
-//				em.getTransaction().begin();
-//				em.persist(this.klient);
-//				em.persist(this.user);
-//				em.persist(this.user_role);
-//				em.getTransaction().commit();
-//				em.close();
+				em.getTransaction().begin();
+				em.persist(this.klient);
+				em.persist(this.user);
+				em.persist(this.user_role);
+				em.getTransaction().commit();
+				em.close();
 			} catch (TransactionalException e) {
-				DisplayMessage
-				.InfoMessage(
-						FacesContext.getCurrentInstance(),
-						"globalmessage",
-						"B³¹d danych",
-						3);
+				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+						"globalmessage", "B³¹d danych", 3);
 			}
-			
 
-//			try {
-//				new SendMail(
-//						this.klient.getE_mail(),
-//						"Rejestracja w serwisie Wypo¿yczalnia DVD",
-//						this.klient.getImie()
-//								+ " witaj  w serwisie Wypo¿yczalniaDVD. Twój e-mail jest loginem. \n "
-//								+ "Twoje has³o to: " + tmpPassword
-//								+ " Zmien je przy pierwszym logowaniu").send();
-//			} catch (MessagingException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
+			try {
+				new SendMail(
+						this.klient.getE_mail(),
+						"Rejestracja w serwisie Wypo¿yczalnia DVD",
+						this.klient.getImie()
+								+ " witaj  w serwisie Wypo¿yczalniaDVD. Twój e-mail jest loginem. \n "
+								+ "Twoje has³o to: " + tmpPassword
+								+ " Zmien je przy pierwszym logowaniu").send();
+			} catch (MessagingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			try {
 				DisplayMessage
-				.InfoMessage(
-						FacesContext.getCurrentInstance(),
-						"text-message",
-						"Uzytkownik zarejestrowany. Has³o pierwszego logowania zosta³o wys³ane w e-mailu podanym przy rejestracji",
-						2);
-				if(miejsceWywolania.equals("user"))
-				{
-					context.getFlash().setKeepMessages(true);
+						.InfoMessage(
+								FacesContext.getCurrentInstance(),
+								"text-message",
+								"Uzytkownik zarejestrowany. Has³o pierwszego logowania zosta³o wys³ane w e-mailu podanym przy rejestracji",
+								2);
+				context.getFlash().setKeepMessages(true);
+				if (fullURI.equals("/wypozyczalnia/nowyuser.xhtml")) {
+
 					context.redirect(context.getRequestContextPath()
 							+ "/zaloguj.xhtml");
+				} else {
+					context.redirect(context.getRequestContextPath()
+							+ "/Zarzadzanie/listafilmow.xhtml");
 				}
-				
-				
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -157,6 +161,39 @@ public class klienciBean {
 
 	}
 
+	public void przekierowanieEdycjaKlienta() {
+		try {
+			if (selectedKlient == (null)) {
+				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+						"globalmessage", "Nie wybra³es klienta!!!", 3);
+
+			} else {
+				FacesContext
+						.getCurrentInstance()
+						.getExternalContext()
+						.redirect(
+								"/wypozyczalnia/Zarzadzanie/editKlient.xhtml?id_klient="
+										+ selectedKlient.getId_klienta());
+			}
+		} catch (IOException e) {
+			System.out.print("ssadsdassd");
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Nie wybra³es klienta!!!", 3);
+		}
+	}
+	public void przekierowanieDodajKlienta() {
+		try {
+			FacesContext
+			.getCurrentInstance()
+			.getExternalContext()
+			.redirect(
+					"/wypozyczalnia/Zarzadzanie/addKlient.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private boolean ifExistEmail(String email) {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		List results = null;
@@ -169,6 +206,22 @@ public class klienciBean {
 			return true;// istnieje
 		else
 			return false;// nie istnieje
+	}
+
+	public Klienci getSelectedKlient() {
+		return selectedKlient;
+	}
+
+	public void setSelectedKlient(Klienci selectedKlient) {
+		this.selectedKlient = selectedKlient;
+	}
+
+	public List<Klienci> getFilteredKlienci() {
+		return filteredKlienci;
+	}
+
+	public void setFilteredKlienci(List<Klienci> filteredKlienci) {
+		this.filteredKlienci = filteredKlienci;
 	}
 
 }

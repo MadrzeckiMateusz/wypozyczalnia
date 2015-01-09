@@ -3,7 +3,7 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="./SzablonZarzadzanie.xhtml" 
+	template="./SzablonZarzadzanie.xhtml"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
@@ -11,11 +11,11 @@
 
 
 
-		<p:growl id="growl" for="globalmessage" globalOnly="true" showDetail="true"
-			autoUpdate="true" life="4000" />
-	
+		<p:growl id="growl" for="globalmessage" globalOnly="true"
+			showDetail="true" autoUpdate="true" life="4000" />
+
 		<p:panel id="daneOS" styleClass="nowyUserPanel">
-			<h:outputLabel value="Dane Osobowe" style="font-size:20px; " />
+			<h:outputLabel value="Nowy klient" style="font-size:20px; " />
 			<p:separator />
 
 
@@ -42,24 +42,13 @@
 					autoUpdate="true" severity="error" />
 
 				<h:outputText value="Pesel: *" />
-				<p:inputMask mask="99999999999" id="pesel" value="#{klienciBean.klient.pesel}"
-					required="true" label="Pesel" requiredMessage="Pole wymagane"/>
+				<p:inputMask mask="99999999999" id="pesel"
+					value="#{klienciBean.klient.pesel}" required="true" label="Pesel"
+					requiredMessage="Pole wymagane" />
 
-
-				
 				<p:message id="ermsg1" styleClass="ermsg" for="pesel"
 					autoUpdate="true" severity="error" />
-			</h:panelGrid>
-		</p:panel>
 
-
-
-
-		<p:panel id="address" styleClass="nowyUserPanel">
-			<h:outputLabel value="Dane Adresowe" style="font-size:20px; " />
-			<p:separator />
-
-			<h:panelGrid columns="3" columnClasses="label, value">
 				<h:outputText value="Ulica: " />
 				<p:inputText id="Ulica" value="#{klienciBean.klient.ulica}"
 					validatorMessage="Pole może mieć max. 45 znaków">
@@ -82,17 +71,6 @@
 				</p:inputText>
 				<p:message id="ermsgMiasto" styleClass="ermsg" for="Miasto"
 					autoUpdate="true" severity="error" />
-			</h:panelGrid>
-		</p:panel>
-
-
-
-
-		<p:panel id="contact" styleClass="nowyUserPanel">
-			<h:outputLabel value="Dane kontaktowe" style="font-size:20px; " />
-			<p:separator />
-
-			<h:panelGrid columns="3" columnClasses="label, value">
 				<h:outputText value="Email: *" />
 				<p:inputText value="#{klienciBean.klient.e_mail}" required="true"
 					label="Email" id="email" requiredMessage="Pole wymagane" />
@@ -103,9 +81,25 @@
 					requiredMessage="Pole wymagane" />
 				<p:message for="telefon" />
 			</h:panelGrid>
-			<p:commandButton value="Zapisz" actionListener="#{klienciBean.save(admin)}"
-				styleClass="button_zapisz" update="form_sz" />
+			<p:separator />
+
+
+			<p:commandButton value="Zapisz"
+				actionListener="#{klienciBean.save()}" styleClass="button_zapisz"
+				update="form_sz" />
 		</p:panel>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

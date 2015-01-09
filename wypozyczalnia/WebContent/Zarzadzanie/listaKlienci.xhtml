@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="./SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+		<p:outputPanel style="margin-bottom:15px">
+			<p:commandButton action="#{klienciBean.przekierowanieEdycjaKlienta()}"
+				image="button_icon"
+				style="height:50px; width:50px; margin-right:5px" />
+			<p:commandButton action="#{klienciBean.przekierowanieDodajKlienta()}"
+				image="button_dodaj"
+				style="height:50px; width:50px; margin-right:5px" />
+		</p:outputPanel>
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:dataTable var="klient" styleClass="zarzadzaj"
+			value="#{klienciBean.allKlienci}" widgetVar="klienciTables"
+			filteredValue="#{klienciBean.filteredKlienci}"
+			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
+			selection="#{klienciBean.selectedKlient}"
+			rowKey="#{klient.id_klienta}">
+
+			<f:facet name="header">
+				<p:outputPanel style="margin-right:67%">
+					<h:outputText value="Wyszukiwanie globalne:"
+						style="margin-right:15px" />
+					<p:inputText id="globalFilter"
+						onkeyup="PF('klienciTables').filter()" style="width:150px"
+						placeholder="Wpisz frazę" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Numer Klienta" filterBy="#{klient.nr_klienta}"
+				filterMatchMode="contains" style="width:55px" filterStyle="width:60px">
+				<h:outputText value="#{klient.nr_klienta}" />
+			</p:column>
+			
+			<p:column headerText="Data Rejestracji" filterBy="#{klient.data_rejestracji}"
+				filterMatchMode="contains" style="width:80px" filterStyle="width:60px">
+				<h:outputText value="#{klient.data_rejestracji}" />
+			</p:column>
+
+			<p:column headerText="Imie" filterBy="#{klient.imie}"
+				filterMatchMode="contains" style="width:60px" filterStyle="width:60px">
+				<h:outputText value="#{klient.imie}" />
+			</p:column>
+
+			<p:column headerText="Nazwisko" filterBy="#{klient.nazwisko}"
+				filterMatchMode="contains" style="width:70px" filterStyle="width:60px">
+				<h:outputText value="#{klient.nazwisko}"  />
+			</p:column>
+			<p:column headerText="Pesel" filterBy="#{klient.pesel}"
+				filterMatchMode="contains" style="width:85px" filterStyle="width:60px">
+				<h:outputText value="#{klient.pesel}" />
+			</p:column>
+			
+			<p:column headerText="E-mail" filterBy="#{klient.e_mail}"
+				filterMatchMode="contains" style="width:190px; " filterStyle="width:185px ">
+				<h:outputText value="#{klient.e_mail}" />
+			</p:column>
+			
+			<p:column headerText="Numer telefonu" filterBy="#{klient.nr_telefonu}"
+				filterMatchMode="contains" style="width:80px" filterStyle="width:75px">
+				<h:outputText value="#{klient.nr_telefonu}" />
+			</p:column>
+
+			<p:column headerText="Ulica" filterBy="#{klient.ulica}"
+				filterMatchMode="contains" style="width:80px; " filterStyle="width:75px ">
+				<h:outputText value="#{klient.ulica}" />
+			</p:column>
+
+			<p:column headerText="Miasto" filterBy="#{klient.miasto}"
+				filterMatchMode="contains" style="width:60px" filterStyle="width:65px">
+				<h:outputText value="#{klient.miasto}" />
+			</p:column>
+
+			<p:column headerText="Kod pocztowy" filterBy="#{klient.kod_pocztowy}"
+				filterMatchMode="contains" style="width:70px" filterStyle="width:65px">
+				<h:outputText value="#{klient.kod_pocztowy}" />
+			</p:column>
+
+		</p:dataTable>
+
+	</ui:define>
+
+</ui:composition>

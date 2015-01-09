@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="./SzablonZarzadzanie.xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="content">
+		<script type="text/javascript">
+			//<![CDATA[
+			PrimeFaces.locales['pl'] = {
+				closeText : 'Zamknij',
+				prevText : 'Poprzedni',
+				nextText : 'Następny',
+				monthNames : [ 'Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj',
+						'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień',
+						'Październik', 'Listopad', 'Grudzień' ],
+				monthNamesShort : [ 'Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze',
+						'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru' ],
+				dayNames : [ 'Niedziela', 'Poniedziałek', 'Wtorek', 'Środa',
+						'Czwartek', 'Piątek', 'Sobota' ],
+				dayNamesShort : [ 'Nie', 'Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'So' ],
+				dayNamesMin : [ 'N', 'P', 'W', 'Ś', 'Cz', 'P', 'S' ],
+				weekHeader : 'Tydzień',
+				firstDay : 1,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : 'r',
+				timeOnlyTitle : 'Tylko czas',
+				timeText : 'Czas',
+				hourText : 'Godzina',
+				minuteText : 'Minuta',
+				secondText : 'Sekunda',
+				currentText : 'Teraz',
+				ampm : false,
+				month : 'Miesiąc',
+				week : 'Tydzień',
+				day : 'Dzień',
+				allDayText : 'Cały dzień'
+			};
+			//]]>
+		</script>
+
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:panel styleClass="editprofile">
+			<h:outputLabel value="Dane Osobowe" style="font-size:20px; " />
+			<p:separator />
+			<p:messages />
+			<h:panelGrid columns="2" columnClasses="label, value"
+				style="height:80px">
+				<h:outputText value="Numer klienta: *" />
+				<p:outputLabel value="#{editBean.klient.nr_klienta}" label="Imie" />
+				<h:outputText value="Data wprowadzenia: *" />
+				<p:calendar value="#{editBean.klient.data_rejestracji}"
+					pattern="yyyy-MM-dd" mask="true" locale="pl" lang="pl"
+					required="true" requiredMessage="Pole wymagane" />
+				<h:outputText value="Imie: *" />
+				<p:inputText value="#{editBean.klient.imie}" required="true"
+					label="Imie" requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Nazwisko: *" />
+				<p:inputText value="#{editBean.klient.nazwisko}" required="true"
+					label="Nazwsiko" requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Pesel: *" />
+				<p:inputText value="#{editBean.klient.pesel}" required="true"
+					label="Pesel" requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Ulica: " />
+				<p:inputText value="#{editBean.klient.ulica}" />
+
+				<h:outputText value="Kod Pocztowy: " />
+				<p:inputText value="#{editBean.klient.kod_pocztowy}" />
+
+				<h:outputText value="Miasto: " />
+				<p:inputText value="#{editBean.klient.miasto}" />
+				<h:outputText value="Email: " />
+				<p:inputText value="#{editBean.klient.e_mail}" required="true"
+					label="Email" requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Numer Telefonu: " />
+				<p:inputText value="#{editBean.klient.nr_telefonu}" />
+			</h:panelGrid>
+
+
+
+			<p:separator />
+
+			<p:commandButton id="zapisz2" value="Zapisz"
+				action="#{editBean.editOsobowe}" styleClass="button_zapisz" />
+		</p:panel>
+
+
+
+	</ui:define>
+</ui:composition>
