@@ -38,18 +38,18 @@
 							<p:menuitem value="Katalog" url="/katalogFilmow.xhtml"
 								icon="ui-icon-image" />
 							<p:menuitem value="Koszyk" url="/Users/koszykrezerwacje.xhtml"
-								icon="ui-icon-cart" rendered="#{LogingBean.userLoged}" />
+								icon="ui-icon-cart" rendered="#{AuthorizationBean.userLoged}" />
 						</p:submenu>
 						<p:submenu label="Dostęp" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Zaloguj" url="/zaloguj.xhtml"
 								icon="ui-icon-key" />
-							<p:menuitem value="Wyloguj" action="#{LogingBean.LogOut}"
+							<p:menuitem value="Wyloguj" action="#{AuthorizationBean.LogOut}"
 								icon="ui-icon-power" />
 							<p:menuitem value="Utwórz konto" url="/nowyuser.xhtml"
 								icon="ui-icon-person" />
 						</p:submenu>
 						<p:submenu label="Profil" style=" background-color: #A4BDEF;"
-							rendered="#{LogingBean.userLoged}">
+							rendered="#{AuthorizationBean.userLoged}">
 							<p:menuitem value="Edytuj Dane" url="/Users/editprofile.xhtml"
 								icon="ui-icon-pencil" />
 							<p:menuitem value="Zmień Hasło" url="/Users/zmianahasla.xhtml"

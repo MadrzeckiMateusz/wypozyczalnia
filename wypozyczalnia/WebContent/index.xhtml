@@ -21,7 +21,7 @@
 				style="font-size: 15px ; margin-bottom: 10px">
 				<h:panelGrid columns="2" style="margin-left:750px">
 					<p:commandButton action="#{koszyk.dodajDoKoszyka(lista.id_filmu)}"
-						title="Dodaj do koszyka" rendered="#{LogingBean.userLoged}"
+						title="Dodaj do koszyka" rendered="#{AuthorizationBean.userLoged}"
 						icon="ui-icon-cart" />
 
 					<p:commandButton title="Szczegóły filmu"

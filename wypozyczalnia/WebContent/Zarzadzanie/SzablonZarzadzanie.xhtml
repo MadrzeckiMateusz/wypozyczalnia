@@ -30,8 +30,8 @@
 			</div>
 
 			<div id="page">
-				<div id="left">
-					<p:menu styleClass="menu">
+				<div id="leftmanage">
+					<p:menu styleClass="menumanage" toggleable="true" >
 						<p:submenu label="Filmy" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Lista filmów"
 								url="/Zarzadzanie/listafilmow.xhtml" icon="list-icon" />
@@ -42,31 +42,28 @@
 								icon="ui-icon-home" />
 						</p:submenu>
 						<p:submenu label="Gatunki" style=" background-color: #A4BDEF;">
-							<p:menuitem value="Lista gatunki" url="/Zarzadzanie/listaGatunki.xhtml"
+							<p:menuitem value="Lista gatunki"
+								url="/Zarzadzanie/listaGatunki.xhtml" icon="ui-icon-home" />
+							<p:menuitem value="Dodaj gatunek"
+								action="#{gatunkiBean.przekierowanieDodajGatunek}"
 								icon="ui-icon-home" />
-							<p:menuitem value="Dodaj gatunek" action="#{gatunkiBean.przekierowanieDodajGatunek}"
-								icon="ui-icon-home" />
-							<p:menuitem value="Edytuj gatunek" action="#{gatunkiBean.przekierowanieEdycjaGatunku}"
+							<p:menuitem value="Edytuj gatunek"
+								action="#{gatunkiBean.przekierowanieEdycjaGatunku}"
 								icon="ui-icon-home" />
 						</p:submenu>
 						<p:submenu label="Klienci" style=" background-color: #A4BDEF;">
-							<p:menuitem value="Lista klienci" url="/Zarzadzanie/listaKlienci.xhtml"
+							<p:menuitem value="Lista klienci"
+								url="/Zarzadzanie/listaKlienci.xhtml" icon="ui-icon-home" />
+							<p:menuitem value="Dodaj klienta"
+								action="#{klienciBean.przekierowanieDodajKlienta}"
 								icon="ui-icon-home" />
-							<p:menuitem value="Dodaj klienta" action="#{klienciBean.przekierowanieDodajKlienta}"
-								icon="ui-icon-home" />
-							<p:menuitem value="Edytuj klienta" action="#{klienciBean.przekierowanieEdycjaKlienta}"
+							<p:menuitem value="Edytuj klienta"
+								action="#{klienciBean.przekierowanieEdycjaKlienta}"
 								icon="ui-icon-home" />
 						</p:submenu>
-						<p:submenu label="Dostęp" style=" background-color: #A4BDEF;">
-							<p:menuitem value="Zaloguj" url="/zaloguj.xhtml"
-								icon="ui-icon-key" />
-							<p:menuitem value="Wyloguj" action="#{LogingBean.LogOut}"
-								icon="ui-icon-power" />
-							<p:menuitem value="Utwórz konto" url="/nowyuser.xhtml"
-								icon="ui-icon-person" />
-						</p:submenu>
+						
 						<p:submenu label="Admin" style=" background-color: #A4BDEF;"
-							rendered="#{LogingBean.adminRole}">
+							rendered="#{AuthorizationBean.adminRole}">
 							<p:menuitem value="Edytuj Dane" url="/Users/editprofile.xhtml"
 								icon="ui-icon-pencil" />
 							<p:menuitem value="Zmień Hasło" url="/Users/zmianahasla.xhtml"

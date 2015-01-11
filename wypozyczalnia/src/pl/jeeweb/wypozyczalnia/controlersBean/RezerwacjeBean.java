@@ -15,15 +15,15 @@ import pl.jeeweb.wypozyczalnia.entity.Klienci;
 import pl.jeeweb.wypozyczalnia.entity.Rezerwacje;
 
 
-@ManagedBean(name = "RezerwacjeKlientaBean")
+@ManagedBean(name = "RezerwacjeBean")
 @RequestScoped
-public class RezerwacjeKlientaBean implements Serializable{
+public class RezerwacjeBean implements Serializable{
 	
 	private Rezerwacje rezerwacje = new Rezerwacje();
 	private List<Rezerwacje> rezerwacjebyid ;//= new ArrayList<>();
 	private Rezerwacje zaznaczonaRezerwacja ;// = new Rezerwacje();
 	private Klienci klient = new Klienci();
-	public RezerwacjeKlientaBean(){
+	public RezerwacjeBean(){
 		this.rezerwacje = new Rezerwacje();
 		this.rezerwacjebyid = new ArrayList<>();
 		this.zaznaczonaRezerwacja = new Rezerwacje();

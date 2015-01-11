@@ -9,57 +9,88 @@
 	template="./SzablonZarzadzanie.xhtml">
 
 	<ui:define name="content">
-	<p:outputPanel style="margin-bottom:15px">
-	<p:commandButton action="#{FilmyBean.przekierowanieEdycjaFilmu()}" image="button_icon" style="height:50px; width:50px; margin-right:5px" />
-	<p:commandButton  action="#{FilmyBean.przekierowanieDodajFilm()}" image="button_dodaj" style="height:50px; width:50px; margin-right:5px" />
-	</p:outputPanel>
-	<p:growl id="growl" for="globalmessage" showDetail="true"
-				autoUpdate="true" life="2000" />
+		<p:panelGrid columns="2" style=" width:100%; ">
+			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
+				<p:commandButton action="#{FilmyBean.przekierowanieEdycjaFilmu()}"
+					image="button_icon"
+					style="height:50px; width:50px; margin-right:5px" />
+				<p:commandButton action="#{FilmyBean.przekierowanieDodajFilm()}"
+					image="button_dodaj"
+					style="height:50px; width:50px; margin-right:5px" />
+			</p:outputPanel>
+			<p:panel styleClass="infologowanie">
+				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
+				<p:outputLabel value="#{AuthorizationBean.rola}" style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.imie}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.nazwisko}"
+					style="font-size:16px; margin-left:5px" />
+				<p:commandButton value="Wyloguj" action="#{AuthorizationBean.LogOut()}"
+					style="margin-left:30px; width:90px" />
+			</p:panel>
+		</p:panelGrid>
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
 		<p:dataTable var="filmy" styleClass="zarzadzaj"
-			value="#{FilmyBean.listaFilmy}" widgetVar="filmTables" filteredValue="#{FilmyBean.filetredFilmy}" emptyMessage="Brak wyników dla wyszukiwania" 
-			selectionMode="single" selection="#{FilmyBean.selectedFilm}" rowKey="#{filmy.id_filmu}"  >
-			
-			<f:facet name="header" >
-            <p:outputPanel style="margin-right:67%">
-                <h:outputText value="Wyszukiwanie globalne:" style="margin-right:15px"/>
-                <p:inputText id="globalFilter" onkeyup="PF('filmTables').filter()" style="width:150px" placeholder="Wpisz frazę"/>
-            </p:outputPanel>
-        </f:facet>
-			<p:column headerText="Numer filmu" filterBy="#{filmy.nr_filmu}" filterMatchMode="contains" >
+			value="#{FilmyBean.listaFilmy}" widgetVar="filmTables"
+			filteredValue="#{FilmyBean.filetredFilmy}"
+			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
+			selection="#{FilmyBean.selectedFilm}" rowKey="#{filmy.id_filmu}">
+
+			<f:facet name="header">
+				<p:outputPanel style="margin-right:67%">
+					<h:outputText value="Wyszukiwanie globalne:"
+						style="margin-right:15px" />
+					<p:inputText id="globalFilter" onkeyup="PF('filmTables').filter()"
+						style="width:150px" placeholder="Wpisz frazę" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Numer filmu" filterBy="#{filmy.nr_filmu}"
+				filterMatchMode="contains">
 				<h:outputText value="#{filmy.nr_filmu}" />
 			</p:column>
-			
-			<p:column headerText="Tytuł" filterBy="#{filmy.tytul}" filterMatchMode="contains">
+
+			<p:column headerText="Tytuł" filterBy="#{filmy.tytul}"
+				filterMatchMode="contains">
 				<h:outputText value="#{filmy.tytul}" />
 			</p:column>
-			
-			<p:column headerText="Rezyseria" filterBy="#{filmy.rezyseria}" filterMatchMode="contains">
+
+			<p:column headerText="Rezyseria" filterBy="#{filmy.rezyseria}"
+				filterMatchMode="contains">
 				<h:outputText value="#{filmy.rezyseria}" />
 			</p:column>
-			
-			<p:column headerText="Scenariusz" filterBy="#{filmy.scenariusz}" filterMatchMode="contains">
+
+			<p:column headerText="Scenariusz" filterBy="#{filmy.scenariusz}"
+				filterMatchMode="contains">
 				<h:outputText value="#{filmy.scenariusz}" />
 			</p:column>
 
-			<p:column headerText="Produkcja" filterBy="#{filmy.produkcja}" filterMatchMode="contains">
+			<p:column headerText="Produkcja" filterBy="#{filmy.produkcja}"
+				filterMatchMode="contains">
 				<h:outputText value="#{filmy.produkcja}" />
 			</p:column>
 
-			<p:column headerText="Data premiery" filterBy="#{filmy.premiera}" filterMatchMode="contains" >
+			<p:column headerText="Data premiery" filterBy="#{filmy.premiera}"
+				filterMatchMode="contains">
 				<h:outputText value="#{filmy.premiera}" />
 			</p:column>
 
-			<p:column headerText="Gatunek" filterBy="#{FilmyBean.klasyfikacjaGatunkuToString(filmy)}" filterMatchMode="contains">
+			<p:column headerText="Gatunek"
+				filterBy="#{FilmyBean.klasyfikacjaGatunkuToString(filmy)}"
+				filterMatchMode="contains">
 				<h:outputText
 					value="#{FilmyBean.klasyfikacjaGatunkuToString(filmy)}" />
 			</p:column>
-			<p:column headerText="Data wprowadzenia" filterBy="#{filmy.data_dodania}" filterMatchMode="contains" >
+			<p:column headerText="Data wprowadzenia"
+				filterBy="#{filmy.data_dodania}" filterMatchMode="contains">
 				<h:outputText value="#{filmy.data_dodania}" />
 			</p:column>
-			<p:column headerText="Ilość kopii filmu" filterBy="#{FilmyBean.iloscKopiiFilmu(filmy)}" filterMatchMode="contains" >
+			<p:column headerText="Ilość kopii filmu"
+				filterBy="#{FilmyBean.iloscKopiiFilmu(filmy)}"
+				filterMatchMode="contains">
 				<h:outputText value="#{FilmyBean.iloscKopiiFilmu(filmy)}" />
 			</p:column>
-			
+
 		</p:dataTable>
 
 	</ui:define>

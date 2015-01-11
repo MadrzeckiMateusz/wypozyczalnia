@@ -3,7 +3,7 @@ package pl.jeeweb.wypozyczalnia.test;
 
 import java.util.List;
 
-import pl.jeeweb.wypozyczalnia.controlersBean.RezerwacjeKlientaBean;
+import pl.jeeweb.wypozyczalnia.controlersBean.RezerwacjeBean;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.KopieFilmu;
 import pl.jeeweb.wypozyczalnia.entity.Rezerwacje;
@@ -15,7 +15,7 @@ public abstract class test {
 	public static void main(String[] args) {
 		
 		
-//		RezerwacjeKlientaBean  rezerwacja = new RezerwacjeKlientaBean();
+//		RezerwacjeBean  rezerwacja = new RezerwacjeBean();
 //		List<Rezerwacje> reser = rezerwacja.getklientbyid();
 //		
 //		List <KopieFilmu> sdd= reser.get(0).getKopieFilmus();

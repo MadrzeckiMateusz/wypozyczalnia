@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -43,6 +44,11 @@ public class klienciBean {
 
 	public void setKlient(Klienci klient) {
 		this.klient = klient;
+	}
+	@PostConstruct
+	public void initBean() {
+		this.klient.setNr_klienta(setNumerKlienta());
+		this.klient.setData_rejestracji(currentDate());
 	}
 	public List<Klienci> getAllKlienci(){
 		EntityManager em = DBManager.getManager().createEntityManager();
@@ -95,8 +101,8 @@ public class klienciBean {
 			RandomAlphaNum rand = new RandomAlphaNum();
 			ExternalContext context = FacesContext.getCurrentInstance()
 					.getExternalContext();
-			this.klient.setNr_klienta(setNumerKlienta());
-			this.klient.setData_rejestracji(currentDate());
+			
+			
 			String tmpPassword = rand.RandomPass();
 			this.klient.setHaslo(SHA256hash.HashText(tmpPassword));
 

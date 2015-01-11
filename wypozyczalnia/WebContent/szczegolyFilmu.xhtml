@@ -16,7 +16,7 @@
 			style="font-size: 15px ; margin-bottom: 10px" widgetVar="">
 
 			<p:commandButton action="#{koszyk.dodajDoKoszyka(SzczegolyFilmu.id)}"
-				title="Dodaj do koszyka" rendered="#{LogingBean.userLoged}"
+				title="Dodaj do koszyka" rendered="#{AuthorizationBean.userLoged}"
 				icon="ui-icon-cart" style="margin-left: 90%" ajax="false" />
 
 			<h:panelGrid columns="2" cellpadding="5">

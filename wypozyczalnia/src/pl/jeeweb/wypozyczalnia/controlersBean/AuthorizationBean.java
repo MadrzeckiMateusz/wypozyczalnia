@@ -16,19 +16,22 @@ import javax.servlet.http.HttpServletRequest;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Klienci;
+import pl.jeeweb.wypozyczalnia.entity.Pracownicy;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 import pl.jeeweb.wypozyczalnia.tools.SHA256hash;
 
-@ManagedBean(name = "LogingBean")
+@ManagedBean(name = "AuthorizationBean")
 @SessionScoped
-public class LogingBean {
+public class AuthorizationBean {
 	private String username;
 	private String password;
 	private Klienci klient = new Klienci();
 	private boolean islogin = false;
-	private boolean adminRole = false; 
+	private boolean adminRole = false;
+	private Pracownicy pracownik;
+	private String rola;
 
-	public void readCookieMessage() {
+	 public void readCookieMessage() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
 		Cookie cok[] = request.getCookies();
@@ -47,75 +50,110 @@ public class LogingBean {
 			request.getSession();
 			request.login(this.username, this.password);
 			addLoginKlientToSession(request);
-			islogin= true;
+			islogin = true;
 
 		} catch (ServletException e) {
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "B³êdny login lub has³o", 2);
-			System.out.print(e);
+			
 		}
 
 	}
 
 	private void addLoginKlientToSession(HttpServletRequest request) {
+		Map<String, Object> sessiondate = new HashMap<>();
+
+		if (request.isUserInRole("klient")) {
+			isLogedKlient(sessiondate);
+			rola = "Klient";
+		} else if (request.isUserInRole("pracownik")) {
+			isLogedPracownik(sessiondate, "pracownik");
+			rola = "pracownik: ";
+		} else if (request.isUserInRole("admin")) {
+			isLogedPracownik(sessiondate, "admin");
+			rola = "administrator: ";
+		}
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.putAll(sessiondate);
+
+	}
+
+	private void isLogedKlient(Map<String, Object> sessiondate) {
+		FacesContext.getCurrentInstance().getExternalContext()
+				.setSessionMaxInactiveInterval(15 * 60);
 		EntityManager em = DBManager.getManager().createEntityManager();
-		List lista = em.createNativeQuery(
+		
+		List lista1 = em.createNativeQuery(
 				"Select * from klienci  where e_mail like '" + this.username
 						+ "'", Klienci.class).getResultList();
 		em.close();
-		if (lista.size() != 0) {
-			klient = (Klienci) lista.get(0);
+		if (lista1.size() != 0) {
+			klient = (Klienci) lista1.get(0);
 		}
-		Map<String, Object> sessiondate = new HashMap<>();
-		sessiondate.put("user_id", this.klient.getId_klienta());
-		
 
-		
-		FacesContext.getCurrentInstance().getExternalContext()
-				.setSessionMaxInactiveInterval(30 * 60);
+		sessiondate.put("user_id", this.klient.getId_klienta());
+
+		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+				"globalmessage", "Zalogowano pomyœlnie", 1);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash()
+				.setKeepMessages(true);
 		try {
-			if(request.isUserInRole("klient")) {
-			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-					"globalmessage", "Zalogowano pomyœlnie", 1);
-			FacesContext.getCurrentInstance().getExternalContext().getFlash()
-					.setKeepMessages(true);
 			FacesContext.getCurrentInstance().getExternalContext()
 					.redirect("/wypozyczalnia/katalogFilmow.xhtml");
-			sessiondate.put("role-name", "klient");}
-			else if (request.isUserInRole("pracownik")) {
-				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-						"globalmessage", "Zalogowano pomyœlnie", 1);
-				FacesContext.getCurrentInstance().getExternalContext().getFlash()
-						.setKeepMessages(true);
-				FacesContext.getCurrentInstance().getExternalContext()
-						.redirect("/wypozyczalnia/Zarzadzanie/listafilmow.xhtml");
-				sessiondate.put("role-name", "pracownik");
-			}
-			else if ( request.isUserInRole("admin")) {
-				adminRole = true;
-				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-						"globalmessage", "Zalogowano pomyœlnie", 1);
-				FacesContext.getCurrentInstance().getExternalContext().getFlash()
-						.setKeepMessages(true);
-				FacesContext.getCurrentInstance().getExternalContext()
-						.redirect("/wypozyczalnia/Zarzadzanie/zarzadzaj.xhtml");
-				sessiondate.put("role-name", "admin");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sessiondate.put("role-name", "klient");
+	}
+
+	private void isLogedPracownik(Map<String, Object> sessiondate, String role) {
+
+		EntityManager em = DBManager.getManager().createEntityManager();
+		List lista = (List<Pracownicy>) em.createNamedQuery("Pracownicy.findByEmail").setParameter("email", this.username).getResultList();
 				
-			}
-			FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-			.putAll(sessiondate);
+				
+		em.close();
+		if (lista.size() != 0) {
+			pracownik = (Pracownicy) lista.get(0);
+		}
+		sessiondate.put("pracownik_id", this.pracownik.getId_prcownika());
+
+		if (role.equals("pracownik")) {
+			FacesContext.getCurrentInstance().getExternalContext()
+					.setSessionMaxInactiveInterval(20 * 60);
+
+			sessiondate.put("role-name", "pracownik");
+		} else if (role.equals("admin")) {
+			FacesContext.getCurrentInstance().getExternalContext()
+					.setSessionMaxInactiveInterval(30 * 60);
+
+			adminRole = true;
+
+			sessiondate.put("role-name", "admin");
+		}
+		
+		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+				"globalmessage", "Zalogowano pomyœlnie", 1);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash()
+				.setKeepMessages(true);
+		try {
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("/wypozyczalnia/Zarzadzanie/listafilmow.xhtml");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 	public boolean isAdminRole() {
 		return adminRole;
 	}
+
 	public boolean isUserLoged() {
 		Map<String, Object> mapasesji = FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap();
-		
+
 		if (!mapasesji.containsKey("user_id"))
 			return false;
 		else
@@ -181,5 +219,21 @@ public class LogingBean {
 
 	public void setIslogin(boolean islogin) {
 		this.islogin = islogin;
+	}
+
+	public Pracownicy getPracownik() {
+		return pracownik;
+	}
+
+	public void setPracownik(Pracownicy pracownik) {
+		this.pracownik = pracownik;
+	}
+
+	public String getRola() {
+		return rola;
+	}
+
+	public void setRola(String rola) {
+		this.rola = rola;
 	}
 }

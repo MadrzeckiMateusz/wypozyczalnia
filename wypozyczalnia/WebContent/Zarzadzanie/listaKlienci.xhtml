@@ -9,14 +9,24 @@
 	template="./SzablonZarzadzanie.xhtml">
 
 	<ui:define name="content">
-		<p:outputPanel style="margin-bottom:15px">
-			<p:commandButton action="#{klienciBean.przekierowanieEdycjaKlienta()}"
+	<p:panelGrid columns="2" style=" width:100%; ">
+		<p:outputPanel style="margin-bottom:10px; margin-top:5px">
+			<p:commandButton
+				action="#{klienciBean.przekierowanieEdycjaKlienta()}"
 				image="button_icon"
 				style="height:50px; width:50px; margin-right:5px" />
 			<p:commandButton action="#{klienciBean.przekierowanieDodajKlienta()}"
 				image="button_dodaj"
 				style="height:50px; width:50px; margin-right:5px" />
 		</p:outputPanel>
+		<p:panel styleClass="infologowanie">
+	<p:outputLabel  value="Zalogowany " style="font-size:16px; "/>
+	<p:outputLabel value="#{AuthorizationBean.rola}" style="font-size:16px"/>
+	<p:outputLabel value="#{AuthorizationBean.pracownik.imie}" style="font-size:16px"/>
+	<p:outputLabel value="#{AuthorizationBean.pracownik.nazwisko}" style="font-size:16px; margin-left:5px"/>
+	<p:commandButton value="Wyloguj" action="#{AuthorizationBean.LogOut()}" style="margin-left:30px; width:90px"/>
+	</p:panel>
+	</p:panelGrid>
 		<p:growl id="growl" for="globalmessage" showDetail="true"
 			autoUpdate="true" life="2000" />
 		<p:dataTable var="klient" styleClass="zarzadzaj"
@@ -36,51 +46,61 @@
 				</p:outputPanel>
 			</f:facet>
 			<p:column headerText="Numer Klienta" filterBy="#{klient.nr_klienta}"
-				filterMatchMode="contains" style="width:55px" filterStyle="width:60px">
+				filterMatchMode="contains" style="width:55px"
+				filterStyle="width:60px">
 				<h:outputText value="#{klient.nr_klienta}" />
 			</p:column>
-			
-			<p:column headerText="Data Rejestracji" filterBy="#{klient.data_rejestracji}"
-				filterMatchMode="contains" style="width:80px" filterStyle="width:60px">
+
+			<p:column headerText="Data Rejestracji"
+				filterBy="#{klient.data_rejestracji}" filterMatchMode="contains"
+				style="width:80px" filterStyle="width:60px">
 				<h:outputText value="#{klient.data_rejestracji}" />
 			</p:column>
 
 			<p:column headerText="Imie" filterBy="#{klient.imie}"
-				filterMatchMode="contains" style="width:60px" filterStyle="width:60px">
+				filterMatchMode="contains" style="width:60px"
+				filterStyle="width:60px">
 				<h:outputText value="#{klient.imie}" />
 			</p:column>
 
 			<p:column headerText="Nazwisko" filterBy="#{klient.nazwisko}"
-				filterMatchMode="contains" style="width:70px" filterStyle="width:60px">
-				<h:outputText value="#{klient.nazwisko}"  />
+				filterMatchMode="contains" style="width:70px"
+				filterStyle="width:60px">
+				<h:outputText value="#{klient.nazwisko}" />
 			</p:column>
 			<p:column headerText="Pesel" filterBy="#{klient.pesel}"
-				filterMatchMode="contains" style="width:85px" filterStyle="width:60px">
+				filterMatchMode="contains" style="width:85px"
+				filterStyle="width:60px">
 				<h:outputText value="#{klient.pesel}" />
 			</p:column>
-			
+
 			<p:column headerText="E-mail" filterBy="#{klient.e_mail}"
-				filterMatchMode="contains" style="width:190px; " filterStyle="width:185px ">
+				filterMatchMode="contains" style="width:190px; "
+				filterStyle="width:185px ">
 				<h:outputText value="#{klient.e_mail}" />
 			</p:column>
-			
-			<p:column headerText="Numer telefonu" filterBy="#{klient.nr_telefonu}"
-				filterMatchMode="contains" style="width:80px" filterStyle="width:75px">
+
+			<p:column headerText="Numer telefonu"
+				filterBy="#{klient.nr_telefonu}" filterMatchMode="contains"
+				style="width:80px" filterStyle="width:75px">
 				<h:outputText value="#{klient.nr_telefonu}" />
 			</p:column>
 
 			<p:column headerText="Ulica" filterBy="#{klient.ulica}"
-				filterMatchMode="contains" style="width:80px; " filterStyle="width:75px ">
+				filterMatchMode="contains" style="width:80px; "
+				filterStyle="width:75px ">
 				<h:outputText value="#{klient.ulica}" />
 			</p:column>
 
 			<p:column headerText="Miasto" filterBy="#{klient.miasto}"
-				filterMatchMode="contains" style="width:60px" filterStyle="width:65px">
+				filterMatchMode="contains" style="width:60px"
+				filterStyle="width:65px">
 				<h:outputText value="#{klient.miasto}" />
 			</p:column>
 
 			<p:column headerText="Kod pocztowy" filterBy="#{klient.kod_pocztowy}"
-				filterMatchMode="contains" style="width:70px" filterStyle="width:65px">
+				filterMatchMode="contains" style="width:70px"
+				filterStyle="width:65px">
 				<h:outputText value="#{klient.kod_pocztowy}" />
 			</p:column>
 

@@ -14,10 +14,7 @@
 }
 
 .ui-icon-myAddFilm {
-	background-image: url(#{ resource [ 'images:shop-cart-16.png' ]
-}
-
-);
+	background-image: url(#{ resource [ 'images:shop-cart-16.png' ]});
 }
 .editprofile.ui-panel {
 	background-color: #E3E5E7;
@@ -34,6 +31,17 @@
 	border: none;
 	margin-bottom: 10px;
 	margin-left: 20%
+}
+
+.infologowanie.ui-panel {
+	background-color: #E3E5E7; 
+	margin-left:440px; 
+	width:470px; 
+	height:45px; 
+	position:relative;
+	margin-bottom:10px; 
+	margin-top:5px;
+	
 }
 
 .naglowek.ui-panel {
@@ -91,35 +99,27 @@
 	height: 400px;
 	margin-top: 10px;
 }
+.menumanage {
+	background-color: #A4BDEF;
+	position: relative;
+	height: Auto;
+	margin-top: 10px;
+}
 
 .ui-menu-list {
 	background-color: #A4BDEF;
+	
 }
-
+.menumanage ..ui-menuitem-text{
+	color: black;
+}
 .menu .ui-menuitem-text {
 	color: black;
 }
 
-.ui-datatable
-
- 
-
-table
-,
+.ui-datatable table
 {
-margin-top
-
-
-:
-
-
-5
-px
-;
-
-
-	
-
+margin-top: 5px;
 }
 .ui-datatable th {
 	background-color: #A4BDEF !important;
@@ -150,9 +150,13 @@ px
 	padding: 5px;
 	margin: 10px 0px 0px 0px;
 }
-
-#left {
+#left{
 	float: left;
+	
+}
+#leftmanage {
+	float: left;
+	height: 1000x
 }
 
 #footer {
