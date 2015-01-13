@@ -66,5 +66,6 @@ public class KopieFilmu implements Serializable {
 	public void setRezerwacje(Rezerwacje rezerwacje) {
 		this.rezerwacje = rezerwacje;
 	}
-
+	
+	
 }

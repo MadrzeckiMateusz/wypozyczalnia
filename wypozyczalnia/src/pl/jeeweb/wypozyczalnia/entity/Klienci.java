@@ -1,7 +1,9 @@
 package pl.jeeweb.wypozyczalnia.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -42,13 +44,14 @@ public class Klienci implements Serializable {
 
 	private String nr_klienta;
 
-	private BigDecimal nr_telefonu;
+	private String nr_telefonu;
 
 	private BigDecimal pesel;
 
 	private String ulica;
 
 	private String uwagi;
+	private String aktywowany;
 
 	//bi-directional many-to-one association to Rezerwacje
 	@OneToMany(mappedBy="klienci" , fetch= FetchType.EAGER)
@@ -141,11 +144,11 @@ public class Klienci implements Serializable {
 		this.nr_klienta = nr_klienta;
 	}
 
-	public BigDecimal getNr_telefonu() {
+	public String getNr_telefonu() {
 		return this.nr_telefonu;
 	}
 
-	public void setNr_telefonu(BigDecimal nr_telefonu) {
+	public void setNr_telefonu(String nr_telefonu) {
 		this.nr_telefonu = nr_telefonu;
 	}
 
@@ -163,6 +166,14 @@ public class Klienci implements Serializable {
 
 	public void setUlica(String ulica) {
 		this.ulica = ulica;
+	}
+
+	public String getAktywowany() {
+		return aktywowany;
+	}
+
+	public void setAktywowany(String aktywowany) {
+		this.aktywowany = aktywowany;
 	}
 
 	public String getUwagi() {

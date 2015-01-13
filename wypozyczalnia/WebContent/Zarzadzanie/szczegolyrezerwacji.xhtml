@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="./SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:panelGrid styleClass="gridNoPaddingszczegoly" columns="2">
+			<p:panel styleClass="panelNoPadding">
+
+				<p:dataTable styleClass="bordernew" var="rezerwacja"
+					value="#{SzczegolyRezerwacji.rezerwacja}">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Rezerwacja" style="text-align:left" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer rezerwacji">
+						<h:outputText value="#{rezerwacja.nr_rezerwacji}" />
+					</p:column>
+					<p:column headerText="Data rezerwacji">
+						<h:outputText value="#{rezerwacja.data_rezerwacji}" />
+					</p:column>
+					<p:column headerText="Data odbioru">
+						<h:outputText value="#{rezerwacja.data_odbioru}" />
+					</p:column>
+
+					<p:column headerText="Status">
+						<h:outputText value="#{rezerwacja.status_rezerwacji}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<p:dataTable id="filmyTable" styleClass="bordernew" var="kopieFilmu"
+					value="#{SzczegolyRezerwacji.rezerwacja.kopieFilmus}"
+					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Filmy" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer filmu">
+						<h:outputText value="#{kopieFilmu.filmy.nr_filmu}" />
+					</p:column>
+					<p:column headerText="Tytuł">
+						<h:outputText value="#{kopieFilmu.filmy.tytul}" />
+					</p:column>
+					<p:column headerText="Reżyseria">
+						<h:outputText value="#{kopieFilmu.filmy.rezyseria}" />
+					</p:column>
+					<p:column headerText="Reżyseria">
+						<h:outputText value="#{kopieFilmu.filmy.rezyseria}" />
+					</p:column>
+					<p:column headerText="Gatunek">
+						<h:outputText
+							value="#{SzczegolyRezerwacji.klasyfikacjaGatunkuToString(kopieFilmu.filmy)}" />
+					</p:column>
+					<p:column headerText="Numer kopii filmu">
+						<h:outputText
+							value="#{SzczegolyRezerwacji.getNumerkopiiFlmu(kopieFilmu)}" />
+					</p:column>
+
+					<p:column style="width:32px; text-align: center">
+						<p:commandButton action="#{SzczegolyRezerwacji.usunFilm(kopieFilmu.filmy.id_filmu)}"
+							icon="ui-icon-minus" update="filmyTable"/>
+					</p:column>
+				</p:dataTable>
+				<p:dataTable styleClass="bordernew" var="klient"
+					value="#{SzczegolyRezerwacji.rezerwacja.klienci}"
+					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Dane Klienta" style="text-align:left" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer klienta">
+						<h:outputText value="#{klient.nr_klienta}" />
+					</p:column>
+					<p:column headerText="Imie">
+						<h:outputText value="#{klient.imie}" />
+					</p:column>
+					<p:column headerText="Nazwsiko">
+						<h:outputText value="#{klient.nazwisko}" />
+					</p:column>
+					<p:column headerText="Telefon">
+						<h:outputText value="#{klient.nr_telefonu}" />
+					</p:column>
+					<p:column headerText="Email">
+						<h:outputText value="#{klient.e_mail}" />
+					</p:column>
+
+				</p:dataTable>
+
+
+
+			</p:panel>
+
+			<p:panel styleClass="panelNoPadding" style="vertical-align:top">
+				<p:panelGrid styleClass="gridNoPadding" columns="1"
+					columnClasses="topAligment">
+					<p:commandButton onclick="PF('DialogDodajFilm').show()"
+						image="button_dodaj" style="height:50px; width:50px; " title="Dodaj film do rezerwacji" />
+
+					<p:commandButton action="#{SzczegolyRezerwacji.PDF}"
+						image="button_icon"
+						style="height:50px; width:50px; margin-top:5px" ajax="false" />
+
+					<p:commandButton action="#{FilmyBean.przekierowanieEdycjaFilmu()}"
+						image="button_icon"
+						style="height:50px; width:50px; margin-top:5px"
+						title="Szczegoly rezerwacji" />
+				</p:panelGrid>
+			</p:panel>
+
+		</p:panelGrid>
+
+		<p:dialog header="WybierzFilmy" global="true" showEffect="fade"
+			hideEffect="explode" widgetVar="DialogDaneKlient" position="center">
+			<p:panelGrid columns="1" styleClass="gridNoPadding"
+				style="text-align:center;">
+				<p:outputLabel value="Potwierdź tożsamość klienta!!!"
+					style="color:red; font-size:18px" />
+				<p:commandButton value="Ok" styleClass="ui-confirmdialog-yes"
+					icon="ui-icon-check" style="text-align:center; width:80px;"
+					action="#{SzczegolyRezerwacji.przekierowaniePotwierdz()}" />
+			</p:panelGrid>
+		</p:dialog>
+
+		<p:dialog header="Wyszukaj filmy" global="true"
+			widgetVar="DialogDodajFilm" position="top" width="1200" height="500">
+			<p:commandButton action="#{SzczegolyRezerwacji.dodajFilmy()}"
+				image="button_icon" style="height:50px; width:50px;" update="filmyTable" />
+			<p:dataTable var="filmy" styleClass="zarzadzaj"
+				value="#{FilmyBean.listaFilmy}" widgetVar="filmTables"
+				filteredValue="#{FilmyBean.filetredFilmy}"
+				emptyMessage="Brak wyników dla wyszukiwania"
+				selectionMode="multiple"
+				selection="#{SzczegolyRezerwacji.selectedFilmy}"
+				rowKey="#{filmy.id_filmu}">
+
+				<f:facet name="header">
+					<p:outputPanel style="margin-right:67%">
+						<h:outputText value="Wyszukiwanie globalne:"
+							style="margin-right:15px" />
+						<p:inputText id="globalFilter" onkeyup="PF('filmTables').filter()"
+							style="width:150px" placeholder="Wpisz frazę" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column headerText="Numer filmu" filterBy="#{filmy.nr_filmu}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.nr_filmu}" />
+				</p:column>
+
+				<p:column headerText="Tytuł" filterBy="#{filmy.tytul}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.tytul}" />
+				</p:column>
+
+				<p:column headerText="Rezyseria" filterBy="#{filmy.rezyseria}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.rezyseria}" />
+				</p:column>
+
+				<p:column headerText="Scenariusz" filterBy="#{filmy.scenariusz}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.scenariusz}" />
+				</p:column>
+
+				<p:column headerText="Produkcja" filterBy="#{filmy.produkcja}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.produkcja}" />
+				</p:column>
+
+				<p:column headerText="Data premiery" filterBy="#{filmy.premiera}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.premiera}" />
+				</p:column>
+
+				<p:column headerText="Gatunek"
+					filterBy="#{FilmyBean.klasyfikacjaGatunkuToString(filmy)}"
+					filterMatchMode="contains">
+					<h:outputText
+						value="#{FilmyBean.klasyfikacjaGatunkuToString(filmy)}" />
+				</p:column>
+				<p:column headerText="Data wprowadzenia"
+					filterBy="#{filmy.data_dodania}" filterMatchMode="contains">
+					<h:outputText value="#{filmy.data_dodania}" />
+				</p:column>
+				<p:column headerText="Ilość kopii filmu"
+					filterBy="#{FilmyBean.iloscKopiiFilmu(filmy)}"
+					filterMatchMode="contains">
+					<h:outputText value="#{FilmyBean.iloscKopiiFilmu(filmy)}" />
+				</p:column>
+
+			</p:dataTable>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

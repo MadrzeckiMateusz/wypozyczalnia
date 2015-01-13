@@ -2,6 +2,9 @@ package pl.jeeweb.wypozyczalnia.controlersBean;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -13,6 +16,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.parser.Entity;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Klienci;
@@ -31,31 +35,47 @@ public class editProfilKlient implements Serializable {
 
 	private Klienci klient = new Klienci();
 	private User user = new User();
-	
-	private Klienci selectedKlient = null; 
+
+	private Klienci selectedKlient = null;
 
 	private String stareHaslo;
 	private String noweHaslo1;
 	private String noweHaslo2;
 	private boolean zaladowanodoedycji = false;
+	private int id = 0;
+	private String target = "";
 
 	public editProfilKlient() {
 
 	}
-	
+
 	@PostConstruct
 	public void Zaladujdoedycji() {
-		int id;
+
 		FacesContext ctx = FacesContext.getCurrentInstance();
-		HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
+		Map<String, String> paramMap = ctx.getExternalContext()
+				.getRequestParameterMap();
+		HttpServletRequest servletRequest = (HttpServletRequest) ctx
+				.getExternalContext().getRequest();
 		String fullURI = servletRequest.getRequestURI();
-		if(fullURI.equals("/wypozyczalnia/Zarzadzanie/editKlient.xhtml")) {
-		id = Integer.valueOf(FacesContext.getCurrentInstance()
-				.getExternalContext().getRequestParameterMap().get("id_klient"));
-		}else {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(true);
-		id = (int) session.getAttribute("user_id");
+		Iterator<String> paramIter = ctx.getExternalContext()
+				.getRequestParameterNames();
+		ArrayList<String> paramListNames = new ArrayList<>();
+		while (paramIter.hasNext()) {
+			paramListNames.add(paramIter.next());
+		}
+		if (fullURI.equals("/wypozyczalnia/Zarzadzanie/editKlient.xhtml")) {
+			if (paramListNames.contains("id_klient")) {
+				id = Integer.valueOf(paramMap.get("id_klient"));
+			}
+			if (paramListNames.contains("target")) {
+				target = paramMap.get("target");
+			}
+
+		} else {
+			HttpSession session = (HttpSession) FacesContext
+					.getCurrentInstance().getExternalContext().getSession(true);
+			id = (int) session.getAttribute("user_id");
 		}
 		EntityManager em = DBManager.getManager().createEntityManager();
 		this.klient = em.find(Klienci.class, id);
@@ -64,7 +84,6 @@ public class editProfilKlient implements Serializable {
 		em.close();
 		this.zaladowanodoedycji = true;
 
-		
 	}
 
 	public String editOsobowe() {
@@ -73,10 +92,27 @@ public class editProfilKlient implements Serializable {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.merge(this.klient);
-		tx.commit();
-		em.close();
+
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 				"globalmessage", "Daneosobowe zapisane", 1);
+		if (!target.isEmpty()) {
+			this.klient.setAktywowany("TAK");
+			em.merge(this.klient);
+
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "To¿samoœæ klienta potwierdzona", 1);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash()
+					.setKeepMessages(true);
+			try {
+				FacesContext.getCurrentInstance().getExternalContext()
+						.redirect("/wypozyczalnia" + target);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		tx.commit();
+		em.close();
 		return null;
 	}
 
@@ -87,7 +123,7 @@ public class editProfilKlient implements Serializable {
 		String hashhaslo = SHA256hash.HashText(this.stareHaslo);
 		// System.out.println("starehas³o  " + hashhaslo);
 		// System.out.println("has³ozbazy" + this.klient.getHaslo());
-		
+
 		if (hashhaslo.equals(this.klient.getHaslo())) {
 			if (this.noweHaslo1.equals(this.noweHaslo2)) {
 				klient.setHaslo(SHA256hash.HashText(this.noweHaslo1));
@@ -158,6 +194,14 @@ public class editProfilKlient implements Serializable {
 
 	public void setNoweHaslo2(String noweHaslo2) {
 		this.noweHaslo2 = noweHaslo2;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

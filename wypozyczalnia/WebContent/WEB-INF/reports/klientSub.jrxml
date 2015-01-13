@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-01-13T23:35:39 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="klientSub" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8b0ccc68-b74c-4b35-b182-3ca758b165fe">
+	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nr_klienta" class="java.lang.String">
+		<fieldDescription><![CDATA[nr_klienta]]></fieldDescription>
+	</field>
+	<field name="imie" class="java.lang.String">
+		<fieldDescription><![CDATA[imie]]></fieldDescription>
+	</field>
+	<field name="nazwisko" class="java.lang.String">
+		<fieldDescription><![CDATA[nazwisko]]></fieldDescription>
+	</field>
+	<field name="nr_telefonu" class="java.lang.String">
+		<fieldDescription><![CDATA[nr_telefonu]]></fieldDescription>
+	</field>
+	<field name="e_mail" class="java.lang.String">
+		<fieldDescription><![CDATA[e_mail]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="106" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="62" width="76" height="20" uuid="b6f75c4f-f5fe-4920-a3c2-a258fd8ddde8"/>
+				<textElement>
+					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Tel:
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="24" width="70" height="38" uuid="cec313db-865d-405c-89e6-df6ea2f2ae92"/>
+				<textElement>
+					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Nazwisko i 
+imię:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="82" width="70" height="20" uuid="63dc4f13-0270-44d5-b7e3-cddd4af349c5"/>
+				<textElement>
+					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="2" width="60" height="22" uuid="45b46a4c-c059-4bd9-9d6e-4964bd7235cd"/>
+				<textElement>
+					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<text><![CDATA[Nr:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="2" width="220" height="18" uuid="b4b5d252-e358-4e95-94c8-a08b9fc6478d"/>
+				<textElement>
+					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nr_klienta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="24" width="220" height="38" uuid="88dc28f8-499a-44fd-a570-4c9540962ae4"/>
+				<textElement>
+					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{imie}+" "+$F{nazwisko}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="62" width="220" height="20" uuid="372822dc-8597-4baf-81b1-3aa2eb9cf2b9"/>
+				<textElement>
+					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nr_telefonu}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="82" width="220" height="20" uuid="1438d6b1-0c48-42a8-87a0-e476bb809dc8"/>
+				<textElement>
+					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{e_mail}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

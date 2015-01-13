@@ -92,6 +92,11 @@ public class Filmy implements Serializable ,Comparable<Filmy> {
 	//bi-directional many-to-one association to KopieFilmu
 	@OneToMany(mappedBy="filmy", fetch=FetchType.LAZY)
 	private List<KopieFilmu> kopieFilmus;
+	@Transient
+	private String numerKopiifilmu;
+	
+	@Transient
+	private String gatunek_string;
 	
 	public Filmy() {
 	}
@@ -211,6 +216,22 @@ public class Filmy implements Serializable ,Comparable<Filmy> {
 		kopieFilmus.setFilmy(null);
 
 		return kopieFilmus;
+	}
+
+	public String getGatunek_string() {
+		return gatunek_string;
+	}
+
+	public void setGatunek_string(String gatunek_string) {
+		this.gatunek_string = gatunek_string;
+	}
+
+	public String getNumerKopiifilmu() {
+		return numerKopiifilmu;
+	}
+
+	public void setNumerKopiifilmu(String numerKopiifilmu) {
+		this.numerKopiifilmu = numerKopiifilmu;
 	}
 
 	@Override

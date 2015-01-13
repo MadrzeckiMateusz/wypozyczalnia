@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-01-13T23:12:29 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subKlient" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5b36bd23-c0a7-4501-9ad2-adff24a98bf5">
+	<parameter name="klienci" class="pl.jeeweb.wypozyczalnia.entity.Klienci"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nr_filmu" class="java.lang.String">
+		<fieldDescription><![CDATA[nr_filmu]]></fieldDescription>
+	</field>
+	<field name="tytul" class="java.lang.String">
+		<fieldDescription><![CDATA[tytul]]></fieldDescription>
+	</field>
+	<field name="produkcja" class="java.lang.String">
+		<fieldDescription><![CDATA[produkcja]]></fieldDescription>
+	</field>
+	<field name="gatunek_string" class="java.lang.String">
+		<fieldDescription><![CDATA[gatunek_string]]></fieldDescription>
+	</field>
+	<field name="numerKopiifilmu" class="java.lang.String">
+		<fieldDescription><![CDATA[numerKopiifilmu]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="65" splitType="Stretch">
+			<textField>
+				<reportElement x="12" y="0" width="100" height="50" uuid="df9999a2-3b4e-4a8a-bc93-b541052d3a97"/>
+				<textElement>
+					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nr_filmu}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="129" y="0" width="100" height="50" uuid="9bfbd940-fd1e-44b1-8fa3-2acf9f73f6b5"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tytul}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="248" y="1" width="100" height="49" uuid="43f2da28-0779-4fd3-8eac-c4b1238cd9b1"/>
+				<textElement>
+					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produkcja}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="361" y="0" width="106" height="50" uuid="e2511303-43be-443a-8d1b-9f2521654d33"/>
+				<textElement>
+					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gatunek_string}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="0" width="114" height="50" uuid="451de501-1012-4644-a6de-056a03352a4c"/>
+				<textElement>
+					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numerKopiifilmu}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="50" width="559" height="1" uuid="948864a6-adef-474c-82da-245c018e84fc"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

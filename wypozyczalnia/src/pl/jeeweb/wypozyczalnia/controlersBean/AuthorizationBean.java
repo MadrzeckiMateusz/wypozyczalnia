@@ -31,7 +31,7 @@ public class AuthorizationBean {
 	private Pracownicy pracownik;
 	private String rola;
 
-	 public void readCookieMessage() {
+	public void readCookieMessage() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
 		Cookie cok[] = request.getCookies();
@@ -55,7 +55,7 @@ public class AuthorizationBean {
 		} catch (ServletException e) {
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "B³êdny login lub has³o", 2);
-			
+
 		}
 
 	}
@@ -82,7 +82,7 @@ public class AuthorizationBean {
 		FacesContext.getCurrentInstance().getExternalContext()
 				.setSessionMaxInactiveInterval(15 * 60);
 		EntityManager em = DBManager.getManager().createEntityManager();
-		
+
 		List lista1 = em.createNativeQuery(
 				"Select * from klienci  where e_mail like '" + this.username
 						+ "'", Klienci.class).getResultList();
@@ -110,9 +110,10 @@ public class AuthorizationBean {
 	private void isLogedPracownik(Map<String, Object> sessiondate, String role) {
 
 		EntityManager em = DBManager.getManager().createEntityManager();
-		List lista = (List<Pracownicy>) em.createNamedQuery("Pracownicy.findByEmail").setParameter("email", this.username).getResultList();
-				
-				
+		List lista = (List<Pracownicy>) em
+				.createNamedQuery("Pracownicy.findByEmail")
+				.setParameter("email", this.username).getResultList();
+
 		em.close();
 		if (lista.size() != 0) {
 			pracownik = (Pracownicy) lista.get(0);
@@ -132,7 +133,7 @@ public class AuthorizationBean {
 
 			sessiondate.put("role-name", "admin");
 		}
-		
+
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 				"globalmessage", "Zalogowano pomyœlnie", 1);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash()

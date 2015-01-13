@@ -120,13 +120,13 @@
 		</p:panel>
 		<p:dialog header="Załaduj plik" widgetVar="dlg2" modal="true"
 				height="300px" width="500px"  closeOnEscape="true"
-				minHeight="200" minWidth="800" >
+				minHeight="200" minWidth="800" position="center" >
 
 				<p:fileUpload fileUploadListener="#{addFilmBean.handleFileUpload}"
 					mode="advanced" dragDropSupport="false" sizeLimit="100000"
 					fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 					uploadLabel="Wczytaj" cancelLabel="Anuluj"
-					label="Wybierz" update="labelPlakat" />
+					label="Wybierz"  />
 
 				<p:growl id="messages" showDetail="true" />
 

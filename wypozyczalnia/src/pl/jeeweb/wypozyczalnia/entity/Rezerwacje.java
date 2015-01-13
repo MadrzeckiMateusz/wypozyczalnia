@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,10 @@ import java.util.List;
  */
 @Entity
 @Table(name="rezerwacje")
-@NamedQuery(name="Rezerwacje.findAll", query="SELECT r FROM Rezerwacje r")
+@NamedQueries({
+@NamedQuery(name="Rezerwacje.findAll", query="SELECT r FROM Rezerwacje r"),
+@NamedQuery(name="Rezerwacje.findById", query="SELECT r FROM Rezerwacje r where r.id_rezerwacji = :id_rezerwacji")
+})
 public class Rezerwacje implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -54,6 +58,11 @@ public class Rezerwacje implements Serializable {
 	@JoinColumn(name="Id_prcownika")
 	private Pracownicy pracownicy;
 
+	@Transient
+	private List<Filmy> filmyTran;
+	
+	@Transient 
+	private List<Klienci> klientTran;
 	public Rezerwacje() {
 	}
 
@@ -141,6 +150,24 @@ public class Rezerwacje implements Serializable {
 
 	public void setPracownicy(Pracownicy pracownicy) {
 		this.pracownicy = pracownicy;
+	}
+
+	public List<Filmy> getFilmyTran() {
+		return filmyTran;
+	}
+
+	public void setFilmyTran(List<Filmy> filmy) {
+		this.filmyTran = filmy;
+	}
+
+	public List<Klienci> getKlientTran() {
+		List<Klienci> listaKliencis = new ArrayList<>();
+		listaKliencis.add(klienci);
+		return listaKliencis;
+	}
+
+	public void setKlientTran(List<Klienci> klient) {
+		this.klientTran = klient;
 	}
 
 }
