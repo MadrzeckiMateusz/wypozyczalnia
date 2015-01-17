@@ -15,33 +15,37 @@
 		<p:panelGrid styleClass="gridNoPaddingszczegoly" columns="2">
 			<p:panel styleClass="panelNoPadding">
 
-				<p:dataTable id="tableRezewacja" styleClass="bordernew"
-					var="rezerwacja" value="#{SzczegolyRezerwacji.rezerwacja}">
+				<p:dataTable id="tableWypozyczenia" styleClass="bordernew"
+					var="wypozyczenie" value="#{WypozyczeniaDetailsBean.wypozyczenie}">
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left">
-							<h:outputText value="Rezerwacja" style="text-align:left" />
+							<h:outputText value="Wypożyczenie" style="text-align:left" />
 						</p:outputPanel>
 					</f:facet>
-					<p:column headerText="Numer rezerwacji">
-						<h:outputText value="#{rezerwacja.nr_rezerwacji}" />
+					<p:column headerText="Numer wypżyczenia">
+						<h:outputText value="#{wypozyczenie.nr_wypozyczenia}" />
 					</p:column>
-					<p:column headerText="Data rezerwacji">
-						<h:outputText value="#{rezerwacja.data_rezerwacji}" />
+					<p:column headerText="Data wypżyczenia">
+						<h:outputText value="#{wypozyczenie.data_wypozyczenia}" />
 					</p:column>
-					<p:column headerText="Data odbioru">
-						<h:outputText value="#{rezerwacja.data_odbioru}" />
+					<p:column headerText="Termin zwrotu">
+						<h:outputText value="#{wypozyczenie.termin_zwrotu}" />
 					</p:column>
 
-					<p:column headerText="Status">
-						<h:outputText value="#{rezerwacja.status_rezerwacji}" />
+					<p:column headerText="Data Zwrotu">
+						<h:outputText value="#{wypozyczenie.data_zwrotu}" />
+					</p:column>
+					
+					<p:column headerText="Kara za zwłoke" >
+						<h:outputText value="#{wypozyczenie.odsetki}" />
 					</p:column>
 
 				</p:dataTable>
 
 				<p:dataTable id="filmyTable" styleClass="bordernew" var="kopieFilmu"
-					value="#{SzczegolyRezerwacji.rezerwacja.kopieFilmus}"
+					value="#{WypozyczeniaDetailsBean.wypozyczenie.kopieFilmus}"
 					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px"
-					selection="#{SzczegolyRezerwacji.slelectedFilm}"
+					selection="#{WypozyczeniaDetailsBean.slelectedkopia}"
 					selectionMode="single" rowKey="#{kopieFilmu.filmy.id_filmu}">
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left">
@@ -62,21 +66,21 @@
 					</p:column>
 					<p:column headerText="Gatunek">
 						<h:outputText
-							value="#{SzczegolyRezerwacji.klasyfikacjaGatunkuToString(kopieFilmu.filmy)}" />
+							value="#{WypozyczeniaDetailsBean.klasyfikacjaGatunkuToString(kopieFilmu.filmy)}" />
 					</p:column>
 					<p:column headerText="Numer kopii filmu">
 						<h:outputText
-							value="#{SzczegolyRezerwacji.getNumerkopiiFlmu(kopieFilmu)}" />
+							value="#{WypozyczeniaDetailsBean.getNumerkopiiFlmu(kopieFilmu)}" />
 					</p:column>
 
 					<p:column style="width:32px; text-align: center">
 						<p:commandButton
-							action="#{SzczegolyRezerwacji.usunFilm(kopieFilmu)}"
+							action="#{WypozyczeniaDetailsBean.usunFilm(kopieFilmu)}"
 							icon="ui-icon-minus" update="filmyTable" />
 					</p:column>
 				</p:dataTable>
 				<p:dataTable styleClass="bordernew" var="klient"
-					value="#{SzczegolyRezerwacji.rezerwacja.klienci}"
+					value="#{WypozyczeniaDetailsBean.wypozyczenie.klienci}"
 					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px">
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left">
@@ -113,33 +117,27 @@
 						title="Dodaj film do rezerwacji" />
 
 					<p:commandButton
-						actionListener="#{SzczegolyRezerwacji.zmienStatusRezerwacji()}"
+						
 						image="button_check"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Obsługa rezerwacji/Zmiana statusu" update="tableRezewacja" />
 
-					<p:commandButton action="#{SzczegolyRezerwacji.PDF}"
+					<p:commandButton action="#{WypozyczeniaDetailsBean.PDF}"
 						image="button_print"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Wydrukuj potwierdzenie" ajax="false" />
 
 					<p:commandButton
-						action="#{SzczegolyRezerwacji.przekierowanieSzczegoly()}"
+						action="#{WypozyczeniaDetailsBean.przekierowanieSzczegoly()}"
 						image="button_szczegol"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Szczegóły wybranego filmu" />
 
 					<p:commandButton
-						action="#{SzczegolyRezerwacji.przekierowaniePotwierdz}"
+						action="#{WypozyczeniaDetailsBean.przekierowaniePotwierdz}"
 						image="button_daneKlienta"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Dane klienta" />
-						
-						<p:commandButton
-						action="#{SzczegolyRezerwacji.wypozyczFilmy}"
-						image="button_wypozycz"
-						style="height:50px; width:50px; margin-top:5px"
-						title="Wypożycz filmy" />
 				</p:panelGrid>
 			</p:panel>
 
@@ -153,13 +151,13 @@
 					style="color:red; font-size:18px" />
 				<p:commandButton value="Ok" styleClass="ui-confirmdialog-yes"
 					icon="ui-icon-check" style="text-align:center; width:80px;"
-					action="#{SzczegolyRezerwacji.przekierowaniePotwierdz()}" />
+					action="#{WypozyczeniaDetailsBean.przekierowaniePotwierdz()}" />
 			</p:panelGrid>
 		</p:dialog>
 
 		<p:dialog header="Wyszukaj filmy" global="true"
 			widgetVar="DialogDodajFilm" position="top" width="1200" height="500">
-			<p:commandButton action="#{SzczegolyRezerwacji.dodajFilmy()}"
+			<p:commandButton action="#{WypozyczeniaDetailsBean.dodajFilmy()}"
 				image="button_icon" style="height:50px; width:50px;"
 				update="filmyTable" />
 			<p:dataTable var="filmy" styleClass="zarzadzaj"
@@ -167,7 +165,7 @@
 				filteredValue="#{FilmyBean.filetredFilmy}"
 				emptyMessage="Brak wyników dla wyszukiwania"
 				selectionMode="multiple"
-				selection="#{SzczegolyRezerwacji.selectedFilmy}"
+				selection="#{WypozyczeniaDetailsBean.selectedFilmy}"
 				rowKey="#{filmy.id_filmu}">
 
 				<f:facet name="header">

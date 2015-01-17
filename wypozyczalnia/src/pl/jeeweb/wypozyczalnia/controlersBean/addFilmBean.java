@@ -31,7 +31,7 @@ import pl.jeeweb.wypozyczalnia.entity.KopieFilmuPK;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
 @ManagedBean(name = "addFilmBean")
-@SessionScoped
+@ViewScoped
 public class addFilmBean implements Serializable {
 
 	private Filmy film;

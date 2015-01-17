@@ -263,6 +263,41 @@
 	top: 35% !important;
 	left: 35% !important;
 }
+.button_check {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/ok-icon.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+.button_print {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/print-report.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+.button_szczegol {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/Mes-videos-icon.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+.button_daneKlienta {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/klient.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+.button_wypozycz {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/wypozycz.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
 .list_icon {
 	background: url("#{resource['image/list16.png']}") !important;
 	height: 16px;

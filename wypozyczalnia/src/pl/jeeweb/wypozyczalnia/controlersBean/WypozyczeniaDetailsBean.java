@@ -6,12 +6,7 @@ package pl.jeeweb.wypozyczalnia.controlersBean;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -19,11 +14,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
@@ -31,7 +23,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.parser.Entity;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintPage;
@@ -40,7 +31,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-import org.apache.catalina.connector.Request;
 import org.primefaces.context.RequestContext;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
@@ -52,7 +42,6 @@ import pl.jeeweb.wypozyczalnia.entity.KopieFilmuPK;
 import pl.jeeweb.wypozyczalnia.entity.Pracownicy;
 import pl.jeeweb.wypozyczalnia.entity.Rezerwacje;
 import pl.jeeweb.wypozyczalnia.entity.Wypozyczenia;
-import pl.jeeweb.wypozyczalnia.tools.DateTools;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 import pl.jeeweb.wypozyczalnia.tools.SendMail;
 
@@ -60,28 +49,28 @@ import pl.jeeweb.wypozyczalnia.tools.SendMail;
  * @author Mateusz
  * 
  */
-@ManagedBean(name = "SzczegolyRezerwacji")
+@ManagedBean(name = "WypozyczeniaDetailsBean")
 @ViewScoped
-public class SzczegolyRezerwacji implements Serializable {
+public class WypozyczeniaDetailsBean implements Serializable {
+	
+	public WypozyczeniaDetailsBean() {
+		
+	}
 
-	private Rezerwacje rezerwacja;
-	private Wypozyczenia wypozyczenie = new Wypozyczenia();
+	private Wypozyczenia wypozyczenie;
 	private List<Filmy> selectedFilmy;
 	JasperPrint jasperPrint;
 	private Pracownicy pracownik;
-	private KopieFilmu slelectedFilm = null;
-
-	public SzczegolyRezerwacji() {
-
-	}
+	private KopieFilmu slelectedkopia = null;
 
 	@PostConstruct
 	public void initBean() {
 
-		int id_rezerwacji = Integer.valueOf(FacesContext.getCurrentInstance()
-				.getExternalContext().getRequestParameterMap().get("rez"));
-		this.rezerwacja = findRezeracja(id_rezerwacji);
+		int id_wypozyczenia = Integer.valueOf(FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get("wypo"));
+		this.wypozyczenie = findWypozyczenie(id_wypozyczenia);
 
+		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(true);
 		int id = (int) session.getAttribute("pracownik_id");
@@ -103,14 +92,14 @@ public class SzczegolyRezerwacji implements Serializable {
 						.setParameter("idFilmu", film.getId_filmu())
 						.getSingleResult();
 				for (KopieFilmu kopia : film1.getKopieFilmus()) {
-					if (kopia.getRezerwacje() == null && kopia.getWypozyczenia() == null) {
-						kopia.setRezerwacje(rezerwacja);
-						this.rezerwacja.getKopieFilmus().add(kopia);
+					if (kopia.getRezerwacje() == null) {
+						kopia.setWypozyczenia(wypozyczenie);
+						this.wypozyczenie.getKopieFilmus().add(kopia);
 						break;
 					}
 				}
 			}
-			em.merge(this.rezerwacja);
+			em.merge(this.wypozyczenie);
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "Filmy dodane", 1);
 		} else {
@@ -125,9 +114,9 @@ public class SzczegolyRezerwacji implements Serializable {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		em.getTransaction().begin();
 		kopia.setRezerwacje(null);
-		this.rezerwacja.getKopieFilmus().remove(kopia);
+		this.wypozyczenie.getKopieFilmus().remove(kopia);
 		em.merge(kopia);
-		em.merge(this.rezerwacja);
+		em.merge(this.wypozyczenie);
 		em.getTransaction().commit();
 		em.close();
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
@@ -135,79 +124,59 @@ public class SzczegolyRezerwacji implements Serializable {
 
 	}
 
-	private List<Rezerwacje> wrapRezerwacjaTolist() {
-		List<Rezerwacje> Rezerwacja = new ArrayList<>();
-		Rezerwacja.add(this.rezerwacja);
-		return Rezerwacja;
+	private List<Wypozyczenia> rezerwacjaFilmy() {
+		List<Wypozyczenia> wypozyczenia = new ArrayList<>();
+		List<Filmy> filmyrez = new ArrayList<>();
+		for (KopieFilmu kopia : this.wypozyczenie.getKopieFilmus()) {
+			Filmy film = kopia.getFilmy();
+			film.setGatunek_string(klasyfikacjaGatunkuToString(film));
+			film.setNumerKopiifilmu(film.getNr_filmu() + "/"
+					+ kopia.getId().getId_kopii());
+			filmyrez.add(film);
+		}
+		this.wypozyczenie.setFilmyTran(filmyrez);
+		wypozyczenia.add(this.wypozyczenie);
+		return wypozyczenia;
 	}
+	public void wypozyczFilmy() {
+		if (wypozyczenie.getKlienci().getAktywowany().equals("NIE")) {
 
-	public void wypozyczFilmy() throws IOException {
-		if (rezerwacja.getKlienci().getAktywowany().equals("NIE")) {
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('DialogDaneKlient').show();");
 		}
-		EntityManager em = DBManager.getManager().createEntityManager();
-		em.getTransaction().begin();
-		this.wypozyczenie.setData_wypozyczenia(DateTools.currentDate());
-		this.wypozyczenie.setTermin_zwrotu(DateTools.nextDate(2));
-		this.wypozyczenie.setKlienci(this.rezerwacja.getKlienci());
-		this.wypozyczenie.setKopieFilmus(this.rezerwacja.getKopieFilmus());
-		this.wypozyczenie.setNr_wypozyczenia(setNumerWypozyczenia());
-		this.wypozyczenie.setOdsetki(0);
-		this.wypozyczenie.setPracownicy(this.pracownik);
-		Wypozyczenia wypozyczenie_merge = em.merge(this.wypozyczenie);
-
-		for (KopieFilmu kopiafilmu : this.rezerwacja.getKopieFilmus()) {
-			kopiafilmu.setWypozyczenia(wypozyczenie_merge);
-			// kopiafilmu.setRezerwacje(null);
-			em.merge(kopiafilmu);
-		}
-		this.rezerwacja.setStatus_rezerwacji("Wypo¿yczono");
-		em.getTransaction().commit();
-		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-				"globalmessage", "Wypo¿yczenie zrealizowane wydrukuj poteirdzenie", 1);
-		FacesContext.getCurrentInstance().getExternalContext().getFlash()
-				.setKeepMessages(true);
-		FacesContext
-		.getCurrentInstance()
-		.getExternalContext()
-		.redirect(
-				"/wypozyczalnia/Zarzadzanie/szczegolyWypozyczenia.xhtml?wypo="
-						+ wypozyczenie_merge
-								.getId_wypozyczenia());
-
 	}
+	
 
-	public void zmienStatusRezerwacji() {
+//	public void () {
+//
+//		EntityManager em = DBManager.getManager().createEntityManager();
+//		em.getTransaction().begin();
+//		;
+//		this.wypozyczenie.setStatus_rezerwacji("Obs³u¿ona. Do odbioru");
+//		this.wypozyczenie.setPracownicy(this.pracownik);
+//
+//		wyslijPowiadomienieOdbioru();
+//		DisplayMessage
+//				.InfoMessage(
+//						FacesContext.getCurrentInstance(),
+//						"globalmessage",
+//						"Rezerwacja obs³u¿ona. Zmieniono status na Obs³u¿ona. Do odbioru.",
+//						1);
+//		em.merge(this.wypozyczenie);
+//
+//		em.getTransaction().commit();
+//		em.close();
+//
+//	}
 
-		EntityManager em = DBManager.getManager().createEntityManager();
-		em.getTransaction().begin();
-		;
-		this.rezerwacja.setStatus_rezerwacji("Obs³u¿ona. Do odbioru");
-		this.rezerwacja.setPracownicy(this.pracownik);
-
-		wyslijPowiadomienieOdbioru();
-		DisplayMessage
-				.InfoMessage(
-						FacesContext.getCurrentInstance(),
-						"globalmessage",
-						"Rezerwacja obs³u¿ona. Zmieniono status na Obs³u¿ona. Do odbioru.",
-						1);
-		em.merge(this.rezerwacja);
-
-		em.getTransaction().commit();
-		em.close();
-
-	}
-
-	public void wyslijPowiadomienieOdbioru() {
-		Klienci klient = this.rezerwacja.getKlienci();
+	public void wyslijPowiadomienieWypozyczenia() {
+		Klienci klient = this.wypozyczenie.getKlienci();
 		SendMail mail = new SendMail(
 				klient.getE_mail(),
-				"Rezerwacja numer " + this.rezerwacja.getNr_rezerwacji(),
+				"Wpozyczenie numer " + this.wypozyczenie.getNr_wypozyczenia(),
 				"<html>Witaj "
 						+ klient.getImie()
-						+ " <br> Twoja rezerwacja zosta³a przygotowana do odbioru</html>");
+						+ " <br>Wypozyczenie zosta³o zrealizowane. Dziêkujemy za skorzystanie z naszych us³ug.</html>");
 		try {
 			mail.send();
 		} catch (MessagingException e) {
@@ -218,7 +187,7 @@ public class SzczegolyRezerwacji implements Serializable {
 
 	private void init() throws JRException {
 		JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
-				wrapRezerwacjaTolist());
+				rezerwacjaFilmy());
 		HttpServletRequest req = (HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest();
 		ServletContext con = req.getServletContext();
@@ -236,7 +205,7 @@ public class SzczegolyRezerwacji implements Serializable {
 		httpServletResponse.addHeader(
 				"Content-disposition",
 				"attachment; filename=rezerwacja_"
-						+ this.rezerwacja.getNr_rezerwacji() + ".pdf");
+						+ this.wypozyczenie.getNr_wypozyczenia() + ".pdf");
 		ServletOutputStream servletOutputStream = httpServletResponse
 				.getOutputStream();
 		removeBlankPage(jasperPrint.getPages());
@@ -246,13 +215,13 @@ public class SzczegolyRezerwacji implements Serializable {
 
 	}
 
-	private Rezerwacje findRezeracja(int id) {
+	private Wypozyczenia findWypozyczenie(int id) {
 		EntityManager em = DBManager.getManager().createEntityManager();
-		Rezerwacje _rezerwacja = (Rezerwacje) em
-				.createNamedQuery("Rezerwacje.findById")
-				.setParameter("id_rezerwacji", id).getSingleResult();
+		Wypozyczenia _wypozyczenie = (Wypozyczenia) em
+				.createNamedQuery("Wypozyczenia.findById")
+				.setParameter("id", id).getSingleResult();
 		em.close();
-		return _rezerwacja;
+		return _wypozyczenie;
 	}
 
 	public String getNumerkopiiFlmu(KopieFilmu kopiaFilmu) {
@@ -293,12 +262,12 @@ public class SzczegolyRezerwacji implements Serializable {
 					.getExternalContext()
 					.redirect(
 							"/wypozyczalnia/Zarzadzanie/editKlient.xhtml?id_klient="
-									+ rezerwacja.getKlienci().getId_klienta()
+									+ wypozyczenie.getKlienci().getId_klienta()
 									+ "&target="
 									+ FacesContext.getCurrentInstance()
 											.getViewRoot().getViewId()
-									+ "?rez="
-									+ this.rezerwacja.getId_rezerwacji());
+									+ "?wypo="
+									+ this.wypozyczenie.getId_wypozyczenia());
 			// }
 		} catch (IOException e) {
 			System.out.print("ssadsdassd");
@@ -309,14 +278,13 @@ public class SzczegolyRezerwacji implements Serializable {
 
 	public void przekierowanieSzczegoly() {
 		try {
-			if (this.slelectedFilm != null) {
+			if (this.slelectedkopia != null) {
 				FacesContext
 						.getCurrentInstance()
 						.getExternalContext()
 						.redirect(
 								"/wypozyczalnia/szczegolyFilmu.xhtml?id_filmu="
-										+ this.slelectedFilm.getFilmy()
-												.getId_filmu());
+										+ this.slelectedkopia.getFilmy().getId_filmu());
 			} else {
 				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 						"globalmessage", "Nie wybraleœ filmu", 3);
@@ -328,40 +296,12 @@ public class SzczegolyRezerwacji implements Serializable {
 		}
 	}
 
-	private String setNumerWypozyczenia() {
-		EntityManager em = DBManager.getManager().createEntityManager();
-		List<Integer> id = em.createNativeQuery(
-				"Select id_wypozyczenia from wypozyczenia").getResultList();
-		em.close();
-		List<Integer> id_int = new ArrayList<Integer>();
-		Integer i;
-		for (Integer k : id) {
-			id_int.add(new Integer(k));
-		}
-		if (id_int.size() == 0)
-			i = 0;
-		else
-			i = Collections.max(id_int);
-
-		i += 1;
-		String numerKlienta = "";
-		if (i < 10)
-			numerKlienta = "W0/000" + i.toString();
-		if (i >= 10 && i < 100)
-			numerKlienta = "W0/00" + i.toString();
-		if (i >= 100 && i < 1000)
-			numerKlienta = "W0/0" + i.toString();
-		if (i >= 1000)
-			numerKlienta = "W0/" + i.toString();
-		return numerKlienta;
+	public Wypozyczenia getWypozyczenie() {
+		return wypozyczenie;
 	}
 
-	public Rezerwacje getRezerwacja() {
-		return rezerwacja;
-	}
-
-	public void setRezerwacja(Rezerwacje rezerwacja) {
-		this.rezerwacja = rezerwacja;
+	public void setWypozyczenie(Wypozyczenia wypozyczenie) {
+		this.wypozyczenie = wypozyczenie;
 	}
 
 	public List<Filmy> getSelectedFilmy() {
@@ -372,12 +312,11 @@ public class SzczegolyRezerwacji implements Serializable {
 		this.selectedFilmy = selectedFilmy;
 	}
 
-	public KopieFilmu getSlelectedFilm() {
-		return slelectedFilm;
+	public KopieFilmu getSlelectedkopia() {
+		return slelectedkopia;
 	}
 
-	public void setSlelectedFilm(KopieFilmu slelectedFilm) {
-		this.slelectedFilm = slelectedFilm;
+	public void setSlelectedkopia(KopieFilmu slelectedkopia) {
+		this.slelectedkopia = slelectedkopia;
 	}
-
 }

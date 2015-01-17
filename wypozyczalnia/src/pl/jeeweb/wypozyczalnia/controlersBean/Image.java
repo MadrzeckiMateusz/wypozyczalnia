@@ -1,6 +1,7 @@
 package pl.jeeweb.wypozyczalnia.controlersBean;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -20,7 +21,7 @@ import pl.jeeweb.wypozyczalnia.entity.Filmy;
 @RequestScoped
 public class Image {
 
-	private StreamedContent image;
+	private StreamedContent image = new DefaultStreamedContent();
 
 	@ManagedProperty("#{param.id}")
 	private int id = 0;
@@ -30,7 +31,8 @@ public class Image {
 		if (FacesContext.getCurrentInstance().getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
 			// So, we're rendering the view. Return a stub StreamedContent so
 			// that it will generate right URL.
-			image = new DefaultStreamedContent();
+			InputStream image_default = this.getClass().getResourceAsStream("brak_zdjecia.png");
+			image = new DefaultStreamedContent(image_default,"image/jpeg");
 		} else {
 			// So, browser is requesting the image. Return a real
 			// StreamedContent with the image bytes.

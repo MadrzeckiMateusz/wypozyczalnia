@@ -15,7 +15,8 @@ import java.util.List;
 @Table(name="pracownicy")
 @NamedQueries({
 @NamedQuery(name="Pracownicy.findAll", query="SELECT p FROM Pracownicy p"),
-@NamedQuery(name="Pracownicy.findByEmail", query="SELECT p FROM Pracownicy p where p.e_mail = :email")})
+@NamedQuery(name="Pracownicy.findByEmail", query="SELECT p FROM Pracownicy p where p.e_mail = :email"),
+@NamedQuery(name="Pracownicy.findByid", query="SELECT p FROM Pracownicy p where p.id_prcownika = :id")})
 public class Pracownicy implements Serializable {
 	private static final long serialVersionUID = 1L;
 

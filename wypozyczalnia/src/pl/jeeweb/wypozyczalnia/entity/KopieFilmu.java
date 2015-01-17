@@ -28,8 +28,8 @@ public class KopieFilmu implements Serializable {
 	private Wypozyczenia wypozyczenia;
 
 	//bi-directional many-to-one association to Rezerwacje
-	@ManyToOne
-	@JoinColumn(name="Id_rezerwacji")
+	@ManyToOne (cascade = CascadeType.MERGE)
+	@JoinColumn(name="id_rezerwacji")
 	private Rezerwacje rezerwacje;
 
 	public KopieFilmu() {

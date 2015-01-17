@@ -31,7 +31,27 @@
 
 			<div id="page">
 				<div id="leftmanage">
-					<p:menu styleClass="menumanage" toggleable="true" >
+					<p:menu styleClass="menumanage" toggleable="true">
+						<p:submenu label="Rezerwacje" style=" background-color: #A4BDEF;">
+							<p:menuitem value="Lista rezerwacji"
+								url="/Zarzadzanie/listaRezerwacji.xhtml" icon="ui-icon-home" />
+							<p:menuitem value="Dodaj klienta"
+								action="#{klienciBean.przekierowanieDodajKlienta}"
+								icon="ui-icon-home" />
+							<p:menuitem value="Edytuj klienta"
+								action="#{klienciBean.przekierowanieEdycjaKlienta}"
+								icon="ui-icon-home" />
+						</p:submenu>
+						<p:submenu label="Wypożyczenia" style=" background-color: #A4BDEF;">
+							<p:menuitem value="Lista rezerwacji"
+								url="/Zarzadzanie/listaWypozyczeń.xhtml" icon="ui-icon-home" />
+							<p:menuitem value="Dodaj klienta"
+								action="#{klienciBean.przekierowanieDodajKlienta}"
+								icon="ui-icon-home" />
+							<p:menuitem value="Edytuj klienta"
+								action="#{klienciBean.przekierowanieEdycjaKlienta}"
+								icon="ui-icon-home" />
+						</p:submenu>
 						<p:submenu label="Filmy" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Lista filmów"
 								url="/Zarzadzanie/listafilmow.xhtml" icon="list-icon" />
@@ -61,17 +81,8 @@
 								action="#{klienciBean.przekierowanieEdycjaKlienta}"
 								icon="ui-icon-home" />
 						</p:submenu>
-						<p:submenu label="Rezerwacje" style=" background-color: #A4BDEF;">
-							<p:menuitem value="Lista rezerwacji"
-								url="/Zarzadzanie/listaRezerwacji.xhtml" icon="ui-icon-home" />
-							<p:menuitem value="Dodaj klienta"
-								action="#{klienciBean.przekierowanieDodajKlienta}"
-								icon="ui-icon-home" />
-							<p:menuitem value="Edytuj klienta"
-								action="#{klienciBean.przekierowanieEdycjaKlienta}"
-								icon="ui-icon-home" />
-						</p:submenu>
-						
+
+
 						<p:submenu label="Admin" style=" background-color: #A4BDEF;"
 							rendered="#{AuthorizationBean.adminRole}">
 							<p:menuitem value="Edytuj Dane" url="/Users/editprofile.xhtml"

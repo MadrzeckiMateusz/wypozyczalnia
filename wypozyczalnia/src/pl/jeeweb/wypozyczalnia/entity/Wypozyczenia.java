@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import pl.jeeweb.wypozyczalnia.tools.Converters;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +17,9 @@ import java.util.List;
  */
 @Entity
 @Table(name="wypozyczenia")
-@NamedQuery(name="Wypozyczenia.findAll", query="SELECT w FROM Wypozyczenia w")
+@NamedQueries({
+@NamedQuery(name="Wypozyczenia.findAll", query="SELECT w FROM Wypozyczenia w"),
+@NamedQuery(name="Wypozyczenia.findById", query="SELECT w FROM Wypozyczenia w where w.id_wypozyczenia = :id")})
 public class Wypozyczenia implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +48,7 @@ public class Wypozyczenia implements Serializable {
 	private String uwagi;
 
 	//bi-directional many-to-one association to KopieFilmu
-	@OneToMany(mappedBy="wypozyczenia" , fetch= FetchType.EAGER)
+	@OneToMany(mappedBy="wypozyczenia" , fetch= FetchType.EAGER )
 	private List<KopieFilmu> kopieFilmus;
 
 	//bi-directional many-to-one association to Pracownicy
@@ -55,6 +60,12 @@ public class Wypozyczenia implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="Id_klienta")
 	private Klienci klienci;
+	
+	@Transient
+	private List<Filmy> filmyTran;
+	
+	@Transient 
+	private List<Klienci> klientTran;
 
 	public Wypozyczenia() {
 	}
@@ -151,6 +162,32 @@ public class Wypozyczenia implements Serializable {
 
 	public void setKlienci(Klienci klienci) {
 		this.klienci = klienci;
+	}
+
+	public List<Filmy> getFilmyTran() {
+		List<Filmy> filmyrez = new ArrayList<>();
+		for (KopieFilmu kopia : getKopieFilmus()) {
+			Filmy film = kopia.getFilmy();
+			film.setGatunek_string(Converters.klasyfikacjaGatunkuToString(film));
+			film.setNumerKopiifilmu(film.getNr_filmu() + "/"
+					+ kopia.getId().getId_kopii());
+			filmyrez.add(film);
+		}
+		return filmyrez;
+	}
+
+	public void setFilmyTran(List<Filmy> filmyTran) {
+		this.filmyTran = filmyTran;
+	}
+
+	public List<Klienci> getKlientTran() {
+		List<Klienci> listaKliencis = new ArrayList<>();
+		listaKliencis.add(klienci);
+		return listaKliencis;
+	}
+
+	public void setKlientTran(List<Klienci> klientTran) {
+		this.klientTran = klientTran;
 	}
 
 }

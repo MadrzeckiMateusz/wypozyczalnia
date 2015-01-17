@@ -91,16 +91,20 @@ public class editProfilKlient implements Serializable {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.merge(this.klient);
+		
 
-		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-				"globalmessage", "Daneosobowe zapisane", 1);
+		
 		if (!target.isEmpty()) {
 			this.klient.setAktywowany("TAK");
-			em.merge(this.klient);
-
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "To¿samoœæ klienta potwierdzona", 1);
+		}else {
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Daneosobowe zapisane", 1);
+		}
+			em.merge(this.klient);
+
+			
 			FacesContext.getCurrentInstance().getExternalContext().getFlash()
 					.setKeepMessages(true);
 			try {
@@ -110,7 +114,7 @@ public class editProfilKlient implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		
 		tx.commit();
 		em.close();
 		return null;

@@ -45,17 +45,21 @@ public class klienciBean {
 	public void setKlient(Klienci klient) {
 		this.klient = klient;
 	}
+
 	@PostConstruct
 	public void initBean() {
 		this.klient.setNr_klienta(setNumerKlienta());
 		this.klient.setData_rejestracji(currentDate());
 	}
-	public List<Klienci> getAllKlienci(){
+
+	public List<Klienci> getAllKlienci() {
 		EntityManager em = DBManager.getManager().createEntityManager();
-		List<Klienci> klienci = em.createNamedQuery("Klienci.findAll").getResultList();
+		List<Klienci> klienci = em.createNamedQuery("Klienci.findAll")
+				.getResultList();
 		em.close();
-		return  klienci;
+		return klienci;
 	}
+
 	public String setNumerKlienta() {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		List<Integer> id = em.createNativeQuery(
@@ -101,8 +105,7 @@ public class klienciBean {
 			RandomAlphaNum rand = new RandomAlphaNum();
 			ExternalContext context = FacesContext.getCurrentInstance()
 					.getExternalContext();
-			
-			
+
 			String tmpPassword = rand.RandomPass();
 			this.klient.setHaslo(SHA256hash.HashText(tmpPassword));
 
@@ -187,13 +190,11 @@ public class klienciBean {
 					"globalmessage", "Nie wybra³es klienta!!!", 3);
 		}
 	}
+
 	public void przekierowanieDodajKlienta() {
 		try {
-			FacesContext
-			.getCurrentInstance()
-			.getExternalContext()
-			.redirect(
-					"/wypozyczalnia/Zarzadzanie/addKlient.xhtml");
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("/wypozyczalnia/Zarzadzanie/addKlient.xhtml");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
