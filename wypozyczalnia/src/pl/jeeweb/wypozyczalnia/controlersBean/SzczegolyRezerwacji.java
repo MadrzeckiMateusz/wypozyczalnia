@@ -159,13 +159,16 @@ public class SzczegolyRezerwacji implements Serializable {
 
 		for (KopieFilmu kopiafilmu : this.rezerwacja.getKopieFilmus()) {
 			kopiafilmu.setWypozyczenia(wypozyczenie_merge);
-			// kopiafilmu.setRezerwacje(null);
+			 kopiafilmu.setRezerwacje(null);
 			em.merge(kopiafilmu);
 		}
-		this.rezerwacja.setStatus_rezerwacji("Wypo퓓czono");
+//		this.rezerwacja.setStatus_rezerwacji("Wypo퓓czono");
+		//em.remove(this.rezerwacja);
 		em.getTransaction().commit();
+		//em.close();
+		DBManager.getManager().closeEntityManagerFactory();
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-				"globalmessage", "Wypo퓓czenie zrealizowane wydrukuj poteirdzenie", 1);
+				"globalmessage", "Wypo퓓czenie zrealizowane wydrukuj potwierdzenie", 1);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash()
 				.setKeepMessages(true);
 		FacesContext

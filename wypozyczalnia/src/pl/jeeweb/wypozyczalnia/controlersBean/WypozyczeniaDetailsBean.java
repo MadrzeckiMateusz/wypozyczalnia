@@ -18,6 +18,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +69,7 @@ public class WypozyczeniaDetailsBean implements Serializable {
 
 		int id_wypozyczenia = Integer.valueOf(FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap().get("wypo"));
-		this.wypozyczenie = findWypozyczenie(id_wypozyczenia);
+		this.wypozyczenie = findWypozyczenie(id_wypozyczenia).get(0);
 
 		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -215,11 +216,12 @@ public class WypozyczeniaDetailsBean implements Serializable {
 
 	}
 
-	private Wypozyczenia findWypozyczenie(int id) {
-		EntityManager em = DBManager.getManager().createEntityManager();
-		Wypozyczenia _wypozyczenie = (Wypozyczenia) em
-				.createNamedQuery("Wypozyczenia.findById")
-				.setParameter("id", id).getSingleResult();
+	private List<Wypozyczenia> findWypozyczenie(int id) {
+		
+		;
+		EntityManager em = DBManager.getManager().createEntityManagerFactory().createEntityManager();
+		em.clear();
+		 List<Wypozyczenia>_wypozyczenie = (List<Wypozyczenia>) em.createNamedQuery("Wypozyczenia.findById").setParameter("id", id).getResultList();
 		em.close();
 		return _wypozyczenie;
 	}

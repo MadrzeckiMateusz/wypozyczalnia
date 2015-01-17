@@ -47,7 +47,7 @@ public class Rezerwacje implements Serializable {
 	private String uwagi;
 
 	//bi-directional many-to-one association to KopieFilmu
-	@OneToMany(mappedBy="rezerwacje" , fetch= FetchType.EAGER, cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy="rezerwacje" , fetch= FetchType.EAGER)//, cascade = CascadeType.MERGE)
 	private List<KopieFilmu> kopieFilmus;
 
 	//bi-directional many-to-one association to Klienci

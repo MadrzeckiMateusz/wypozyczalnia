@@ -26,7 +26,10 @@ public class DBManager {
 	        return this.createEntityManagerFactory().createEntityManager();
 	    }
 	    public void closeEntityManagerFactory() {
-	        if (emf != null)
+	        if (emf != null) {
 	            emf.close();
+	        emf = null;
+	        }
+	       
 	    }
 }
