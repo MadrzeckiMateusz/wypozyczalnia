@@ -57,11 +57,11 @@ public class Pracownicy implements Serializable {
 	private BigDecimal pesel;
 
 	//bi-directional many-to-one association to Rezerwacje
-	@OneToMany(mappedBy="pracownicy" , fetch= FetchType.EAGER)
+	@OneToMany(mappedBy="pracownicy" )//, fetch= FetchType.EAGER)
 	private List<Rezerwacje> rezerwacjes;
 
 	//bi-directional many-to-one association to Wypozyczenia
-	@OneToMany(mappedBy="pracownicy", fetch= FetchType.EAGER)
+	@OneToMany(mappedBy="pracownicy")//, fetch= FetchType.EAGER)
 	private List<Wypozyczenia> wypozyczenias;
 
 	public Pracownicy() {

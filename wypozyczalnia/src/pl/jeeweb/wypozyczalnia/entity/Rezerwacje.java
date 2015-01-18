@@ -154,17 +154,17 @@ public class Rezerwacje implements Serializable {
 		this.pracownicy = pracownicy;
 	}
 
-//	public List<Filmy> getFilmyTran() {
-//		List<Filmy> filmyrez = new ArrayList<>();
-//		for (KopieFilmu kopia : getKopieFilmus()) {
-//			Filmy film = kopia.getFilmy();
-//			film.setGatunek_string(Converters.klasyfikacjaGatunkuToString(film));
-//			film.setNumerKopiifilmu(film.getNr_filmu() + "/"
-//					+ kopia.getId().getId_kopii());
-//			filmyrez.add(film);
-//		}
-//		return filmyrez;
-//	}
+	public List<Filmy> getFilmyTran() {
+		List<Filmy> filmyrez = new ArrayList<>();
+		for (KopieFilmu kopia : getKopieFilmus()) {
+			Filmy film = kopia.getFilmy();
+			film.setGatunek_string(Converters.klasyfikacjaGatunkuToString(film));
+			film.setNumerKopiifilmu(film.getNr_filmu() + "/"
+					+ kopia.getId().getId_kopii());
+			filmyrez.add(film);
+		}
+		return filmyrez;
+	}
 
 	public void setFilmyTran(List<Filmy> filmy) {
 		this.filmyTran = filmy;

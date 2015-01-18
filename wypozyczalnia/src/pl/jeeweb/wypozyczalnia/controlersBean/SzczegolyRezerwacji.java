@@ -103,7 +103,8 @@ public class SzczegolyRezerwacji implements Serializable {
 						.setParameter("idFilmu", film.getId_filmu())
 						.getSingleResult();
 				for (KopieFilmu kopia : film1.getKopieFilmus()) {
-					if (kopia.getRezerwacje() == null && kopia.getWypozyczenia() == null) {
+					if (kopia.getRezerwacje() == null
+							&& kopia.getWypozyczenia() == null) {
 						kopia.setRezerwacje(rezerwacja);
 						this.rezerwacja.getKopieFilmus().add(kopia);
 						break;
@@ -159,25 +160,32 @@ public class SzczegolyRezerwacji implements Serializable {
 
 		for (KopieFilmu kopiafilmu : this.rezerwacja.getKopieFilmus()) {
 			kopiafilmu.setWypozyczenia(wypozyczenie_merge);
-			 kopiafilmu.setRezerwacje(null);
+			kopiafilmu.setRezerwacje(null);
 			em.merge(kopiafilmu);
 		}
-//		this.rezerwacja.setStatus_rezerwacji("Wypo¿yczono");
-		//em.remove(this.rezerwacja);
+		this.rezerwacja.setPracownicy(null);
+		em.flush();
+		em.remove(em.merge(this.rezerwacja));
 		em.getTransaction().commit();
-		//em.close();
+		//);
+//		EntityManager em1 = DBManager.getManager().createEntityManager();
+//		em1.getTransaction().begin();
+//		em1.remove(em.merge(this.rezerwacja));
+//		em1.getTransaction().commit();
+//		em1.close();
+//		// em.close();
 		DBManager.getManager().closeEntityManagerFactory();
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-				"globalmessage", "Wypo¿yczenie zrealizowane wydrukuj potwierdzenie", 1);
+				"globalmessage",
+				"Wypo¿yczenie zrealizowane wydrukuj potwierdzenie", 1);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash()
 				.setKeepMessages(true);
 		FacesContext
-		.getCurrentInstance()
-		.getExternalContext()
-		.redirect(
-				"/wypozyczalnia/Zarzadzanie/szczegolyWypozyczenia.xhtml?wypo="
-						+ wypozyczenie_merge
-								.getId_wypozyczenia());
+				.getCurrentInstance()
+				.getExternalContext()
+				.redirect(
+						"/wypozyczalnia/Zarzadzanie/szczegolyWypozyczenia.xhtml?wypo="
+								+ wypozyczenie_merge.getId_wypozyczenia());
 
 	}
 
