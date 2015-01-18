@@ -102,7 +102,7 @@ public class rezerwacjeKoszyk implements Serializable {
 			this.rezerwacja.setStatus_rezerwacji("W REALIZACJI");
 
 			em.getTransaction().begin();
-			em.persist(rezerwacja);
+			this.rezerwacja = em.merge(rezerwacja);
 			em.getTransaction().commit();
 			oznaczKopieFilmu(em);
 
@@ -116,16 +116,16 @@ public class rezerwacjeKoszyk implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void oznaczKopieFilmu(EntityManager em1) {
 		EntityManager em = em1;
-		List<Integer> maxid = em.createNativeQuery(
-				"Select Id_rezerwacji from rezerwacje").getResultList();
-		this.rezerwacja = new Rezerwacje();
-		int maxID = Collections.max(maxid);
-		this.rezerwacja = em.find(Rezerwacje.class, maxID);
+//		List<Integer> maxid = em.createNativeQuery(
+//				"Select Id_rezerwacji from rezerwacje").getResultList();
+//		this.rezerwacja = new Rezerwacje();
+//		int maxID = Collections.max(maxid);
+//		this.rezerwacja = em.find(Rezerwacje.class, maxID);
 
 		for (Filmy film : rezerwowaneFilmy) {
 
 			for (KopieFilmu kf : film.getKopieFilmus()) {
-				if (kf.getRezerwacje() == null) {
+				if (kf.getRezerwacje() == null && kf.getWypozyczenia() == null) {
 					kf.setRezerwacje(rezerwacja);
 					em.getTransaction().begin();
 					em.merge(kf);

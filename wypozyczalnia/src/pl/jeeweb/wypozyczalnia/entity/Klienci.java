@@ -54,11 +54,11 @@ public class Klienci implements Serializable {
 	private String aktywowany;
 
 	//bi-directional many-to-one association to Rezerwacje
-	@OneToMany(mappedBy="klienci" , fetch= FetchType.EAGER)
+	@OneToMany(mappedBy="klienci" )//, fetch= FetchType.EAGER)
 	private List<Rezerwacje> rezerwacjes;
 
 	//bi-directional many-to-one association to Wypozyczenia
-	@OneToMany(mappedBy="klienci" , fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="klienci" )//, fetch=FetchType.EAGER)
 	private List<Wypozyczenia> wypozyczenias;
 
 	public Klienci() {

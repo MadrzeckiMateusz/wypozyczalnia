@@ -1,10 +1,95 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="./SzablonZarzadzanie.xhtml">
 
-</body>
-</html>
+	<ui:define name="content">
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2" >
+			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
+				<p:commandButton 
+					image="button_icon"
+					style="height:50px; width:50px; margin-right:5px" />
+				<p:commandButton 
+					image="button_dodaj"
+					style="height:50px; width:50px; margin-right:5px" />
+					<p:commandButton action="#{WypozyczeniaBean.przekierowanieszczegoly}"
+					image="button_info" 
+					style="height:50px; width:50px; margin-right:5px" title="Szczegóły rezerwacji"/>
+			</p:outputPanel>
+			<p:panel styleClass="infologowanie">
+				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
+				<p:outputLabel value="#{AuthorizationBean.rola}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.imie}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.nazwisko}"
+					style="font-size:16px; margin-left:5px" />
+				<p:commandButton value="Wyloguj"
+					action="#{AuthorizationBean.LogOut()}"
+					style="margin-left:30px; width:90px" />
+			</p:panel>
+		</p:panelGrid>
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:dataTable var="wypozyczenia" styleClass="zarzadzaj"
+			value="#{WypozyczeniaBean.allWypozyczenia}" widgetVar="wpozyczeniaTables"
+			filteredValue="#{WypozyczeniaBean.filteredWypozyczenia}"
+			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
+			selection="#{WypozyczeniaBean.zaznaczoneWypozyczenie}"
+			rowKey="#{wypozyczenia.id_wypozyczenia}">
+
+			<f:facet name="header">
+				<p:outputPanel style="margin-right:67%">
+					<h:outputText value="Wyszukiwanie globalne:"
+						style="margin-right:15px" />
+					<p:inputText id="globalFilter"
+						onkeyup="PF('wpozyczeniaTables').filter()" style="width:150px"
+						placeholder="Wpisz frazę" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Numer wypozyczenia"
+				filterBy="#{wypozyczenia.nr_wypozyczenia}" filterMatchMode="contains">
+				<h:outputText value="#{wypozyczenia.nr_wypozyczenia}" />
+			</p:column>
+
+			<p:column headerText="Data wypozyczenia"
+				filterBy="#{wypozyczenia.data_wypozyczenia}" filterMatchMode="contains">
+				<h:outputText value="#{wypozyczenia.data_wypozyczenia}" />
+			</p:column>
+
+			<p:column headerText="Termin zwrotu"
+				filterBy="#{wypozyczenia.termin_zwrotu}" filterMatchMode="contains">
+				<h:outputText value="#{wypozyczenia.termin_zwrotu}" />
+			</p:column>
+
+			<p:column headerText="Data zwrotu"
+				filterBy="#{wypozyczenia.data_zwrotu}"
+				filterMatchMode="contains">
+				<h:outputText value="#{wypozyczenia.data_zwrotu}" />
+			</p:column>
+
+			<p:column headerText="Nr klienta"
+				filterBy="#{wypozyczenia.klienci.nr_klienta}"
+				filterMatchMode="contains">
+				<h:outputText value="#{wypozyczenia.klienci.nr_klienta}" />
+			</p:column>
+
+			<p:column headerText="Klient"
+				filterBy="#{WypozyczeniaBean.ImieNazwiskoKlient(wypozyczenia.klienci)}"
+				filterMatchMode="contains">
+				<h:outputText
+					value="#{WypozyczeniaBean.ImieNazwiskoKlient(wypozyczenia.klienci)}" />
+			</p:column>
+
+
+
+		</p:dataTable>
+
+	</ui:define>
+
+</ui:composition>

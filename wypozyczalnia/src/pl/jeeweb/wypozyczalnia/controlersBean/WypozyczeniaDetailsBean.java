@@ -53,9 +53,9 @@ import pl.jeeweb.wypozyczalnia.tools.SendMail;
 @ManagedBean(name = "WypozyczeniaDetailsBean")
 @ViewScoped
 public class WypozyczeniaDetailsBean implements Serializable {
-	
+
 	public WypozyczeniaDetailsBean() {
-		
+
 	}
 
 	private Wypozyczenia wypozyczenie;
@@ -71,7 +71,6 @@ public class WypozyczeniaDetailsBean implements Serializable {
 				.getExternalContext().getRequestParameterMap().get("wypo"));
 		this.wypozyczenie = findWypozyczenie(id_wypozyczenia).get(0);
 
-		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(true);
 		int id = (int) session.getAttribute("pracownik_id");
@@ -93,7 +92,8 @@ public class WypozyczeniaDetailsBean implements Serializable {
 						.setParameter("idFilmu", film.getId_filmu())
 						.getSingleResult();
 				for (KopieFilmu kopia : film1.getKopieFilmus()) {
-					if (kopia.getRezerwacje() == null) {
+					if (kopia.getRezerwacje() == null
+							&& kopia.getWypozyczenia() == null) {
 						kopia.setWypozyczenia(wypozyczenie);
 						this.wypozyczenie.getKopieFilmus().add(kopia);
 						break;
@@ -139,6 +139,7 @@ public class WypozyczeniaDetailsBean implements Serializable {
 		wypozyczenia.add(this.wypozyczenie);
 		return wypozyczenia;
 	}
+
 	public void wypozyczFilmy() {
 		if (wypozyczenie.getKlienci().getAktywowany().equals("NIE")) {
 
@@ -146,29 +147,28 @@ public class WypozyczeniaDetailsBean implements Serializable {
 			context.execute("PF('DialogDaneKlient').show();");
 		}
 	}
-	
 
-//	public void () {
-//
-//		EntityManager em = DBManager.getManager().createEntityManager();
-//		em.getTransaction().begin();
-//		;
-//		this.wypozyczenie.setStatus_rezerwacji("Obs³u¿ona. Do odbioru");
-//		this.wypozyczenie.setPracownicy(this.pracownik);
-//
-//		wyslijPowiadomienieOdbioru();
-//		DisplayMessage
-//				.InfoMessage(
-//						FacesContext.getCurrentInstance(),
-//						"globalmessage",
-//						"Rezerwacja obs³u¿ona. Zmieniono status na Obs³u¿ona. Do odbioru.",
-//						1);
-//		em.merge(this.wypozyczenie);
-//
-//		em.getTransaction().commit();
-//		em.close();
-//
-//	}
+	// public void () {
+	//
+	// EntityManager em = DBManager.getManager().createEntityManager();
+	// em.getTransaction().begin();
+	// ;
+	// this.wypozyczenie.setStatus_rezerwacji("Obs³u¿ona. Do odbioru");
+	// this.wypozyczenie.setPracownicy(this.pracownik);
+	//
+	// wyslijPowiadomienieOdbioru();
+	// DisplayMessage
+	// .InfoMessage(
+	// FacesContext.getCurrentInstance(),
+	// "globalmessage",
+	// "Rezerwacja obs³u¿ona. Zmieniono status na Obs³u¿ona. Do odbioru.",
+	// 1);
+	// em.merge(this.wypozyczenie);
+	//
+	// em.getTransaction().commit();
+	// em.close();
+	//
+	// }
 
 	public void wyslijPowiadomienieWypozyczenia() {
 		Klienci klient = this.wypozyczenie.getKlienci();
@@ -217,11 +217,14 @@ public class WypozyczeniaDetailsBean implements Serializable {
 	}
 
 	private List<Wypozyczenia> findWypozyczenie(int id) {
-		
+
 		;
-		EntityManager em = DBManager.getManager().createEntityManagerFactory().createEntityManager();
+		EntityManager em = DBManager.getManager().createEntityManagerFactory()
+				.createEntityManager();
 		em.clear();
-		 List<Wypozyczenia>_wypozyczenie = (List<Wypozyczenia>) em.createNamedQuery("Wypozyczenia.findById").setParameter("id", id).getResultList();
+		List<Wypozyczenia> _wypozyczenie = (List<Wypozyczenia>) em
+				.createNamedQuery("Wypozyczenia.findById")
+				.setParameter("id", id).getResultList();
 		em.close();
 		return _wypozyczenie;
 	}
@@ -286,7 +289,8 @@ public class WypozyczeniaDetailsBean implements Serializable {
 						.getExternalContext()
 						.redirect(
 								"/wypozyczalnia/szczegolyFilmu.xhtml?id_filmu="
-										+ this.slelectedkopia.getFilmy().getId_filmu());
+										+ this.slelectedkopia.getFilmy()
+												.getId_filmu());
 			} else {
 				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 						"globalmessage", "Nie wybraleœ filmu", 3);
