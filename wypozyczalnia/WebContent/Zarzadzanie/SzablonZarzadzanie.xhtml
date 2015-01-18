@@ -35,12 +35,10 @@
 						<p:submenu label="Rezerwacje" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Lista rezerwacji"
 								url="/Zarzadzanie/listaRezerwacji.xhtml" icon="ui-icon-home" />
-							<p:menuitem value="Dodaj klienta"
-								action="#{klienciBean.przekierowanieDodajKlienta}"
+							<p:menuitem value="Dodaj Rezerwacje"
+								action="#{RezerwacjeBean.przekierowanieDodajRezerwacje()}"
 								icon="ui-icon-home" />
-							<p:menuitem value="Edytuj klienta"
-								action="#{klienciBean.przekierowanieEdycjaKlienta}"
-								icon="ui-icon-home" />
+							
 						</p:submenu>
 						<p:submenu label="Wypożyczenia" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Lista rezerwacji"

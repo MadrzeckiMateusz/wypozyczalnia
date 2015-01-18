@@ -9,7 +9,7 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<p:dataTable id="basicDt" var="rezerwacjeList"
-				value="#{WypozyczeniaBean.getklientbyid()}">
+				value="#{RezerwacjeBean.getklientbyid()}">
 				<p:column headerText="Numer rezerwacji">
 					<h:outputText value="#{rezerwacjeList.nr_rezerwacji}" />
 				</p:column>
@@ -26,7 +26,7 @@
 					<p:commandButton oncomplete="PF('carDialog').show()"
 						icon="ui-icon-search" title="Wyświetl szczegóły">
 						<f:setPropertyActionListener value="#{rezerwacjeList}"
-							target="#{WypozyczeniaBean.zaznaczonaRezerwacja}" />
+							target="#{RezerwacjeBean.zaznaczonaRezerwacja}" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
@@ -37,7 +37,7 @@
 				<p:outputPanel id="carDetail" style="text-align: center; "
 					autoUpdate="true">
 					<p:dataTable var="kopiefilmy"
-						value="#{WypozyczeniaBean.zaznaczonaRezerwacja.kopieFilmus}">
+						value="#{RezerwacjeBean.zaznaczonaRezerwacja.kopieFilmus}">
 						<p:column headerText="Numer filmu">
 							<h:outputText value="#{kopiefilmy.filmy.nr_filmu}" />
 						</p:column>

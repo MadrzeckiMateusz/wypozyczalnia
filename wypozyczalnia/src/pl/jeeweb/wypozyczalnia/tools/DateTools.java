@@ -15,6 +15,7 @@ public abstract class DateTools {
 	
 	public static Date currentDate() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		
 		Date date = new Date();
 
 		return date;

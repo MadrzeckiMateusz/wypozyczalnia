@@ -19,7 +19,9 @@ import java.util.List;
 @Table(name="rezerwacje")
 @NamedQueries({
 @NamedQuery(name="Rezerwacje.findAll", query="SELECT r FROM Rezerwacje r"),
-@NamedQuery(name="Rezerwacje.findById", query="SELECT r FROM Rezerwacje r where r.id_rezerwacji = :id_rezerwacji")
+@NamedQuery(name="Rezerwacje.findById", query="SELECT r FROM Rezerwacje r where r.id_rezerwacji = :id_rezerwacji"),
+@NamedQuery(name="Rezerwacje.findDifferentStatus", query="SELECT r FROM Rezerwacje r where r.status_rezerwacji <> :status"),
+@NamedQuery(name="Rezerwacje.getMaxId",query="SELECT MAX(r.id_rezerwacji) FROM Rezerwacje r")
 })
 public class Rezerwacje implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -51,7 +53,7 @@ public class Rezerwacje implements Serializable {
 	private List<KopieFilmu> kopieFilmus;
 
 	//bi-directional many-to-one association to Klienci
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="Id_klienta")
 	private Klienci klienci;
 

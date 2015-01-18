@@ -11,12 +11,12 @@
 	<ui:define name="content">
 
 		<p:growl id="growl" for="globalmessage" showDetail="true"
-			autoUpdate="true" life="2000" />
+			autoUpdate="true" life="4000" />
 		<p:panelGrid styleClass="gridNoPaddingszczegoly" columns="2">
 			<p:panel styleClass="panelNoPadding">
 
 				<p:dataTable id="tableRezewacja" styleClass="bordernew"
-					var="rezerwacja" value="#{SzczegolyRezerwacji.rezerwacja}">
+					var="rezerwacja" value="#{RezerwacjeDetailsBean.rezerwacja}">
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left">
 							<h:outputText value="Rezerwacja" style="text-align:left" />
@@ -39,9 +39,9 @@
 				</p:dataTable>
 
 				<p:dataTable id="filmyTable" styleClass="bordernew" var="kopieFilmu"
-					value="#{SzczegolyRezerwacji.rezerwacja.kopieFilmus}"
+					value="#{RezerwacjeDetailsBean.rezerwacja.kopieFilmus}"
 					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px"
-					selection="#{SzczegolyRezerwacji.slelectedFilm}"
+					selection="#{RezerwacjeDetailsBean.slelectedFilm}"
 					selectionMode="single" rowKey="#{kopieFilmu.filmy.id_filmu}">
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left">
@@ -62,21 +62,21 @@
 					</p:column>
 					<p:column headerText="Gatunek">
 						<h:outputText
-							value="#{SzczegolyRezerwacji.klasyfikacjaGatunkuToString(kopieFilmu.filmy)}" />
+							value="#{RezerwacjeDetailsBean.klasyfikacjaGatunkuToString(kopieFilmu.filmy)}" />
 					</p:column>
 					<p:column headerText="Numer kopii filmu">
 						<h:outputText
-							value="#{SzczegolyRezerwacji.getNumerkopiiFlmu(kopieFilmu)}" />
+							value="#{RezerwacjeDetailsBean.getNumerkopiiFlmu(kopieFilmu)}" />
 					</p:column>
 
-					<p:column style="width:32px; text-align: center">
+					<p:column style="width:32px; text-align: center" rendered="#{RezerwacjeDetailsBean.edytowalnarezerwacja}">
 						<p:commandButton
-							action="#{SzczegolyRezerwacji.usunFilm(kopieFilmu)}"
+							action="#{RezerwacjeDetailsBean.usunFilm(kopieFilmu)}"
 							icon="ui-icon-minus" update="filmyTable" />
 					</p:column>
 				</p:dataTable>
 				<p:dataTable styleClass="bordernew" var="klient"
-					value="#{SzczegolyRezerwacji.rezerwacja.klienci}"
+					value="#{RezerwacjeDetailsBean.rezerwacja.klienci}"
 					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px">
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left">
@@ -105,38 +105,38 @@
 
 			</p:panel>
 
-			<p:panel styleClass="panelNoPadding" style="vertical-align:top">
+			<p:panel id="panel_button" styleClass="panelNoPadding" style="vertical-align:top">
 				<p:panelGrid styleClass="gridNoPadding" columns="1"
 					columnClasses="topAligment">
 					<p:commandButton onclick="PF('DialogDodajFilm').show()"
 						image="button_dodaj" style="height:50px; width:50px; "
-						title="Dodaj film do rezerwacji" />
+						title="Dodaj film do rezerwacji" rendered="#{RezerwacjeDetailsBean.edytowalnarezerwacja}"/>
 
 					<p:commandButton
-						actionListener="#{SzczegolyRezerwacji.zmienStatusRezerwacji()}"
+						actionListener="#{RezerwacjeDetailsBean.zmienStatusRezerwacji()}"
 						image="button_check"
 						style="height:50px; width:50px; margin-top:5px"
-						title="Obsługa rezerwacji/Zmiana statusu" update="tableRezewacja" />
+						title="Obsługa rezerwacji/Zmiana statusu" update="tableRezewacja, panel_button, filmyTable  " />
 
-					<p:commandButton action="#{SzczegolyRezerwacji.PDF}"
+					<p:commandButton action="#{RezerwacjeDetailsBean.PDF}"
 						image="button_print"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Wydrukuj potwierdzenie" ajax="false" />
 
 					<p:commandButton
-						action="#{SzczegolyRezerwacji.przekierowanieSzczegoly()}"
+						action="#{RezerwacjeDetailsBean.przekierowanieSzczegoly()}"
 						image="button_szczegol"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Szczegóły wybranego filmu" />
 
 					<p:commandButton
-						action="#{SzczegolyRezerwacji.przekierowaniePotwierdz}"
+						action="#{RezerwacjeDetailsBean.przekierowaniePotwierdz}"
 						image="button_daneKlienta"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Dane klienta" />
 						
 						<p:commandButton
-						action="#{SzczegolyRezerwacji.wypozyczFilmy}"
+						action="#{RezerwacjeDetailsBean.wypozyczFilmy}"
 						image="button_wypozycz"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Wypożycz filmy" />
@@ -153,13 +153,13 @@
 					style="color:red; font-size:18px" />
 				<p:commandButton value="Ok" styleClass="ui-confirmdialog-yes"
 					icon="ui-icon-check" style="text-align:center; width:80px;"
-					action="#{SzczegolyRezerwacji.przekierowaniePotwierdz()}" />
+					action="#{RezerwacjeDetailsBean.przekierowaniePotwierdz()}" />
 			</p:panelGrid>
 		</p:dialog>
 
 		<p:dialog header="Wyszukaj filmy" global="true"
 			widgetVar="DialogDodajFilm" position="top" width="1200" height="500">
-			<p:commandButton action="#{SzczegolyRezerwacji.dodajFilmy()}"
+			<p:commandButton action="#{RezerwacjeDetailsBean.dodajFilmy()}"
 				image="button_icon" style="height:50px; width:50px;"
 				update="filmyTable" />
 			<p:dataTable var="filmy" styleClass="zarzadzaj"
@@ -167,7 +167,7 @@
 				filteredValue="#{FilmyBean.filetredFilmy}"
 				emptyMessage="Brak wyników dla wyszukiwania"
 				selectionMode="multiple"
-				selection="#{SzczegolyRezerwacji.selectedFilmy}"
+				selection="#{RezerwacjeDetailsBean.selectedFilmy}"
 				rowKey="#{filmy.id_filmu}">
 
 				<f:facet name="header">

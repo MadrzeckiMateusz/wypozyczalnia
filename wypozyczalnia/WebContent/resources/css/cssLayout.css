@@ -142,13 +142,13 @@
 .menu {
 	background-color: #A4BDEF;
 	position: relative;
-	height: 400px;
+	height: px;
 	margin-top: 10px;
 }
 .menumanage {
 	background-color: #A4BDEF;
-	position: relative;
-	height: Auto;
+	
+	
 	margin-top: 10px;
 }
 
@@ -199,7 +199,7 @@
 }
 #leftmanage {
 	float: left;
-	
+	height: 650px;
 	
 }
 
@@ -288,6 +288,13 @@
 	height: 35px;
 	width: 35px;
 	background-image: url("#{resource['image/klient.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+.button_dodaj2 {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/Add-icon.png']}") !important;
 	top: 35% !important;
 	left: 35% !important;
 }

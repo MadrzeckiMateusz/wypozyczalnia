@@ -76,13 +76,13 @@ public class rezerwacjeKoszyk implements Serializable {
 		i += 1;
 		String numerKlienta = "";
 		if (i < 10)
-			numerKlienta = "RE/000" + i.toString();
+			numerKlienta = "R0/000" + i.toString();
 		if (i >= 10 && i < 100)
-			numerKlienta = "RE/00" + i.toString();
+			numerKlienta = "R0/00" + i.toString();
 		if (i >= 100 && i < 1000)
-			numerKlienta = "RE/0" + i.toString();
+			numerKlienta = "R0/0" + i.toString();
 		if (i >= 1000)
-			numerKlienta = "RE/" + i.toString();
+			numerKlienta = "R0/" + i.toString();
 		return numerKlienta;
 	}
 

@@ -35,10 +35,17 @@ public class RezerwacjeBean implements Serializable {
 	}
 
 	public List<Rezerwacje> getAllRezerwacje() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+		String rola = (String) session.getAttribute("role-name");
+		List<Rezerwacje> list = null;
 		EntityManager em = DBManager.getManager().createEntityManager();
-
-		List<Rezerwacje> list = em.createNamedQuery("Rezerwacje.findAll")
-				.getResultList();
+		if (rola.equals("admin")) {
+			list = em.createNamedQuery("Rezerwacje.findAll").getResultList();
+		} else {
+			list = em.createNamedQuery("Rezerwacje.findDifferentStatus").setParameter("status", "Zrealizowana")
+					.getResultList();
+		}
 		em.close();
 		return list;
 
@@ -53,10 +60,11 @@ public class RezerwacjeBean implements Serializable {
 		klient = (Klienci) em
 				.createQuery("Select k from Klienci k where k.id_klienta=:id")
 				.setParameter("id", user_id).getSingleResult();
+		klient.getRezerwacjes().size();
 		List<Rezerwacje> rezerwacje = klient.getRezerwacjes();
 		em.close();
 
-		return klient.getRezerwacjes();
+		return rezerwacje;
 
 	}
 
@@ -76,8 +84,24 @@ public class RezerwacjeBean implements Serializable {
 				System.out.print(this.zaznaczonaRezerwacja.getId_rezerwacji());
 
 			}
-		}else {
-			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(), "globalmessage", "Nie wybra³eœ rezerwacji", 3);
+		} else {
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Nie wybra³eœ rezerwacji", 3);
+		}
+	}
+	public void przekierowanieDodajRezerwacje() {
+		try {
+			
+				
+			FacesContext
+					.getCurrentInstance()
+					.getExternalContext()
+					.redirect(
+							"/wypozyczalnia/Zarzadzanie/rezerwacjeNowa.xhtml");
+			
+		} catch (IOException e) {
+			System.out.print("ssadsdassd");
+			
 		}
 	}
 

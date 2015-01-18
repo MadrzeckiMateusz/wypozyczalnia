@@ -60,9 +60,9 @@ import pl.jeeweb.wypozyczalnia.tools.SendMail;
  * @author Mateusz
  * 
  */
-@ManagedBean(name = "SzczegolyRezerwacji")
+@ManagedBean(name = "RezerwacjeDetailsBean")
 @ViewScoped
-public class SzczegolyRezerwacji implements Serializable {
+public class RezerwacjeDetailsBean implements Serializable {
 
 	private Rezerwacje rezerwacja;
 	private Wypozyczenia wypozyczenie = new Wypozyczenia();
@@ -71,7 +71,7 @@ public class SzczegolyRezerwacji implements Serializable {
 	private Pracownicy pracownik;
 	private KopieFilmu slelectedFilm = null;
 
-	public SzczegolyRezerwacji() {
+	public RezerwacjeDetailsBean() {
 
 	}
 
@@ -163,17 +163,13 @@ public class SzczegolyRezerwacji implements Serializable {
 			kopiafilmu.setRezerwacje(null);
 			em.merge(kopiafilmu);
 		}
-		this.rezerwacja.setPracownicy(null);
+		this.rezerwacja.setPracownicy(this.pracownik);
 		em.flush();
-		em.remove(em.merge(this.rezerwacja));
+	//	em.remove(em.merge(this.rezerwacja));
+		this.rezerwacja.setStatus_rezerwacji("Zrealizowana");
+		em.merge(this.rezerwacja);
 		em.getTransaction().commit();
-		//);
-//		EntityManager em1 = DBManager.getManager().createEntityManager();
-//		em1.getTransaction().begin();
-//		em1.remove(em.merge(this.rezerwacja));
-//		em1.getTransaction().commit();
-//		em1.close();
-//		// em.close();
+
 		DBManager.getManager().closeEntityManagerFactory();
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 				"globalmessage",
@@ -190,28 +186,47 @@ public class SzczegolyRezerwacji implements Serializable {
 	}
 
 	public void zmienStatusRezerwacji() {
+		if (this.rezerwacja.getStatus_rezerwacji().equals("W REALIZACJI")) {
+			EntityManager em = DBManager.getManager().createEntityManager();
+			em.getTransaction().begin();
 
-		EntityManager em = DBManager.getManager().createEntityManager();
-		em.getTransaction().begin();
-		;
-		this.rezerwacja.setStatus_rezerwacji("Obs³u¿ona. Do odbioru");
-		this.rezerwacja.setPracownicy(this.pracownik);
+			this.rezerwacja.setStatus_rezerwacji("Obs³u¿ona. Do odbioru");
+			this.rezerwacja.setPracownicy(this.pracownik);
 
-		wyslijPowiadomienieOdbioru();
-		DisplayMessage
-				.InfoMessage(
-						FacesContext.getCurrentInstance(),
-						"globalmessage",
-						"Rezerwacja obs³u¿ona. Zmieniono status na Obs³u¿ona. Do odbioru.",
-						1);
-		em.merge(this.rezerwacja);
+			wyslijPowiadomienieOdbioru();
+			DisplayMessage
+					.InfoMessage(
+							FacesContext.getCurrentInstance(),
+							"globalmessage",
+							"Rezerwacja obs³u¿ona. Zmieniono status na Obs³u¿ona. Do odbioru.",
+							1);
+			em.merge(this.rezerwacja);
 
-		em.getTransaction().commit();
-		em.close();
+			em.getTransaction().commit();
+			em.close();
+		} else {
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Rezerwacja zosta³a juz obs³u¿ona!!!", 2);
+		}
 
 	}
 
-	public void wyslijPowiadomienieOdbioru() {
+	public boolean isEdytowalnarezerwacja() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+		String rola = (String) session.getAttribute("role-name");
+		if (this.rezerwacja.getStatus_rezerwacji().equals("W REALIZACJI")) {
+			return true;
+		} else {
+			if (rola.equals("admin")) {
+				return true;
+			} else
+				return false;
+		}
+
+	}
+
+	private void wyslijPowiadomienieOdbioru() {
 		Klienci klient = this.rezerwacja.getKlienci();
 		SendMail mail = new SendMail(
 				klient.getE_mail(),
