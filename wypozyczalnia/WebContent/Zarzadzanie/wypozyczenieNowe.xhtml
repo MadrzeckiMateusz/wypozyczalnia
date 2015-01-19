@@ -11,12 +11,12 @@
 	<ui:define name="content">
 
 		<p:growl id="growl" for="globalmessage" showDetail="true"
-			autoUpdate="true" life="2000" />
+			autoUpdate="true" life="4000" />
 		<p:panelGrid styleClass="gridNoPaddingszczegoly" columns="2">
 			<p:panel styleClass="panelNoPadding">
 
 				<p:dataTable id="tableWypozyczenia" styleClass="bordernew"
-					var="wypozyczenie" value="#{WypozyczeniaDetailsBean.wypozyczenie}">
+					var="wypozyczenie" value="#{WypozyczeniaAddNewBean.wypozyczenie}">
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left">
 							<h:outputText value="Wypożyczenie" style="text-align:left" />
@@ -26,27 +26,26 @@
 						<h:outputText value="#{wypozyczenie.nr_wypozyczenia}" />
 					</p:column>
 					<p:column headerText="Data wypżyczenia">
-						<h:outputText value="#{wypozyczenie.data_wypozyczenia}" />
+
+						<p:calendar value="#{wypozyczenie.data_wypozyczenia}"
+							pattern="yyyy-MM-dd" mask="true" locale="pl" lang="pl"
+							readonly="true"  readonlyInput="true"/>
 					</p:column>
 					<p:column headerText="Termin zwrotu">
-						<h:outputText value="#{wypozyczenie.termin_zwrotu}" />
+						<p:calendar value="#{wypozyczenie.termin_zwrotu}"
+							pattern="yyyy-MM-dd" mask="true" locale="pl" lang="pl" />
+
 					</p:column>
 
-					<p:column headerText="Data Zwrotu">
-						<h:outputText value="#{wypozyczenie.data_zwrotu}" />
-					</p:column>
-					
-					<p:column headerText="Kara za zwłoke" >
-						<h:outputText value="#{wypozyczenie.odsetki}" />
-					</p:column>
+
 
 				</p:dataTable>
 
+
 				<p:dataTable id="filmyTable" styleClass="bordernew" var="kopieFilmu"
-					value="#{WypozyczeniaDetailsBean.wypozyczenie.kopieFilmus}"
-					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px"
-					selection="#{WypozyczeniaDetailsBean.slelectedkopia}"
-					selectionMode="single" rowKey="#{kopieFilmu.filmy.id_filmu}">
+					value="#{WypozyczeniaAddNewBean.kopiefilmu}"
+					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px">
+
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left">
 							<h:outputText value="Filmy" />
@@ -66,22 +65,21 @@
 					</p:column>
 					<p:column headerText="Gatunek">
 						<h:outputText
-							value="#{WypozyczeniaDetailsBean.klasyfikacjaGatunkuToString(kopieFilmu.filmy)}" />
+							value="#{Converters.klasyfikacjaGatunkuToString(kopieFilmu.filmy)}" />
 					</p:column>
 					<p:column headerText="Numer kopii filmu">
-						<h:outputText
-							value="#{WypozyczeniaDetailsBean.getNumerkopiiFlmu(kopieFilmu)}" />
+						<h:outputText value="#{Converters.getNumerkopiiFlmu(kopieFilmu)}" />
 					</p:column>
 
 					<p:column style="width:32px; text-align: center">
 						<p:commandButton
-							action="#{WypozyczeniaDetailsBean.usunFilm(kopieFilmu)}"
-							icon="ui-icon-minus" update="filmyTable" rendered="#{WypozyczeniaBean.admin}"/>
+							action="#{WypozyczeniaAddNewBean.usunFilm(kopieFilmu)}"
+							icon="ui-icon-minus" update="filmyTable" />
 					</p:column>
 				</p:dataTable>
-				<p:dataTable styleClass="bordernew" var="klient"
-					value="#{WypozyczeniaDetailsBean.wypozyczenie.klienci}"
-					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px">
+				<p:dataTable id="klienciTable" styleClass="bordernew" var="klient"
+					value="#{WypozyczeniaAddNewBean.wypozyczenie.klienci}"
+					emptyMessage="Brak klienta!!!" style="margin-top:5px">
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left">
 							<h:outputText value="Dane Klienta" style="text-align:left" />
@@ -109,36 +107,32 @@
 
 			</p:panel>
 
-			<p:panel styleClass="panelNoPadding" style="vertical-align:top">
+			<p:panel id="panel_button" styleClass="panelNoPadding"
+				style="vertical-align:top">
 				<p:panelGrid styleClass="gridNoPadding" columns="1"
 					columnClasses="topAligment">
 					<p:commandButton onclick="PF('DialogDodajFilm').show()"
 						image="button_dodaj" style="height:50px; width:50px; "
-						title="Dodaj film do rezerwacji" rendered="#{WypozyczeniaBean.admin}"/>
+						title="Dodaj film " />
 
-					
-					<p:commandButton action="#{WypozyczeniaDetailsBean.PDF}"
-						image="button_print"
-						style="height:50px; width:50px; margin-top:5px"
-						title="Wydrukuj potwierdzenie" ajax="false" />
-
-					<p:commandButton
-						action="#{WypozyczeniaDetailsBean.przekierowanieSzczegoly()}"
-						image="button_szczegol"
-						style="height:50px; width:50px; margin-top:5px"
-						title="Szczegóły wybranego filmu" />
-
-					<p:commandButton
-						action="#{WypozyczeniaDetailsBean.przekierowaniePotwierdz}"
+					<p:commandButton onclick="PF('DialogDodajKlienta').show()"
 						image="button_daneKlienta"
 						style="height:50px; width:50px; margin-top:5px"
-						title="Dane klienta" />
+						title="Dodaj Klienta" />
+
+
+
+					<p:commandButton
+						action="#{WypozyczeniaAddNewBean.zapiszWypozyczenie}"
+						image="button_wypozycz"
+						style="height:50px; width:50px; margin-top:5px"
+						title="zapisz rezerwacje" />
 				</p:panelGrid>
 			</p:panel>
 
 		</p:panelGrid>
 
-		<p:dialog header="WybierzFilmy" global="true" showEffect="fade"
+		<p:dialog header="Dane Klienta" global="true" showEffect="fade"
 			hideEffect="explode" widgetVar="DialogDaneKlient" position="center">
 			<p:panelGrid columns="1" styleClass="gridNoPadding"
 				style="text-align:center;">
@@ -146,13 +140,13 @@
 					style="color:red; font-size:18px" />
 				<p:commandButton value="Ok" styleClass="ui-confirmdialog-yes"
 					icon="ui-icon-check" style="text-align:center; width:80px;"
-					action="#{WypozyczeniaDetailsBean.przekierowaniePotwierdz()}" />
+					action="#{WypozyczeniaAddNewBean.przekierowaniePotwierdz()}" />
 			</p:panelGrid>
 		</p:dialog>
 
 		<p:dialog header="Wyszukaj filmy" global="true"
 			widgetVar="DialogDodajFilm" position="top" width="1200" height="500">
-			<p:commandButton action="#{WypozyczeniaDetailsBean.dodajFilmy()}"
+			<p:commandButton action="#{WypozyczeniaAddNewBean.dodajFilmy()}"
 				image="button_icon" style="height:50px; width:50px;"
 				update="filmyTable" />
 			<p:dataTable var="filmy" styleClass="zarzadzaj"
@@ -160,7 +154,7 @@
 				filteredValue="#{FilmyBean.filetredFilmy}"
 				emptyMessage="Brak wyników dla wyszukiwania"
 				selectionMode="multiple"
-				selection="#{WypozyczeniaDetailsBean.selectedFilmy}"
+				selection="#{WypozyczeniaAddNewBean.selectedFilmy}"
 				rowKey="#{filmy.id_filmu}">
 
 				<f:facet name="header">
@@ -220,6 +214,68 @@
 			</p:dataTable>
 		</p:dialog>
 
+		<p:dialog header="Dodaj klienta" global="true"
+			widgetVar="DialogDodajKlienta" position="top" width="1200"
+			height="500">
+			<p:commandButton action="#{WypozyczeniaAddNewBean.dodajKlienta()}"
+				image="button_dodaj2" style="height:50px; width:50px;"
+				update="klienciTable" />
+			<p:dataTable var="klient" styleClass="zarzadzaj"
+				value="#{klienciBean.allKlienci}" widgetVar="klienciTables"
+				filteredValue="#{klienciBean.filteredKlienci}"
+				emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
+				selection="#{WypozyczeniaAddNewBean.klient}"
+				rowKey="#{klient.id_klienta}">
+
+				<f:facet name="header">
+					<p:outputPanel style="margin-right:67%">
+						<h:outputText value="Wyszukiwanie globalne:"
+							style="margin-right:15px" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('klienciTables').filter()" style="width:150px"
+							placeholder="Wpisz frazę" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column headerText="Numer Klienta" filterBy="#{klient.nr_klienta}"
+					filterMatchMode="contains" style="width:55px"
+					filterStyle="width:60px">
+					<h:outputText value="#{klient.nr_klienta}" />
+				</p:column>
+
+				<p:column headerText="Data Rejestracji"
+					filterBy="#{klient.data_rejestracji}" filterMatchMode="contains"
+					style="width:80px" filterStyle="width:60px">
+					<h:outputText value="#{klient.data_rejestracji}" />
+				</p:column>
+
+				<p:column headerText="Imie" filterBy="#{klient.imie}"
+					filterMatchMode="contains" style="width:60px"
+					filterStyle="width:60px">
+					<h:outputText value="#{klient.imie}" />
+				</p:column>
+
+				<p:column headerText="Nazwisko" filterBy="#{klient.nazwisko}"
+					filterMatchMode="contains" style="width:70px"
+					filterStyle="width:60px">
+					<h:outputText value="#{klient.nazwisko}" />
+				</p:column>
+
+
+				<p:column headerText="E-mail" filterBy="#{klient.e_mail}"
+					filterMatchMode="contains" style="width:190px; "
+					filterStyle="width:185px ">
+					<h:outputText value="#{klient.e_mail}" />
+				</p:column>
+
+				<p:column headerText="Numer telefonu"
+					filterBy="#{klient.nr_telefonu}" filterMatchMode="contains"
+					style="width:80px" filterStyle="width:75px">
+					<h:outputText value="#{klient.nr_telefonu}" />
+				</p:column>
+
+
+			</p:dataTable>
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>

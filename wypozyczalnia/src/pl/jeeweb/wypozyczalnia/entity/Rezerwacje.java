@@ -58,7 +58,7 @@ public class Rezerwacje implements Serializable {
 	private Klienci klienci;
 
 	//bi-directional many-to-one association to Pracownicy
-	@ManyToOne(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.MERGE},fetch= FetchType.EAGER)
 	@JoinColumn(name="Id_prcownika")
 	private Pracownicy pracownicy;
 

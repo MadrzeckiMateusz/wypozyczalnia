@@ -170,7 +170,8 @@ public class RezerwacjeDetailsBean implements Serializable {
 		em.merge(this.rezerwacja);
 		em.getTransaction().commit();
 
-		DBManager.getManager().closeEntityManagerFactory();
+		//DBManager.getManager().closeEntityManagerFactory();
+		DBManager.getManager().refresh();
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 				"globalmessage",
 				"Wypo¿yczenie zrealizowane wydrukuj potwierdzenie", 1);
@@ -186,7 +187,7 @@ public class RezerwacjeDetailsBean implements Serializable {
 	}
 
 	public void zmienStatusRezerwacji() {
-		if (this.rezerwacja.getStatus_rezerwacji().equals("W REALIZACJI")) {
+		if (this.rezerwacja.getStatus_rezerwacji().equals("W realizacji")) {
 			EntityManager em = DBManager.getManager().createEntityManager();
 			em.getTransaction().begin();
 

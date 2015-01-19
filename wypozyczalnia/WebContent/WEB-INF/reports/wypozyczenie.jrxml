@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-01-18T23:10:26 -->
+<!-- 2015-01-18T23:10:01 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rezerwacja" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2910f9eb-373b-4cee-b601-cd6495c1b73a">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
@@ -128,175 +128,190 @@
 			<![CDATA[]]>
 		</queryString>
 	</subDataset>
-	<queryString>
+	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
-	<field name="nr_rezerwacji" class="java.lang.String">
-		<fieldDescription><![CDATA[nr_rezerwacji]]></fieldDescription>
-	</field>
-	<field name="data_odbioru" class="java.util.Date">
-		<fieldDescription><![CDATA[data_odbioru]]></fieldDescription>
-	</field>
-	<field name="data_rezerwacji" class="java.util.Date">
-		<fieldDescription><![CDATA[data_rezerwacji]]></fieldDescription>
-	</field>
 	<field name="filmyTran" class="java.util.List">
 		<fieldDescription><![CDATA[filmyTran]]></fieldDescription>
 	</field>
 	<field name="klientTran" class="java.util.List">
 		<fieldDescription><![CDATA[klientTran]]></fieldDescription>
 	</field>
+	<field name="termin_zwrotu" class="java.util.Date">
+		<fieldDescription><![CDATA[termin_zwrotu]]></fieldDescription>
+	</field>
+	<field name="nr_wypozyczenia" class="java.lang.String">
+		<fieldDescription><![CDATA[nr_wypozyczenia]]></fieldDescription>
+	</field>
+	<field name="data_wypozyczenia" class="java.util.Date">
+		<fieldDescription><![CDATA[data_wypozyczenia]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="101" splitType="Stretch">
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="81" height="79" uuid="a5ebd5ca-4b61-4dbb-ae97-e0c0436d86f2"/>
+				<imageExpression><![CDATA["C:/Users/Mateusz/git/wypozyczalnia_git/wypozyczalnia/WebContent/resources/image/header.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="474" y="0" width="81" height="79" uuid="0a90b125-11e1-41f9-984c-3639b2c2e4ba"/>
+				<imageExpression><![CDATA["C:/Users/Mateusz/git/wypozyczalnia_git/wypozyczalnia/WebContent/resources/image/header.png"]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement x="90" y="10" width="384" height="51" uuid="68af1f7a-eee2-4ff0-8044-5b17668bb7ca"/>
+				<reportElement x="90" y="10" width="384" height="51" uuid="7bbbc3a0-d875-42bc-8230-66e445a08c55"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="24" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
 				<text><![CDATA[Wypożyczalnia DVD]]></text>
 			</staticText>
-			<image>
-				<reportElement x="474" y="0" width="81" height="79" uuid="5a9a7f9e-02b4-41f2-886b-cfba188050d4"/>
-				<imageExpression><![CDATA["C:/Users/Mateusz/git/wypozyczalnia_git/wypozyczalnia/WebContent/resources/image/header.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="0" y="0" width="81" height="79" uuid="eacc8f69-1a50-4bbc-abef-91ca7a8e4547"/>
-				<imageExpression><![CDATA["C:/Users/Mateusz/git/wypozyczalnia_git/wypozyczalnia/WebContent/resources/image/header.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<detail>
-		<band height="603" splitType="Stretch">
+		<band height="439" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="30" width="80" height="22" uuid="e30f13f8-50b7-4db5-9f1b-87277701e8ad"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="0" y="50" width="100" height="22" uuid="e30f13f8-50b7-4db5-9f1b-87277701e8ad"/>
+				<textElement verticalAlignment="Bottom">
 					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
 				<text><![CDATA[Nr:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="52" width="81" height="40" uuid="1cbad478-dc3b-4786-80e5-6544a65751dd"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="0" y="72" width="100" height="40" uuid="1cbad478-dc3b-4786-80e5-6544a65751dd"/>
+				<textElement verticalAlignment="Bottom">
 					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
-				<text><![CDATA[Data rezerwacji:]]></text>
+				<text><![CDATA[Data wypożyczenia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="93" width="80" height="39" uuid="3c54eab1-d765-4f9d-8688-bb6fda5d44c6"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="0" y="113" width="100" height="40" uuid="3c54eab1-d765-4f9d-8688-bb6fda5d44c6"/>
+				<textElement verticalAlignment="Bottom">
 					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
-				<text><![CDATA[Data 
-odbioru:]]></text>
+				<text><![CDATA[Termin
+zwrotu:
+]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="140" width="555" height="1" uuid="ae08719d-cd84-4779-8141-f34974af124c"/>
+				<reportElement x="0" y="160" width="555" height="1" uuid="ae08719d-cd84-4779-8141-f34974af124c"/>
 			</line>
 			<line>
-				<reportElement x="0" y="20" width="555" height="1" uuid="24c8f08d-6af6-4b0d-b5a3-bd9fa8746dcb"/>
+				<reportElement x="0" y="0" width="555" height="1" uuid="24c8f08d-6af6-4b0d-b5a3-bd9fa8746dcb"/>
 			</line>
 			<line>
-				<reportElement x="0" y="177" width="555" height="1" uuid="5d6e7490-33bd-4533-aceb-ab2652da7141"/>
+				<reportElement x="0" y="198" width="555" height="1" uuid="5d6e7490-33bd-4533-aceb-ab2652da7141"/>
 			</line>
 			<staticText>
-				<reportElement x="0" y="143" width="158" height="31" uuid="887b7897-27bb-4398-bb06-dfa81cce858a"/>
+				<reportElement x="0" y="168" width="158" height="26" uuid="887b7897-27bb-4398-bb06-dfa81cce858a"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font size="20" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
 				<text><![CDATA[Filmy:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="81" y="32" width="110" height="20" uuid="f1119402-90c1-49ce-b366-84920330b6c2"/>
-				<textElement verticalAlignment="Bottom">
-					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{nr_rezerwacji}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="80" y="104" width="100" height="28" uuid="b8c72f9e-1284-4f60-98a8-aac86e4ce313"/>
-				<textElement verticalAlignment="Bottom">
-					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{data_odbioru}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="82" y="61" width="109" height="30" uuid="9fab2dc6-aff7-4187-b7b7-17d53a585362"/>
-				<textElement verticalAlignment="Bottom">
-					<font size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{data_rezerwacji}]]></textFieldExpression>
-			</textField>
 			<subreport>
-				<reportElement x="0" y="236" width="555" height="60" uuid="9227b405-2a38-491a-b79f-2c607b446890"/>
+				<reportElement x="0" y="248" width="555" height="60" uuid="9227b405-2a38-491a-b79f-2c607b446890"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{filmyTran})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\WorkspaceEclipse\\Praca_Inz\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\wypozyczalnia\\WEB-INF\\reports\\filmysub.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement x="0" y="196" width="100" height="19" uuid="43b1f91d-527f-4f76-9c83-2273eddbd574"/>
+				<reportElement x="0" y="208" width="100" height="19" uuid="43b1f91d-527f-4f76-9c83-2273eddbd574"/>
 				<textElement textAlignment="Center">
 					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
 				<text><![CDATA[Numer Filmu]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="112" y="196" width="100" height="19" uuid="6249dc2c-2629-4d2b-a06a-e4c221fbf62f"/>
+				<reportElement x="112" y="208" width="100" height="19" uuid="6249dc2c-2629-4d2b-a06a-e4c221fbf62f"/>
 				<textElement textAlignment="Center">
 					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
 				<text><![CDATA[Tytuł]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="223" y="196" width="100" height="19" uuid="f88c31b4-d511-4af0-8f65-a9cdf1b815c4"/>
+				<reportElement x="223" y="208" width="100" height="19" uuid="f88c31b4-d511-4af0-8f65-a9cdf1b815c4"/>
 				<textElement textAlignment="Center">
 					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
 				<text><![CDATA[Produkcja]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="338" y="196" width="100" height="19" uuid="a8888403-9f8d-45ad-931b-ac9610328d8d"/>
+				<reportElement x="338" y="208" width="100" height="19" uuid="a8888403-9f8d-45ad-931b-ac9610328d8d"/>
 				<textElement textAlignment="Center">
 					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
 				<text><![CDATA[Gatunek]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="455" y="196" width="100" height="19" uuid="d4494041-458b-4063-8b96-e0a6dfa0dac7"/>
+				<reportElement x="455" y="208" width="100" height="19" uuid="d4494041-458b-4063-8b96-e0a6dfa0dac7"/>
 				<textElement textAlignment="Center">
 					<font size="14" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
 				<text><![CDATA[Numer Kopii]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="226" width="555" height="1" uuid="a546b8c2-9b32-470d-8393-4bd646da1f80"/>
+				<reportElement x="0" y="238" width="555" height="1" uuid="a546b8c2-9b32-470d-8393-4bd646da1f80"/>
 			</line>
 			<subreport>
-				<reportElement x="260" y="30" width="294" height="100" uuid="9ea37222-d8c1-4a23-ac1b-8bb4e16f447f"/>
+				<reportElement x="260" y="50" width="294" height="100" uuid="9ea37222-d8c1-4a23-ac1b-8bb4e16f447f"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{klientTran})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\WorkspaceEclipse\\Praca_Inz\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\wypozyczalnia\\WEB-INF\\reports\\klientSub.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement x="101" y="50" width="128" height="22" uuid="78c04098-7b3f-4f95-9ab6-b71b92e78c33"/>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nr_wypozyczenia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="101" y="82" width="128" height="30" uuid="8e86358c-3194-4655-8270-473b12a58c4d"/>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_wypozyczenia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="101" y="122" width="128" height="30" uuid="43b28295-e25c-41c4-a319-88c399b22a50"/>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{termin_zwrotu}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="0" y="-20" width="140" height="40" uuid="bc401c36-41ee-46b1-b614-33f26cc418a6"/>
+				<reportElement x="0" y="0" width="200" height="40" uuid="bc401c36-41ee-46b1-b614-33f26cc418a6"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="20" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
-				<text><![CDATA[Rezerwacja:]]></text>
+				<text><![CDATA[Wypożyczenie:]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="41" width="555" height="1" uuid="6e53b76c-2bd2-464a-82b3-0bd42addb8b6"/>
+			</line>
 			<staticText>
-				<reportElement x="260" y="-20" width="210" height="40" uuid="c0944954-f0e1-4023-bce1-c907bcfeea1d"/>
+				<reportElement x="260" y="1" width="210" height="40" uuid="c0944954-f0e1-4023-bce1-c907bcfeea1d"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="20" pdfFontName="Times-Roman" pdfEncoding="Cp1250"/>
 				</textElement>
 				<text><![CDATA[Dane Klienta:]]></text>
 			</staticText>
-			<line>
-				<reportElement x="0" y="-20" width="555" height="1" uuid="257f3e2c-3964-4ce2-a1ed-d00b02e92773"/>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="53" splitType="Stretch">
+			<textField pattern="dd.MM.yyyy">
+				<reportElement x="290" y="20" width="110" height="16" uuid="9ad73973-b357-42dc-a297-2d96e0ef8856"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="430" y="36" width="67" height="17" uuid="3883410c-b44d-4fd5-9ddb-7908af285410"/>
+				<text><![CDATA[podpis klienta
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="400" y="33" width="130" height="1" uuid="ea82196c-763d-4446-8504-e3ce9e6458b7"/>
+			</line>
+		</band>
 	</columnFooter>
 </jasperReport>

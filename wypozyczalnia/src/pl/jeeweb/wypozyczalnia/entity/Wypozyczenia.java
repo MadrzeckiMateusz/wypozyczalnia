@@ -19,7 +19,8 @@ import java.util.List;
 @Table(name="wypozyczenia")
 @NamedQueries({
 @NamedQuery(name="Wypozyczenia.findAll", query="SELECT w FROM Wypozyczenia w"),
-@NamedQuery(name="Wypozyczenia.findById", query="SELECT w FROM Wypozyczenia w where w.id_wypozyczenia = :id")})
+@NamedQuery(name="Wypozyczenia.findById", query="SELECT w FROM Wypozyczenia w where w.id_wypozyczenia = :id"),
+@NamedQuery(name="Wypozyczenia.getMaxId",query="SELECT MAX(w.id_wypozyczenia) FROM Wypozyczenia w")})
 public class Wypozyczenia implements Serializable {
 	private static final long serialVersionUID = 1L;
 

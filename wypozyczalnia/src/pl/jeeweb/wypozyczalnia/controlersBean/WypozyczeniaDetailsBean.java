@@ -147,28 +147,7 @@ public class WypozyczeniaDetailsBean implements Serializable {
 			context.execute("PF('DialogDaneKlient').show();");
 		}
 	}
-
-	// public void () {
-	//
-	// EntityManager em = DBManager.getManager().createEntityManager();
-	// em.getTransaction().begin();
-	// ;
-	// this.wypozyczenie.setStatus_rezerwacji("Obs³u¿ona. Do odbioru");
-	// this.wypozyczenie.setPracownicy(this.pracownik);
-	//
-	// wyslijPowiadomienieOdbioru();
-	// DisplayMessage
-	// .InfoMessage(
-	// FacesContext.getCurrentInstance(),
-	// "globalmessage",
-	// "Rezerwacja obs³u¿ona. Zmieniono status na Obs³u¿ona. Do odbioru.",
-	// 1);
-	// em.merge(this.wypozyczenie);
-	//
-	// em.getTransaction().commit();
-	// em.close();
-	//
-	// }
+	
 
 	public void wyslijPowiadomienieWypozyczenia() {
 		Klienci klient = this.wypozyczenie.getKlienci();
@@ -193,7 +172,7 @@ public class WypozyczeniaDetailsBean implements Serializable {
 				.getCurrentInstance().getExternalContext().getRequest();
 		ServletContext con = req.getServletContext();
 		InputStream resourc = con
-				.getResourceAsStream("/WEB-INF/reports/rezerwacja1.jasper");
+				.getResourceAsStream("/WEB-INF/reports/wypozyczenie.jasper");
 		Map<String, Object> parametry = new HashMap<>();
 		jasperPrint = JasperFillManager.fillReport(resourc, parametry,
 				beanCollectionDataSource);
@@ -205,7 +184,7 @@ public class WypozyczeniaDetailsBean implements Serializable {
 				.getCurrentInstance().getExternalContext().getResponse();
 		httpServletResponse.addHeader(
 				"Content-disposition",
-				"attachment; filename=rezerwacja_"
+				"attachment; filename=wypozyczenie_"
 						+ this.wypozyczenie.getNr_wypozyczenia() + ".pdf");
 		ServletOutputStream servletOutputStream = httpServletResponse
 				.getOutputStream();
@@ -218,10 +197,11 @@ public class WypozyczeniaDetailsBean implements Serializable {
 
 	private List<Wypozyczenia> findWypozyczenie(int id) {
 
-		;
-		EntityManager em = DBManager.getManager().createEntityManagerFactory()
-				.createEntityManager();
-		em.clear();
+		
+//		EntityManager em = DBManager.getManager().createEntityManagerFactory()
+//				.createEntityManager();
+//		em.clear();
+		EntityManager em = DBManager.getManager().createEntityManager();
 		List<Wypozyczenia> _wypozyczenie = (List<Wypozyczenia>) em
 				.createNamedQuery("Wypozyczenia.findById")
 				.setParameter("id", id).getResultList();

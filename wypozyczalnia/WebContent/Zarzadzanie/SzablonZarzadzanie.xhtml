@@ -35,20 +35,18 @@
 						<p:submenu label="Rezerwacje" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Lista rezerwacji"
 								url="/Zarzadzanie/listaRezerwacji.xhtml" icon="ui-icon-home" />
-							<p:menuitem value="Dodaj Rezerwacje"
+							<p:menuitem value="Nowa rezerwacja"
 								action="#{RezerwacjeBean.przekierowanieDodajRezerwacje()}"
 								icon="ui-icon-home" />
 							
 						</p:submenu>
 						<p:submenu label="Wypożyczenia" style=" background-color: #A4BDEF;">
-							<p:menuitem value="Lista rezerwacji"
+							<p:menuitem value="Lista wypożyczeń"
 								url="/Zarzadzanie/listaWypozyczen.xhtml" icon="ui-icon-home" />
-							<p:menuitem value="Dodaj klienta"
-								action="#{klienciBean.przekierowanieDodajKlienta}"
+							<p:menuitem value="Nowe wypożyczenie"
+								action="#{WypozyczeniaBean.przekierowanieDodajWypozyczenie()}"
 								icon="ui-icon-home" />
-							<p:menuitem value="Edytuj klienta"
-								action="#{klienciBean.przekierowanieEdycjaKlienta}"
-								icon="ui-icon-home" />
+							
 						</p:submenu>
 						<p:submenu label="Filmy" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Lista filmów"

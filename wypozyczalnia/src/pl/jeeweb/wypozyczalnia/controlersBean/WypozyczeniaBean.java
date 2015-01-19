@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 import javax.swing.text.html.parser.Entity;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
@@ -66,6 +67,32 @@ public class WypozyczeniaBean implements Serializable {
 		}else {
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(), "globalmessage", "Nie wybra³eœ rezerwacji", 3);
 		}
+	}
+	public void przekierowanieDodajWypozyczenie() {
+		try {
+			
+				
+			FacesContext
+					.getCurrentInstance()
+					.getExternalContext()
+					.redirect(
+							"/wypozyczalnia/Zarzadzanie/wypozyczenieNowe.xhtml");
+			
+		} catch (IOException e) {
+			System.out.print("ssadsdassd");
+			
+		}
+	}
+	public boolean isAdmin() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+		String rola = (String) session.getAttribute("role-name");
+
+		if (rola.equals("admin")) {
+			return true;
+		} else
+			return false;
+
 	}
 
 	public String ImieNazwiskoKlient(Klienci _klient) {

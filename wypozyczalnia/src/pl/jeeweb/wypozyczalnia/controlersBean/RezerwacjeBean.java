@@ -43,8 +43,8 @@ public class RezerwacjeBean implements Serializable {
 		if (rola.equals("admin")) {
 			list = em.createNamedQuery("Rezerwacje.findAll").getResultList();
 		} else {
-			list = em.createNamedQuery("Rezerwacje.findDifferentStatus").setParameter("status", "Zrealizowana")
-					.getResultList();
+			list = em.createNamedQuery("Rezerwacje.findDifferentStatus")
+					.setParameter("status", "Zrealizowana").getResultList();
 		}
 		em.close();
 		return list;
@@ -89,20 +89,31 @@ public class RezerwacjeBean implements Serializable {
 					"globalmessage", "Nie wybra³eœ rezerwacji", 3);
 		}
 	}
+
 	public void przekierowanieDodajRezerwacje() {
 		try {
-			
-				
+
 			FacesContext
 					.getCurrentInstance()
 					.getExternalContext()
-					.redirect(
-							"/wypozyczalnia/Zarzadzanie/rezerwacjeNowa.xhtml");
-			
+					.redirect("/wypozyczalnia/Zarzadzanie/rezerwacjeNowa.xhtml");
+
 		} catch (IOException e) {
 			System.out.print("ssadsdassd");
-			
+
 		}
+	}
+
+	public boolean isAdmin() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+		String rola = (String) session.getAttribute("role-name");
+
+		if (rola.equals("admin")) {
+			return true;
+		} else
+			return false;
+
 	}
 
 	public String ImieNazwiskoKlient(Klienci _klient) {

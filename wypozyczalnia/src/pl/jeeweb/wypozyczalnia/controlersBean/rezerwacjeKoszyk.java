@@ -99,7 +99,7 @@ public class rezerwacjeKoszyk implements Serializable {
 			this.rezerwacja.setNr_rezerwacji(setNumerRezerwacji());
 			this.rezerwacja.setData_rezerwacji(currentDate());
 			this.rezerwacja.setData_odbioru(nextDate(3));
-			this.rezerwacja.setStatus_rezerwacji("W REALIZACJI");
+			this.rezerwacja.setStatus_rezerwacji("W realizacji");
 
 			em.getTransaction().begin();
 			this.rezerwacja = em.merge(rezerwacja);
