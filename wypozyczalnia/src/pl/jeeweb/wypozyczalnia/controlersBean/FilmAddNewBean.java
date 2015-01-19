@@ -30,9 +30,9 @@ import pl.jeeweb.wypozyczalnia.entity.KopieFilmu;
 import pl.jeeweb.wypozyczalnia.entity.KopieFilmuPK;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
-@ManagedBean(name = "addFilmBean")
+@ManagedBean(name = "FilmAddNewBean")
 @ViewScoped
-public class addFilmBean implements Serializable {
+public class FilmAddNewBean implements Serializable {
 
 	private Filmy film;
 	private List<KlasyfikacjaGatunku> Gatunki;

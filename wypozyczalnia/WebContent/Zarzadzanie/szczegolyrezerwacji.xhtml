@@ -163,8 +163,8 @@
 				image="button_icon" style="height:50px; width:50px;"
 				update="filmyTable" />
 			<p:dataTable var="filmy" styleClass="zarzadzaj"
-				value="#{FilmyBean.listaFilmy}" widgetVar="filmTables"
-				filteredValue="#{FilmyBean.filetredFilmy}"
+				value="#{FilmBean.listaFilmy}" widgetVar="filmTables"
+				filteredValue="#{FilmBean.filetredFilmy}"
 				emptyMessage="Brak wyników dla wyszukiwania"
 				selectionMode="multiple"
 				selection="#{RezerwacjeDetailsBean.selectedFilmy}"
@@ -209,19 +209,19 @@
 				</p:column>
 
 				<p:column headerText="Gatunek"
-					filterBy="#{FilmyBean.klasyfikacjaGatunkuToString(filmy)}"
+					filterBy="#{FilmBean.klasyfikacjaGatunkuToString(filmy)}"
 					filterMatchMode="contains">
 					<h:outputText
-						value="#{FilmyBean.klasyfikacjaGatunkuToString(filmy)}" />
+						value="#{FilmBean.klasyfikacjaGatunkuToString(filmy)}" />
 				</p:column>
 				<p:column headerText="Data wprowadzenia"
 					filterBy="#{filmy.data_dodania}" filterMatchMode="contains">
 					<h:outputText value="#{filmy.data_dodania}" />
 				</p:column>
 				<p:column headerText="Ilość kopii filmu"
-					filterBy="#{FilmyBean.iloscKopiiFilmu(filmy)}"
+					filterBy="#{FilmBean.iloscKopiiFilmu(filmy)}"
 					filterMatchMode="contains">
-					<h:outputText value="#{FilmyBean.iloscKopiiFilmu(filmy)}" />
+					<h:outputText value="#{FilmBean.iloscKopiiFilmu(filmy)}" />
 				</p:column>
 
 			</p:dataTable>

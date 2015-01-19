@@ -13,9 +13,9 @@ import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
-@ManagedBean(name = "editGatunek")
+@ManagedBean(name = "GatunkiEditBean")
 @ViewScoped
-public class editGatunek implements Serializable {
+public class GatunkiEditBean implements Serializable {
 
 	private KlasyfikacjaGatunku gatunek;
 	private int id;

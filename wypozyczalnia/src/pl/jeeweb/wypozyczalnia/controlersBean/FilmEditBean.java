@@ -23,9 +23,9 @@ import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
-@ManagedBean(name = "editFilmBean")
+@ManagedBean(name = "FilmEditBean")
 @ViewScoped
-public class editFilmBean implements Serializable {
+public class FilmEditBean implements Serializable {
 
 	private Filmy film;
 	private int id;

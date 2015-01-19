@@ -54,7 +54,7 @@
 							<p:menuitem value="Dodaj film" url="/Zarzadzanie/addFilm.xhtml"
 								icon="ui-icon-home" />
 							<p:menuitem value="Edytuj film"
-								action="#{FilmyBean.przekierowanieEdycjaFilmu}"
+								action="#{FilmBean.przekierowanieEdycjaFilmu}"
 								icon="ui-icon-home" />
 						</p:submenu>
 						<p:submenu label="Gatunki" style=" background-color: #A4BDEF;">
@@ -71,10 +71,10 @@
 							<p:menuitem value="Lista klienci"
 								url="/Zarzadzanie/listaKlienci.xhtml" icon="ui-icon-home" />
 							<p:menuitem value="Dodaj klienta"
-								action="#{klienciBean.przekierowanieDodajKlienta}"
+								action="#{KlienciBean.przekierowanieDodajKlienta}"
 								icon="ui-icon-home" />
 							<p:menuitem value="Edytuj klienta"
-								action="#{klienciBean.przekierowanieEdycjaKlienta}"
+								action="#{KlienciBean.przekierowanieEdycjaKlienta}"
 								icon="ui-icon-home" />
 						</p:submenu>
 

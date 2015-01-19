@@ -18,9 +18,9 @@ import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
 
-@ManagedBean(name = "SzczegolyFilmu")
+@ManagedBean(name = "FilmDetailsBean")
 @ViewScoped
-public class SzczegolyFilmuBean implements Serializable {
+public class FilmDetailsBean implements Serializable {
 
 	private int id;
 

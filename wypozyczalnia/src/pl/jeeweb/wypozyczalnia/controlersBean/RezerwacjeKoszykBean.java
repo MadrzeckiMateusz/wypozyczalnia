@@ -19,9 +19,9 @@ import pl.jeeweb.wypozyczalnia.entity.KopieFilmu;
 import pl.jeeweb.wypozyczalnia.entity.Rezerwacje;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
-@ManagedBean(name = "koszyk")
+@ManagedBean(name = "RezerwacjeKoszykBean")
 @SessionScoped
-public class rezerwacjeKoszyk implements Serializable {
+public class RezerwacjeKoszykBean implements Serializable {
 	/**
 	 * 
 	 */
@@ -30,7 +30,7 @@ public class rezerwacjeKoszyk implements Serializable {
 	private Rezerwacje rezerwacja = new Rezerwacje();
 	private Filmy filmDoKoszyka = new Filmy();
 
-	public rezerwacjeKoszyk() {
+	public RezerwacjeKoszykBean() {
 	}
 
 	public void dodajDoKoszyka(int id_filmu) {

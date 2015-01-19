@@ -24,9 +24,9 @@ import pl.jeeweb.wypozyczalnia.entity.User;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 import pl.jeeweb.wypozyczalnia.tools.SHA256hash;
 
-@ManagedBean(name = "editBean")
+@ManagedBean(name = "KlienciEditBean")
 @ViewScoped
-public class editProfilKlient implements Serializable {
+public class KlienciEditBean implements Serializable {
 
 	/**
 	 * 
@@ -45,7 +45,7 @@ public class editProfilKlient implements Serializable {
 	private int id = 0;
 	private String target = "";
 
-	public editProfilKlient() {
+	public KlienciEditBean() {
 
 	}
 

@@ -11,36 +11,36 @@
 
 		<p:growl id="growl" for="globalmessage" showDetail="true"
 			autoUpdate="true" life="2000" />
-		<p:fieldset legend="#{SzczegolyFilmu.filmSzczegoly.tytul}"
+		<p:fieldset legend="#{FilmDetailsBean.filmSzczegoly.tytul}"
 			toggleable="false" collapsed="false"
 			style="font-size: 15px ; margin-bottom: 10px" widgetVar="">
 
-			<p:commandButton action="#{koszyk.dodajDoKoszyka(SzczegolyFilmu.id)}"
+			<p:commandButton action="#{RezerwacjeKoszykBean.dodajDoKoszyka(FilmDetailsBean.id)}"
 				title="Dodaj do koszyka" rendered="#{AuthorizationBean.userLoged}"
 				icon="ui-icon-cart" style="margin-left: 90%" ajax="false" />
 
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:graphicImage value="#{image.image}" width="140px" height="200px">
-					<f:param name="id" value="#{SzczegolyFilmu.filmSzczegoly.id_filmu}" />
+					<f:param name="id" value="#{FilmDetailsBean.filmSzczegoly.id_filmu}" />
 				</p:graphicImage>
 				<h:panelGrid>
 
 					<h:outputText
-						value="Numer filmu: #{SzczegolyFilmu.filmSzczegoly.nr_filmu}" />
-					<h:outputText value="Tytul: #{SzczegolyFilmu.filmSzczegoly.tytul}" />
+						value="Numer filmu: #{FilmDetailsBean.filmSzczegoly.nr_filmu}" />
+					<h:outputText value="Tytul: #{FilmDetailsBean.filmSzczegoly.tytul}" />
 					<h:outputText
-						value="Reżyseria: #{SzczegolyFilmu.filmSzczegoly.rezyseria}" />
+						value="Reżyseria: #{FilmDetailsBean.filmSzczegoly.rezyseria}" />
 					<h:outputText
-						value="Scenariusz: #{SzczegolyFilmu.filmSzczegoly.scenariusz}" />
+						value="Scenariusz: #{FilmDetailsBean.filmSzczegoly.scenariusz}" />
 					<h:outputText
-						value="Produkcja: #{SzczegolyFilmu.filmSzczegoly.produkcja}" />
-					<h:outputText value="Gatunek:  #{SzczegolyFilmu.gatunek}" />
+						value="Produkcja: #{FilmDetailsBean.filmSzczegoly.produkcja}" />
+					<h:outputText value="Gatunek:  #{FilmDetailsBean.gatunek}" />
 					<h:outputText
-						value="Premiera: #{SzczegolyFilmu.filmSzczegoly.premiera}" />
+						value="Premiera: #{FilmDetailsBean.filmSzczegoly.premiera}" />
 
 				</h:panelGrid>
 			</h:panelGrid>
-			<h:outputText value="#{SzczegolyFilmu.filmSzczegoly.opis}"
+			<h:outputText value="#{FilmDetailsBean.filmSzczegoly.opis}"
 				style="font-size:16px; color:black; margin-left:160px" />
 
 
@@ -48,12 +48,12 @@
 		</p:fieldset>
 		<p:fieldset legend="Proponowane filmy" toggleable="false"
 			collapsed="false" style="font-size: 15px ; margin-bottom: 10px"
-			rendered="#{SzczegolyFilmu.listaProponowanychFilmow}">
+			rendered="#{FilmDetailsBean.listaProponowanychFilmow}">
 			<center>
 				<p:panelGrid columns="3">
 
 					<ui:repeat var="filmyPodobne"
-						value="#{SzczegolyFilmu.filmyProponowane}">
+						value="#{FilmDetailsBean.filmyProponowane}">
 						<h:commandLink title="#{filmyPodobne.tytul}"
 							action="szczegolyFilmu.xhtml">
 							<f:param name="id_filmu" value="#{filmyPodobne.id_filmu}" />

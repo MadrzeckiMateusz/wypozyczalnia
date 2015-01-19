@@ -23,7 +23,7 @@
 
 				<h:outputText value="Nazwa Gatunk: *" />
 				<p:inputTextarea autoResize="true" rows="1" cols="40"
-					value="#{addGatunek.gatunek.gatunek}" required="true"
+					value="#{GatunkiAddNewBean.gatunek.gatunek}" required="true"
 					requiredMessage="Pole wymagane" />
 
 
@@ -31,7 +31,7 @@
 			</p:panelGrid>
 			<p:separator />
 			<p:commandButton styleClass="button_zapisz" value="Zapisz"
-				action="#{addGatunek.saveGatunek}" ajax="false" />
+				action="#{GatunkiAddNewBean.saveGatunek}" ajax="false" />
 		</p:panel>
 
 

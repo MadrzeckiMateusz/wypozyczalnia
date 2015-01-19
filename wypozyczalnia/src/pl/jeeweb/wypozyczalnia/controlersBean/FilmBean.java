@@ -15,9 +15,9 @@ import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
-@ManagedBean(name = "FilmyBean")
+@ManagedBean(name = "FilmBean")
 @RequestScoped
-public class FilmyBean implements Serializable {
+public class FilmBean implements Serializable {
 
 	/**
 	 * 
@@ -26,7 +26,7 @@ public class FilmyBean implements Serializable {
 	private List<Filmy> filteredFilmy = new ArrayList<>();
 	private Filmy selectedFilm = null;
 
-	public FilmyBean() {
+	public FilmBean() {
 
 	}
 

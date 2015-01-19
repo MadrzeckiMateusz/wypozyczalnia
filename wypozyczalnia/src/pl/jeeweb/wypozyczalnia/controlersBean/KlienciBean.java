@@ -28,9 +28,9 @@ import pl.jeeweb.wypozyczalnia.tools.RandomAlphaNum;
 import pl.jeeweb.wypozyczalnia.tools.SHA256hash;
 import pl.jeeweb.wypozyczalnia.tools.SendMail;
 
-@ManagedBean(name = "klienciBean")
+@ManagedBean(name = "KlienciBean")
 @RequestScoped
-public class klienciBean {
+public class KlienciBean {
 	private Klienci klient = new Klienci();
 	private User user = new User();
 	private Role user_role = new Role();

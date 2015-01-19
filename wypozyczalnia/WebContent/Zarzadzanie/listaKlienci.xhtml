@@ -12,10 +12,10 @@
 	<p:panelGrid styleClass="gridNoPaddinglogin" columns="2" >
 		<p:outputPanel style="margin-bottom:10px; margin-top:5px">
 			<p:commandButton
-				action="#{klienciBean.przekierowanieEdycjaKlienta()}"
+				action="#{KlienciBean.przekierowanieEdycjaKlienta()}"
 				image="button_icon"
 				style="height:50px; width:50px; margin-right:5px" />
-			<p:commandButton action="#{klienciBean.przekierowanieDodajKlienta()}"
+			<p:commandButton action="#{KlienciBean.przekierowanieDodajKlienta()}"
 				image="button_dodaj"
 				style="height:50px; width:50px; margin-right:5px" />
 		</p:outputPanel>
@@ -30,10 +30,10 @@
 		<p:growl id="growl" for="globalmessage" showDetail="true"
 			autoUpdate="true" life="2000" />
 		<p:dataTable var="klient" styleClass="zarzadzaj"
-			value="#{klienciBean.allKlienci}" widgetVar="klienciTables"
-			filteredValue="#{klienciBean.filteredKlienci}"
+			value="#{KlienciBean.allKlienci}" widgetVar="klienciTables"
+			filteredValue="#{KlienciBean.filteredKlienci}"
 			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
-			selection="#{klienciBean.selectedKlient}"
+			selection="#{KlienciBean.selectedKlient}"
 			rowKey="#{klient.id_klienta}">
 
 			<f:facet name="header">
