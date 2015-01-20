@@ -13,8 +13,10 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
+import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.Klienci;
 import pl.jeeweb.wypozyczalnia.entity.Rezerwacje;
+import pl.jeeweb.wypozyczalnia.entity.Wypozyczenia;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
 @ManagedBean(name = "RezerwacjeBean")
@@ -35,17 +37,25 @@ public class RezerwacjeBean implements Serializable {
 	}
 
 	public List<Rezerwacje> getAllRezerwacje() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(true);
-		String rola = (String) session.getAttribute("role-name");
+		
 		List<Rezerwacje> list = null;
 		EntityManager em = DBManager.getManager().createEntityManager();
-		if (rola.equals("admin")) {
-			list = em.createNamedQuery("Rezerwacje.findAll").getResultList();
-		} else {
-			list = em.createNamedQuery("Rezerwacje.findDifferentStatus")
-					.setParameter("status", "Zrealizowana").getResultList();
-		}
+
+		list = em.createNamedQuery("Rezerwacje.findDifferentStatus")
+				.setParameter("status", "Zrealizowana").getResultList();
+
+		em.close();
+		return list;
+
+	}
+	public List<Rezerwacje> gethistoriaRezerwacje() {
+	
+		List<Rezerwacje> list = null;
+		EntityManager em = DBManager.getManager().createEntityManager();
+
+		list = em.createNamedQuery("Rezerwacje.findDiByStatus")
+				.setParameter("status", "Zrealizowana").getResultList();
+
 		em.close();
 		return list;
 
@@ -67,6 +77,24 @@ public class RezerwacjeBean implements Serializable {
 		return rezerwacje;
 
 	}
+	public List<Filmy> getFilmyArchiwum(Rezerwacje rezerwacja) {
+		List<Filmy> filmyarchiwum = new ArrayList<>();
+		String[] idfilm = { "0" };
+		if (rezerwacja.getHistoria_rezer() != null) {
+			idfilm = rezerwacja.getHistoria_rezer().split(";");
+
+			EntityManager em = DBManager.getManager().createEntityManager();
+
+			for (int i = 0; i < idfilm.length; i++) {
+				Filmy film = (Filmy) em.createNamedQuery("Filmy.findById")
+						.setParameter("idFilmu", Integer.parseInt(idfilm[i]))
+						.getSingleResult();
+				filmyarchiwum.add(film);
+			}
+		}
+		return filmyarchiwum;
+
+	}
 
 	public void przekierowanieszczegoly() {
 		if (zaznaczonaRezerwacja != null) {
@@ -77,6 +105,27 @@ public class RezerwacjeBean implements Serializable {
 						.getExternalContext()
 						.redirect(
 								"/wypozyczalnia/Zarzadzanie/szczegolyrezerwacji.xhtml?rez="
+										+ this.zaznaczonaRezerwacja
+												.getId_rezerwacji());
+
+			} catch (IOException e) {
+				System.out.print(this.zaznaczonaRezerwacja.getId_rezerwacji());
+
+			}
+		} else {
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Nie wybra³eœ rezerwacji", 3);
+		}
+	}
+	public void przekierowaniearchiwum() {
+		if (zaznaczonaRezerwacja != null) {
+			try {
+
+				FacesContext
+						.getCurrentInstance()
+						.getExternalContext()
+						.redirect(
+								"/wypozyczalnia/Zarzadzanie/Admin/rezerwacjeHistoriaSzczegoly.xhtml?rez="
 										+ this.zaznaczonaRezerwacja
 												.getId_rezerwacji());
 

@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="../SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2" >
+			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
+					<p:commandButton action="#{RezerwacjeBean.przekierowaniearchiwum}"
+					image="button_info"
+					style="height:50px; width:50px; margin-right:5px" title="Szczegóły rezerwacji"/>
+			</p:outputPanel>
+			<p:panel styleClass="infologowanie">
+				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
+				<p:outputLabel value="#{AuthorizationBean.rola}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.imie}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.nazwisko}"
+					style="font-size:16px; margin-left:5px" />
+				<p:commandButton value="Wyloguj"
+					action="#{AuthorizationBean.LogOut()}"
+					style="margin-left:30px; width:90px" />
+			</p:panel>
+		</p:panelGrid>
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:dataTable var="rezerwacja" styleClass="zarzadzaj"
+			value="#{RezerwacjeBean.historiaRezerwacje}" widgetVar="rezerwacjeTables"
+			filteredValue="#{RezerwacjeBean.filteredRezerwacje}"
+			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
+			selection="#{RezerwacjeBean.zaznaczonaRezerwacja}"
+			rowKey="#{rezerwacja.id_rezerwacji}">
+
+			<f:facet name="header">
+				<p:outputPanel style="margin-right:67%">
+					<h:outputText value="Wyszukiwanie globalne:"
+						style="margin-right:15px" />
+					<p:inputText id="globalFilter"
+						onkeyup="PF('rezerwacjeTables').filter()" style="width:150px"
+						placeholder="Wpisz frazę" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Numer rezerwacji"
+				filterBy="#{rezerwacja.nr_rezerwacji}" filterMatchMode="contains">
+				<h:outputText value="#{rezerwacja.nr_rezerwacji}" />
+			</p:column>
+
+			<p:column headerText="Data rezerwacji"
+				filterBy="#{rezerwacja.data_rezerwacji}" filterMatchMode="contains">
+				<h:outputText value="#{rezerwacja.data_rezerwacji}" />
+			</p:column>
+
+			<p:column headerText="Data odbioru"
+				filterBy="#{rezerwacja.data_odbioru}" filterMatchMode="contains">
+				<h:outputText value="#{rezerwacja.data_odbioru}" />
+			</p:column>
+
+			<p:column headerText="Status"
+				filterBy="#{rezerwacja.status_rezerwacji}"
+				filterMatchMode="contains">
+				<h:outputText value="#{rezerwacja.status_rezerwacji}" />
+			</p:column>
+
+			<p:column headerText="Nr klienta"
+				filterBy="#{rezerwacja.klienci.nr_klienta}"
+				filterMatchMode="contains">
+				<h:outputText value="#{rezerwacja.klienci.nr_klienta}" />
+			</p:column>
+
+			<p:column headerText="Klient"
+				filterBy="#{RezerwacjeBean.ImieNazwiskoKlient(rezerwacja.klienci)}"
+				filterMatchMode="contains">
+				<h:outputText
+					value="#{RezerwacjeBean.ImieNazwiskoKlient(rezerwacja.klienci)}" />
+			</p:column>
+
+
+
+		</p:dataTable>
+
+	</ui:define>
+
+</ui:composition>

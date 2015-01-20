@@ -21,6 +21,7 @@ import java.util.List;
 @NamedQuery(name="Rezerwacje.findAll", query="SELECT r FROM Rezerwacje r"),
 @NamedQuery(name="Rezerwacje.findById", query="SELECT r FROM Rezerwacje r where r.id_rezerwacji = :id_rezerwacji"),
 @NamedQuery(name="Rezerwacje.findDifferentStatus", query="SELECT r FROM Rezerwacje r where r.status_rezerwacji <> :status"),
+@NamedQuery(name="Rezerwacje.findDiByStatus", query="SELECT r FROM Rezerwacje r where r.status_rezerwacji = :status"),
 @NamedQuery(name="Rezerwacje.getMaxId",query="SELECT MAX(r.id_rezerwacji) FROM Rezerwacje r")
 })
 public class Rezerwacje implements Serializable {
