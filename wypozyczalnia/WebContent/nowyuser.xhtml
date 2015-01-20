@@ -10,9 +10,9 @@
 
 
 
-		<p:growl id="growl" for="globalmessage" globalOnly="true" showDetail="true"
-			autoUpdate="true" life="4000" />
-	
+		<p:growl id="growl" for="globalmessage" globalOnly="true"
+			showDetail="true" autoUpdate="true" life="4000" />
+
 		<p:panel id="daneOS" styleClass="nowyUserPanel">
 			<h:outputLabel value="Dane Osobowe" style="font-size:20px; " />
 			<p:separator />
@@ -41,11 +41,12 @@
 					autoUpdate="true" severity="error" />
 
 				<h:outputText value="Pesel: *" />
-				<p:inputMask mask="99999999999" id="pesel" value="#{KlienciBean.klient.pesel}"
-					required="true" label="Pesel" requiredMessage="Pole wymagane"/>
+				<p:inputMask mask="99999999999" id="pesel"
+					value="#{KlienciBean.klient.pesel}" required="true" label="Pesel"
+					requiredMessage="Pole wymagane" />
 
 
-				
+
 				<p:message id="ermsg1" styleClass="ermsg" for="pesel"
 					autoUpdate="true" severity="error" />
 			</h:panelGrid>
@@ -102,8 +103,9 @@
 					requiredMessage="Pole wymagane" />
 				<p:message for="telefon" />
 			</h:panelGrid>
-			<p:commandButton value="Zapisz" actionListener="#{KlienciBean.save()}"
-				styleClass="button_zapisz" update="form" ajax="false" />
+			<p:commandButton value="Zapisz"
+				actionListener="#{KlienciBean.save()}" styleClass="button_zapisz"
+				update="form" ajax="false" />
 		</p:panel>
 
 

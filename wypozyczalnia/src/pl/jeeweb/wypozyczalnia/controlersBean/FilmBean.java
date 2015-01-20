@@ -5,10 +5,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+
+import org.primefaces.event.SelectEvent;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
@@ -37,7 +40,10 @@ public class FilmBean implements Serializable {
 		em.close();
 		return list;
 	}
-
+	 public void onRowSelect(SelectEvent event) {
+		 przekierowanieSzczegoly(this.selectedFilm.getId_filmu());
+	        
+	    }
 	public List<Filmy> getTop5filmy() {
 
 		EntityManager em = DBManager.getManager().createEntityManager();

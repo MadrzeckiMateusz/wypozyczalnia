@@ -11,31 +11,32 @@
 			<p:panelGrid styleClass="gridNoPaddingszczegoly" columns="1">
 				<p:panel styleClass="panelNoPadding">
 
-					<p:dataTable id="basicDt1" var="rezerwacjeList" styleClass="bordernew"
-						value="#{RezerwacjeBean.getklientbyid('inny')}">
+					<p:dataTable id="basicDt1" var="wypozyczeniaList" styleClass="bordernew"
+						value="#{WypozyczeniaBean.getklientbyid('inny')}">
 						<f:facet name="header">
 							<p:outputPanel style="text-align:left">
-								<h:outputText value="Aktualne rezerwacje"
+								<h:outputText value="Aktualne wypożyczenia"
 									style="text-align:left" />
 							</p:outputPanel>
 						</f:facet>
-						<p:column headerText="Numer rezerwacji">
-							<h:outputText value="#{rezerwacjeList.nr_rezerwacji}" />
+						<p:column headerText="Numer wypożyczenia">
+							<h:outputText value="#{wypozyczeniaList.nr_wypozyczenia}" />
 						</p:column>
-						<p:column headerText="Data rezerwacji">
-							<h:outputText value="#{rezerwacjeList.data_rezerwacji}" />
+						<p:column headerText="Data wypożyczenia">
+							<h:outputText value="#{wypozyczeniaList.data_wypozyczenia}" />
 						</p:column>
-						<p:column headerText="Status rezerwacji">
-							<h:outputText value="#{rezerwacjeList.status_rezerwacji}" />
+						<p:column headerText="Termin zwrotu">
+							<h:outputText value="#{wypozyczeniaList.termin_zwrotu}" />
 						</p:column>
-						<p:column headerText="Data odbioru">
-							<h:outputText value="#{rezerwacjeList.data_odbioru}" />
+						
+						<p:column headerText="Odsetki karne">
+							<h:outputText value="#{wypozyczeniaList.odsetki}" />
 						</p:column>
-						<p:column style="width:32px;text-align: center">
+						<p:column style="width:32px; text-align: center">
 							<p:commandButton oncomplete="PF('carDialog').show()"
 								icon="ui-icon-search" title="Wyświetl szczegóły">
-								<f:setPropertyActionListener value="#{rezerwacjeList}"
-									target="#{RezerwacjeBean.zaznaczonaRezerwacja}" />
+								<f:setPropertyActionListener value="#{wypozyczeniaList}"
+									target="#{WypozyczeniaBean.zaznaczoneWypozyczenie}" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
@@ -44,44 +45,47 @@
 
 				<p:panel styleClass="panelNoPadding">
 
-					<p:dataTable id="basicDt2" var="rezerwacjeList1" styleClass="bordernew"
-						value="#{RezerwacjeBean.getklientbyid('Zrealizowana')}" sortBy="#{rezerwacjeList.status_rezerwacji}"> 
+					<p:dataTable id="basicDt2" var="wypozyczeniaList1" styleClass="bordernew"
+						value="#{WypozyczeniaBean.getklientbyid('Zwrocone')}" > 
 						<f:facet name="header">
 							<p:outputPanel style="text-align:left">
-								<h:outputText value="Rezerwacje zrealizowane - historia"
+								<h:outputText value="Wypożyczenia zrealizowane - historia"
 									style="text-align:left" />
 							</p:outputPanel>
 						</f:facet>
-						<p:column headerText="Numer rezerwacji">
-							<h:outputText value="#{rezerwacjeList1.nr_rezerwacji}" />
+						<p:column headerText="Numer wypozyczenia">
+							<h:outputText value="#{wypozyczeniaList1.nr_wypozyczenia}" />
 						</p:column>
-						<p:column headerText="Data rezerwacji">
-							<h:outputText value="#{rezerwacjeList1.data_rezerwacji}" />
+						<p:column headerText="Data wypozyczenia">
+							<h:outputText value="#{wypozyczeniaList1.data_wypozyczenia}" />
 						</p:column>
-						<p:column headerText="Status rezerwacji">
-							<h:outputText value="#{rezerwacjeList1.status_rezerwacji}" />
+						<p:column headerText="Termin zwrotu">
+							<h:outputText value="#{wypozyczeniaList1.termin_zwrotu}" />
 						</p:column>
-						<p:column headerText="Data odbioru">
-							<h:outputText value="#{rezerwacjeList1.data_odbioru}" />
+						<p:column headerText="Data zwrotu">
+							<h:outputText value="#{wypozyczeniaList1.data_zwrotu}" />
+						</p:column>
+						<p:column headerText="Odsetki karne">
+							<h:outputText value="#{wypozyczeniaList1.odsetki}" />
 						</p:column>
 						<p:column style="width:32px;text-align: center">
 							<p:commandButton oncomplete="PF('fimyArchiwum').show()"
 								icon="ui-icon-search" title="Wyświetl szczegóły">
-								<f:setPropertyActionListener value="#{rezerwacjeList1}"
-									target="#{RezerwacjeBean.zaznaczonaRezerwacja}" />
+								<f:setPropertyActionListener value="#{wypozyczeniaList1}"
+									target="#{WypozyczeniaBean.zaznaczoneWypozyczenie}" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
 				</p:panel>
 			</p:panelGrid>
 
-			<p:dialog header="Szczegóły rezerwacji" widgetVar="carDialog"
+			<p:dialog header="Szczegóły wypożyczenia" widgetVar="carDialog"
 				modal="true" showEffect="fade" hideEffect="fade" resizable="false"
 				width="80%"  height="400" position="top" style="background-color:#D0E0FF">
 				<p:outputPanel id="carDetail" style="text-align: center; "
 					autoUpdate="true">
 					<p:dataTable var="kopiefilmy"
-						value="#{RezerwacjeBean.zaznaczonaRezerwacja.kopieFilmus}" emptyMessage="brak rezerwacji">
+						value="#{WypozyczeniaBean.zaznaczoneWypozyczenie.kopieFilmus}" emptyMessage="Brak filmów">
 						<p:column headerText="Numer filmu">
 							<h:outputText value="#{kopiefilmy.filmy.nr_filmu}" />
 						</p:column>
@@ -102,13 +106,13 @@
 				</p:outputPanel>
 			</p:dialog>  
 			
-			<p:dialog header="Szczegóły rezerwacji" widgetVar="fimyArchiwum"
+			<p:dialog header="Szczegóły wypożyczenia" widgetVar="fimyArchiwum"
 				modal="true" showEffect="fade" hideEffect="fade" resizable="false"
 				width="80%"  height="400" position="top"  style="background-color:#D0E0FF">
 				<p:outputPanel id="carDetail1" style="text-align: center; "
 					autoUpdate="true">
 					<p:dataTable var="filmy"
-						value="#{RezerwacjeBean.filmyArchiwum}" emptyMessage="Brak zarchiwizowanych rezerwacji">
+						value="#{WypozyczeniaBean.filmyArchiwum}" emptyMessage="Brak filmów">
 						<p:column headerText="Numer filmu">
 							<h:outputText value="#{filmy.nr_filmu}" />
 						</p:column>

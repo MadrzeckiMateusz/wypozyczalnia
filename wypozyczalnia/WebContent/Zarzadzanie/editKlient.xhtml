@@ -52,7 +52,8 @@
 			<h:panelGrid columns="2" columnClasses="label, value"
 				style="height:80px">
 				<h:outputText value="Numer klienta: *" />
-				<p:outputLabel value="#{KlienciEditBean.klient.nr_klienta}" label="Imie" />
+				<p:outputLabel value="#{KlienciEditBean.klient.nr_klienta}"
+					label="Imie" />
 				<h:outputText value="Data wprowadzenia: *" />
 				<p:calendar value="#{KlienciEditBean.klient.data_rejestracji}"
 					pattern="yyyy-MM-dd" mask="true" locale="pl" lang="pl"
@@ -62,8 +63,8 @@
 					label="Imie" requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Nazwisko: *" />
-				<p:inputText value="#{KlienciEditBean.klient.nazwisko}" required="true"
-					label="Nazwsiko" requiredMessage="Pole wymagane" />
+				<p:inputText value="#{KlienciEditBean.klient.nazwisko}"
+					required="true" label="Nazwsiko" requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Pesel: *" />
 				<p:inputText value="#{KlienciEditBean.klient.pesel}" required="true"
@@ -78,8 +79,8 @@
 				<h:outputText value="Miasto: " />
 				<p:inputText value="#{KlienciEditBean.klient.miasto}" />
 				<h:outputText value="Email: " />
-				<p:inputText value="#{KlienciEditBean.klient.e_mail}" required="true"
-					label="Email" requiredMessage="Pole wymagane" />
+				<p:inputText value="#{KlienciEditBean.klient.e_mail}"
+					required="true" label="Email" requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Numer Telefonu: " />
 				<p:inputText value="#{KlienciEditBean.klient.nr_telefonu}" />

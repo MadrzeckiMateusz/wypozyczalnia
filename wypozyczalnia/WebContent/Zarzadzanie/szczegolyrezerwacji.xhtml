@@ -73,7 +73,7 @@
 						rendered="#{RezerwacjeDetailsBean.edytowalnarezerwacja}">
 						<p:commandButton
 							action="#{RezerwacjeDetailsBean.usunFilm(kopieFilmu)}"
-							icon="ui-icon-minus" update="filmyTable" />
+							icon="ui-icon-minus" update="filmyTable"  rendered="#{RezerwacjeDetailsBean.edytowalnarezerwacja}"/>
 					</p:column>
 				</p:dataTable>
 				<p:dataTable styleClass="bordernew" var="klient"
@@ -120,7 +120,7 @@
 						image="button_check"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Obsługa rezerwacji/Zmiana statusu"
-						update="tableRezewacja, panel_button, filmyTable  " />
+						update="tableRezewacja, panel_button, filmyTable  " rendered="#{RezerwacjeDetailsBean.edytowalnarezerwacja}" />
 
 					<p:commandButton action="#{RezerwacjeDetailsBean.PDF}"
 						image="button_print"

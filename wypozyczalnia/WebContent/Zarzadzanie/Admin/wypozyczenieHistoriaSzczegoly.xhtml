@@ -43,7 +43,7 @@
 				</p:dataTable>
 
 				<p:dataTable id="filmyTable" styleClass="bordernew" var="filmy"
-					value="#{WypozyczeniaBean.getFilmyArchiwum(WypozyczeniaDetailsBean.wypozyczenie)}"
+					value="#{WypozyczeniaDetailsBean.getFilmyArchiwum(WypozyczeniaDetailsBean.wypozyczenie)}"
 					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px"
 					selection="#{WypozyczeniaDetailsBean.slelectedkopia}"
 					selectionMode="single" rowKey="#{filmy.id_filmu}">

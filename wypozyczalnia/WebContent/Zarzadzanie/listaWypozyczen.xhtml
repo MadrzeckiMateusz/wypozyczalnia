@@ -9,15 +9,19 @@
 	template="./SzablonZarzadzanie.xhtml">
 
 	<ui:define name="content">
-		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2" >
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2">
 			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
-				<p:commandButton action="#{WypozyczeniaBean.przekierowanieDodajWypozyczenie()}"
+				<p:commandButton
+					action="#{WypozyczeniaBean.przekierowanieDodajWypozyczenie()}"
 					image="button_dodaj"
-					style="height:50px; width:50px; margin-right:5px" title="Nowe wypożyczenie" />
-				
-					<p:commandButton action="#{WypozyczeniaBean.przekierowanieszczegoly}"
-					image="button_info" 
-					style="height:50px; width:50px; margin-right:5px" title="Szczegóły wypożyczenia"/>
+					style="height:50px; width:50px; margin-right:5px"
+					title="Nowe wypożyczenie" />
+
+				<p:commandButton
+					action="#{WypozyczeniaBean.przekierowanieszczegoly}"
+					image="button_info"
+					style="height:50px; width:50px; margin-right:5px"
+					title="Szczegóły wypożyczenia" />
 			</p:outputPanel>
 			<p:panel styleClass="infologowanie">
 				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
@@ -35,7 +39,8 @@
 		<p:growl id="growl" for="globalmessage" showDetail="true"
 			autoUpdate="true" life="2000" />
 		<p:dataTable var="wypozyczenia" styleClass="zarzadzaj"
-			value="#{WypozyczeniaBean.allWypozyczenia}" widgetVar="wpozyczeniaTables"
+			value="#{WypozyczeniaBean.allWypozyczenia}"
+			widgetVar="wpozyczeniaTables"
 			filteredValue="#{WypozyczeniaBean.filteredWypozyczenia}"
 			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
 			selection="#{WypozyczeniaBean.zaznaczoneWypozyczenie}"
@@ -51,12 +56,14 @@
 				</p:outputPanel>
 			</f:facet>
 			<p:column headerText="Numer wypozyczenia"
-				filterBy="#{wypozyczenia.nr_wypozyczenia}" filterMatchMode="contains">
+				filterBy="#{wypozyczenia.nr_wypozyczenia}"
+				filterMatchMode="contains">
 				<h:outputText value="#{wypozyczenia.nr_wypozyczenia}" />
 			</p:column>
 
 			<p:column headerText="Data wypozyczenia"
-				filterBy="#{wypozyczenia.data_wypozyczenia}" filterMatchMode="contains">
+				filterBy="#{wypozyczenia.data_wypozyczenia}"
+				filterMatchMode="contains">
 				<h:outputText value="#{wypozyczenia.data_wypozyczenia}" />
 			</p:column>
 
@@ -66,8 +73,7 @@
 			</p:column>
 
 			<p:column headerText="Data zwrotu"
-				filterBy="#{wypozyczenia.data_zwrotu}"
-				filterMatchMode="contains">
+				filterBy="#{wypozyczenia.data_zwrotu}" filterMatchMode="contains">
 				<h:outputText value="#{wypozyczenia.data_zwrotu}" />
 			</p:column>
 

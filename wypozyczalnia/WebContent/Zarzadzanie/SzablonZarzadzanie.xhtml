@@ -35,22 +35,27 @@
 						<p:submenu label="Rezerwacje" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Lista rezerwacji"
 								url="/Zarzadzanie/listaRezerwacji.xhtml" icon="ui-icon-home" />
-								<p:menuitem value="Arciwum rezerwacji" rendered="#{AuthorizationBean.adminRole}"
-								url="/Zarzadzanie/Admin/rezerwacjeHistoria.xhtml" icon="ui-icon-home" />
+							<p:menuitem value="Arciwum rezerwacji"
+								rendered="#{AuthorizationBean.adminRole}"
+								url="/Zarzadzanie/Admin/rezerwacjeHistoria.xhtml"
+								icon="ui-icon-home" />
 							<p:menuitem value="Nowa rezerwacja"
 								action="#{RezerwacjeBean.przekierowanieDodajRezerwacje()}"
 								icon="ui-icon-home" />
-							
+
 						</p:submenu>
-						<p:submenu label="Wypożyczenia" style=" background-color: #A4BDEF;">
+						<p:submenu label="Wypożyczenia"
+							style=" background-color: #A4BDEF;">
 							<p:menuitem value="Lista wypożyczeń"
 								url="/Zarzadzanie/listaWypozyczen.xhtml" icon="ui-icon-home" />
-								<p:menuitem value="Archiwum wypożyczeń" rendered="#{AuthorizationBean.adminRole}"
-								url="/Zarzadzanie/Admin/wypozyczeniaHistoria.xhtml" icon="ui-icon-home" />
+							<p:menuitem value="Archiwum wypożyczeń"
+								rendered="#{AuthorizationBean.adminRole}"
+								url="/Zarzadzanie/Admin/wypozyczeniaHistoria.xhtml"
+								icon="ui-icon-home" />
 							<p:menuitem value="Nowe wypożyczenie"
 								action="#{WypozyczeniaBean.przekierowanieDodajWypozyczenie()}"
 								icon="ui-icon-home" />
-							
+
 						</p:submenu>
 						<p:submenu label="Filmy" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Lista filmów"

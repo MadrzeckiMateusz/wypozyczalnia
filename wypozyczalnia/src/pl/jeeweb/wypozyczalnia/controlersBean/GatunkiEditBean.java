@@ -1,5 +1,6 @@
 package pl.jeeweb.wypozyczalnia.controlersBean;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -40,6 +41,13 @@ public class GatunkiEditBean implements Serializable {
 		em.merge(this.gatunek);
 		em.getTransaction().commit();
 		em.close();
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/wypozyczalnia"+FacesContext.getCurrentInstance()
+					.getViewRoot().getViewId()+"?id_gatunku="+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 				"globalmessage", "Gatunek zapisany pomyœlnie", 1);
 		return null;

@@ -149,6 +149,29 @@ public class RezerwacjeDetailsBean implements Serializable {
 				"globalmessage", "Filmy usuniêty", 1);
 
 	}
+	public List<Filmy> getFilmyArchiwum(Rezerwacje rezerwacja) {
+		List<Filmy> filmyarchiwum = new ArrayList<>();
+		String[] idfilm = { "0" };
+		if (rezerwacja != null) {
+			if (rezerwacja.getHistoria_rezer() != null) {
+				idfilm = rezerwacja.getHistoria_rezer().split(
+						";");
+
+				EntityManager em = DBManager.getManager().createEntityManager();
+
+				for (int i = 0; i < idfilm.length; i++) {
+					Filmy film = (Filmy) em
+							.createNamedQuery("Filmy.findById")
+							.setParameter("idFilmu",
+									Integer.parseInt(idfilm[i]))
+							.getSingleResult();
+					filmyarchiwum.add(film);
+				}
+			}
+
+		}
+		return filmyarchiwum;
+	}
 
 	private List<Rezerwacje> wrapRezerwacjaTolist() {
 		List<Rezerwacje> Rezerwacja = new ArrayList<>();
@@ -229,9 +252,9 @@ public class RezerwacjeDetailsBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(true);
 		String rola = (String) session.getAttribute("role-name");
-		if (this.rezerwacja.getStatus_rezerwacji().equals("W realizacji")
-				|| this.rezerwacja.getStatus_rezerwacji().equals(
-						"Obs³u¿ona. Do odbioru")) {
+		if (this.rezerwacja.getStatus_rezerwacji().equals("W realizacji")){
+				
+						
 			return true;
 		} else {
 			if (rola.equals("admin")) {

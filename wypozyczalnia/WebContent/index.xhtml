@@ -8,19 +8,21 @@
 	xmlns:f="http://java.sun.com/jsf/core" template="./szablonApp.xhtml">
 
 	<ui:define name="content">
-	<p:panel styleClass="naglowek">
-	<center>
-	<p:outputLabel value="Nowości w tym miesiącu" style="color:white; font-size:18px"/>
-	</center>
-	</p:panel>
+		<p:panel styleClass="naglowek">
+			<center>
+				<p:outputLabel value="Nowości w tym miesiącu"
+					style="color:white; font-size:18px" />
+			</center>
+		</p:panel>
 		<ui:repeat var="lista" value="#{FilmBean.top5filmy}"
 			varStatus="listavar">
-			
+
 			<p:fieldset legend="#{lista.tytul}" toggleable="false"
 				toggleSpeed="500" collapsed="false"
 				style="font-size: 15px ; margin-bottom: 10px">
 				<h:panelGrid columns="2" style="margin-left:750px">
-					<p:commandButton action="#{RezerwacjeKoszykBean.dodajDoKoszyka(lista.id_filmu)}"
+					<p:commandButton
+						action="#{RezerwacjeKoszykBean.dodajDoKoszyka(lista.id_filmu)}"
 						title="Dodaj do koszyka" rendered="#{AuthorizationBean.userLoged}"
 						icon="ui-icon-cart" />
 

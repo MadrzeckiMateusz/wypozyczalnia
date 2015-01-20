@@ -15,13 +15,15 @@
 			toggleable="false" collapsed="false"
 			style="font-size: 15px ; margin-bottom: 10px" widgetVar="">
 
-			<p:commandButton action="#{RezerwacjeKoszykBean.dodajDoKoszyka(FilmDetailsBean.id)}"
+			<p:commandButton
+				action="#{RezerwacjeKoszykBean.dodajDoKoszyka(FilmDetailsBean.id)}"
 				title="Dodaj do koszyka" rendered="#{AuthorizationBean.userLoged}"
 				icon="ui-icon-cart" style="margin-left: 90%" ajax="false" />
 
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:graphicImage value="#{image.image}" width="140px" height="200px">
-					<f:param name="id" value="#{FilmDetailsBean.filmSzczegoly.id_filmu}" />
+					<f:param name="id"
+						value="#{FilmDetailsBean.filmSzczegoly.id_filmu}" />
 				</p:graphicImage>
 				<h:panelGrid>
 

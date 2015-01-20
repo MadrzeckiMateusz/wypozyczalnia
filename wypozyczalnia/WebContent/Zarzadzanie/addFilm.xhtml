@@ -49,7 +49,7 @@
 		<p:panel id="panel_edit" styleClass="editprofile">
 			<h:outputLabel value="Nowy Film" style="font-size:20px; " />
 			<p:separator />
-			
+
 			<p:panelGrid id="panel_grid" columns="2" columnClasses="label, value"
 				style="height:80px">
 				<h:outputText value="Numer filmu: *" />
@@ -66,9 +66,9 @@
 					required="true" requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Gatunek: *" />
-				<p:selectManyCheckbox id="grid" value="#{FilmAddNewBean.gatunkiFilm}"
-					layout="grid" columns="3" required="true"
-					requiredMessage="Pole wymagane">
+				<p:selectManyCheckbox id="grid"
+					value="#{FilmAddNewBean.gatunkiFilm}" layout="grid" columns="3"
+					required="true" requiredMessage="Pole wymagane">
 					<f:selectItems value="#{FilmAddNewBean.gatunki}" var="gatunek"
 						itemLabel="#{gatunek.gatunek}"
 						itemValue="#{gatunek.id_klasyfikacji}" />
@@ -109,29 +109,30 @@
 
 				<h:outputText value="Plakat: " style="text-align:right" />
 				<p:panel>
-				<p:commandButton value="Wybierz plakat" onclick="PF('dlg2').show();"/>
-				<p:outputLabel id="labelPlakat" value="#{FilmAddNewBean.labelPlakat}"/>
-				</p:panel>	
+					<p:commandButton value="Wybierz plakat"
+						onclick="PF('dlg2').show();" />
+					<p:outputLabel id="labelPlakat"
+						value="#{FilmAddNewBean.labelPlakat}" />
+				</p:panel>
 
 			</p:panelGrid>
 			<p:separator />
-			<p:commandButton action="#{FilmAddNewBean.dodajFilm()}" styleClass="button_zapisz" value="Dodaj"
-				 ajax="false" />
+			<p:commandButton action="#{FilmAddNewBean.dodajFilm()}"
+				styleClass="button_zapisz" value="Dodaj" ajax="false" />
 		</p:panel>
 		<p:dialog header="Załaduj plik" widgetVar="dlg2" modal="true"
-				height="300px" width="500px"  closeOnEscape="true"
-				minHeight="200" minWidth="800" position="center" >
+			height="300px" width="500px" closeOnEscape="true" minHeight="200"
+			minWidth="800" position="center">
 
-				<p:fileUpload fileUploadListener="#{FilmAddNewBean.handleFileUpload}"
-					mode="advanced" dragDropSupport="false" sizeLimit="100000"
-					fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-					uploadLabel="Wczytaj" cancelLabel="Anuluj"
-					label="Wybierz"  />
+			<p:fileUpload fileUploadListener="#{FilmAddNewBean.handleFileUpload}"
+				mode="advanced" dragDropSupport="false" sizeLimit="100000"
+				fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+				uploadLabel="Wczytaj" cancelLabel="Anuluj" label="Wybierz" />
 
-				<p:growl id="messages" showDetail="true" />
+			<p:growl id="messages" showDetail="true" />
 
-			</p:dialog>
-		
+		</p:dialog>
+
 	</ui:define>
 
 </ui:composition>

@@ -148,13 +148,13 @@ public class KlienciBean {
 								"Uzytkownik zarejestrowany. Has³o pierwszego logowania zosta³o wys³ane w e-mailu podanym przy rejestracji",
 								2);
 				context.getFlash().setKeepMessages(true);
-				if (fullURI.equals("/wypozyczalnia/nowyuser.xhtml")) {
+				if (fullURI.equals("/wypozyczalnia/nowyuser.xhtml"))  {
 
 					context.redirect(context.getRequestContextPath()
 							+ "/zaloguj.xhtml");
-				} else {
+				} else if(fullURI.contains("editKlient")) {
 					context.redirect(context.getRequestContextPath()
-							+ "/Zarzadzanie/listafilmow.xhtml");
+							+ "/Zarzadzanie/listaKlienci.xhtml");
 				}
 
 			} catch (IOException e) {
@@ -183,7 +183,8 @@ public class KlienciBean {
 						.getExternalContext()
 						.redirect(
 								"/wypozyczalnia/Zarzadzanie/editKlient.xhtml?id_klient="
-										+ selectedKlient.getId_klienta());
+										+ selectedKlient.getId_klienta()+"&target=/Zarzadzanie/listaKlienci.xhtml"
+									);
 			}
 		} catch (IOException e) {
 			System.out.print("ssadsdassd");

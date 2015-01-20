@@ -14,7 +14,10 @@
 }
 
 .ui-icon-myAddFilm {
-	background-image: url(#{ resource [ 'images:shop-cart-16.png' ]});
+	background-image: url(#{ resource [ 'images:shop-cart-16.png' ]
+}
+
+);
 }
 .editprofile.ui-panel {
 	background-color: #E3E5E7;
@@ -34,14 +37,13 @@
 }
 
 .infologowanie.ui-panel {
-	background-color: #E3E5E7; 
-	margin-left:440px; 
-	width:470px; 
-	height:45px; 
-	position:relative;
-	margin-bottom:10px; 
-	margin-top:5px;
-	
+	background-color: #E3E5E7;
+	margin-left: 440px;
+	width: 470px;
+	height: 45px;
+	position: relative;
+	margin-bottom: 10px;
+	margin-top: 5px;
 }
 
 .naglowek.ui-panel {
@@ -87,82 +89,77 @@
 	font-family: monospace;
 }
 
-.ui-panelgrid.headerGrid tr,
-.ui-panelgrid.headerGrid td {
-	border-style: none ;
+.ui-panelgrid.headerGrid tr,.ui-panelgrid.headerGrid td {
+	border-style: none;
 	border: none;
 	background: none;
 }
 
-.ui-panelgrid.gridNoPadding tr,
-.ui-panelgrid.gridNoPadding td {
-	border-style: none ;
+.ui-panelgrid.gridNoPadding tr,.ui-panelgrid.gridNoPadding td {
+	border-style: none;
 	border: none;
 	background: none;
 	padding: 0;
-	
-}
-.ui-panelgrid.gridNoPaddingszczegoly tr,
-.ui-panelgrid.gridNoPaddingszczegoly td {
-	border-style: none ;
-	border: none;
-	background: none;
-	padding: 0;
-	vertical-align: top;
-	
-}
-.ui-panelgrid.gridNoPaddinglogin tr,
-.ui-panelgrid.gridNoPaddinglogin td, 
-.ui-panelgrid.gridNoPaddinglogin  {
-	border-style: none ;
-	border: none;
-	background: none;
-	padding: 0;
-	width:100%;
-	
-}
-.ui-panel.panelNoPadding,
-.ui-panel-content.panelNoPadding{
-	padding: 0;
-	background: none;
-	border:none;
-}
-.ui-datatable.bordernew thead th,
-.ui-datatable.bordernew tbody,
-.ui-datatable.bordernew tbody tr,
-.ui-datatable.bordernew tbody td {
-    border: 1px solid gray;
-    padding: 5;
-    position: relative;
 }
 
-.topAligment{
+.ui-panelgrid.gridNoPaddingszczegoly tr,.ui-panelgrid.gridNoPaddingszczegoly td
+	{
+	border-style: none;
+	border: none;
+	background: none;
+	padding: 0;
 	vertical-align: top;
 }
+
+.ui-panelgrid.gridNoPaddinglogin tr,.ui-panelgrid.gridNoPaddinglogin td,.ui-panelgrid.gridNoPaddinglogin
+	{
+	border-style: none;
+	border: none;
+	background: none;
+	padding: 0;
+	width: 100%;
+}
+
+.ui-panel.panelNoPadding,.ui-panel-content.panelNoPadding {
+	padding: 0;
+	background: none;
+	border: none;
+}
+
+.ui-datatable.bordernew thead th,.ui-datatable.bordernew tbody,.ui-datatable.bordernew tbody tr,.ui-datatable.bordernew tbody td
+	{
+	border: 1px solid gray;
+	padding: 5;
+	position: relative;
+}
+
+.topAligment {
+	vertical-align: top;
+}
+
 .menu {
 	background-color: #A4BDEF;
 	position: relative;
 	height: px;
 	margin-top: 10px;
 }
+
 .menumanage {
 	background-color: #A4BDEF;
-	
-	
 	margin-top: 10px;
 }
 
 .ui-menu-list {
 	background-color: #A4BDEF;
-	
 }
-.menumanage ..ui-menuitem-text{
-	color: black;
-}
-.menu .ui-menuitem-text {
+
+.menumanage ..ui-menuitem-text {
 	color: black;
 }
 
+.menu .ui-menuitem-text {
+	color: black;
+}
 
 .ui-datatable th {
 	background-color: #A4BDEF !important;
@@ -181,10 +178,10 @@
 
 #page {
 	background-color: #D0E0FF;
-	margin-left:30px;
+	margin-left: 30px;
 	width: 96%;
 	min-height: 90%;
-	padding:0;
+	padding: 0;
 }
 
 #bottom {
@@ -193,14 +190,14 @@
 	padding: 5px;
 	margin: 10px 0px 0px 0px;
 }
-#left{
+
+#left {
 	float: left;
-	
 }
+
 #leftmanage {
 	float: left;
 	height: 650px;
-	
 }
 
 #footer {
@@ -263,6 +260,7 @@
 	top: 35% !important;
 	left: 35% !important;
 }
+
 .button_check {
 	height: 35px;
 	width: 35px;
@@ -270,20 +268,25 @@
 	top: 35% !important;
 	left: 35% !important;
 }
+
 .button_print {
 	height: 35px;
 	width: 35px;
-	background-image: url("#{resource['image/print-report.png']}") !important;
+	background-image: url("#{resource['image/print-report.png']}")
+		!important;
 	top: 35% !important;
 	left: 35% !important;
 }
+
 .button_szczegol {
 	height: 35px;
 	width: 35px;
-	background-image: url("#{resource['image/Mes-videos-icon.png']}") !important;
+	background-image: url("#{resource['image/Mes-videos-icon.png']}")
+		!important;
 	top: 35% !important;
 	left: 35% !important;
 }
+
 .button_daneKlienta {
 	height: 35px;
 	width: 35px;
@@ -291,6 +294,7 @@
 	top: 35% !important;
 	left: 35% !important;
 }
+
 .button_dodaj2 {
 	height: 35px;
 	width: 35px;
@@ -298,6 +302,7 @@
 	top: 35% !important;
 	left: 35% !important;
 }
+
 .button_wypozycz {
 	height: 35px;
 	width: 35px;
@@ -305,6 +310,7 @@
 	top: 35% !important;
 	left: 35% !important;
 }
+
 .button_zwrot {
 	height: 35px;
 	width: 35px;
@@ -312,6 +318,7 @@
 	top: 35% !important;
 	left: 35% !important;
 }
+
 .list_icon {
 	background: url("#{resource['image/list16.png']}") !important;
 	height: 16px;

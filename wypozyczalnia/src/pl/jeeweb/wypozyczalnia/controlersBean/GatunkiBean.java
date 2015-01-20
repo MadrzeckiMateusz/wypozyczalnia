@@ -47,7 +47,7 @@ public class GatunkiBean implements Serializable {
 					.getCurrentInstance()
 					.getExternalContext()
 					.redirect(
-							"/wypozyczalnia/Zarzadzanie/GatunkiEditBean.xhtml?id_gatunku="
+							"/wypozyczalnia/Zarzadzanie/editGatunek.xhtml?id_gatunku="
 									+ selectedGatunek.getId_klasyfikacji());
 			}
 		} catch (IOException e) {

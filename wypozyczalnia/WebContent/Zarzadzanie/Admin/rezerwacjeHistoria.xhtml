@@ -9,11 +9,12 @@
 	template="../SzablonZarzadzanie.xhtml">
 
 	<ui:define name="content">
-		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2" >
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2">
 			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
-					<p:commandButton action="#{RezerwacjeBean.przekierowaniearchiwum}"
+				<p:commandButton action="#{RezerwacjeBean.przekierowaniearchiwum}"
 					image="button_info"
-					style="height:50px; width:50px; margin-right:5px" title="Szczegóły rezerwacji"/>
+					style="height:50px; width:50px; margin-right:5px"
+					title="Szczegóły rezerwacji" />
 			</p:outputPanel>
 			<p:panel styleClass="infologowanie">
 				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
@@ -31,7 +32,8 @@
 		<p:growl id="growl" for="globalmessage" showDetail="true"
 			autoUpdate="true" life="2000" />
 		<p:dataTable var="rezerwacja" styleClass="zarzadzaj"
-			value="#{RezerwacjeBean.historiaRezerwacje}" widgetVar="rezerwacjeTables"
+			value="#{RezerwacjeBean.historiaRezerwacje}"
+			widgetVar="rezerwacjeTables"
 			filteredValue="#{RezerwacjeBean.filteredRezerwacje}"
 			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
 			selection="#{RezerwacjeBean.zaznaczonaRezerwacja}"

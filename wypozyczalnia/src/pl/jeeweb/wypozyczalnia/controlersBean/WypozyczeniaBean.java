@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.Klienci;
+import pl.jeeweb.wypozyczalnia.entity.Rezerwacje;
 import pl.jeeweb.wypozyczalnia.entity.Wypozyczenia;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
@@ -37,6 +38,7 @@ public class WypozyczeniaBean implements Serializable {
 
 	@PostConstruct
 	public void initBean() {
+		this.zaznaczoneWypozyczenie = null;
 		this.filteredWypozyczenia = null;
 	}
 
@@ -70,25 +72,62 @@ public class WypozyczeniaBean implements Serializable {
 		return zwrocone;
 
 	}
-
-	public List<Filmy> getFilmyArchiwum(Wypozyczenia wypozyczenie) {
+	
+	public List<Filmy> getFilmyArchiwum() {
 		List<Filmy> filmyarchiwum = new ArrayList<>();
 		String[] idfilm = { "0" };
-		if (wypozyczenie.getHistoria_wypo() != null) {
-			idfilm = wypozyczenie.getHistoria_wypo().split(";");
+		if (this.zaznaczoneWypozyczenie != null) {
+			if (this.zaznaczoneWypozyczenie.getHistoria_wypo() != null) {
+				idfilm = this.zaznaczoneWypozyczenie.getHistoria_wypo().split(
+						";");
 
-			EntityManager em = DBManager.getManager().createEntityManager();
+				EntityManager em = DBManager.getManager().createEntityManager();
 
-			for (int i = 0; i < idfilm.length; i++) {
-				Filmy film = (Filmy) em.createNamedQuery("Filmy.findById")
-						.setParameter("idFilmu", Integer.parseInt(idfilm[i]))
-						.getSingleResult();
-				filmyarchiwum.add(film);
+				for (int i = 0; i < idfilm.length; i++) {
+					Filmy film = (Filmy) em
+							.createNamedQuery("Filmy.findById")
+							.setParameter("idFilmu",
+									Integer.parseInt(idfilm[i]))
+							.getSingleResult();
+					filmyarchiwum.add(film);
+				}
 			}
+
 		}
 		return filmyarchiwum;
+	}
+
+	public List<Wypozyczenia> getklientbyid(String status) {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(true);
+		List<Wypozyczenia> wypozyczenia;
+		List<Wypozyczenia> zrealizowaneWypozyczenia = new ArrayList<>();
+		List<Wypozyczenia> aktualneWypozyczenia = new ArrayList<>();
+		int user_id = (int) session.getAttribute("user_id");
+
+		EntityManager em = DBManager.getManager().createEntityManager();
+		Klienci klient = (Klienci) em
+				.createQuery("Select k from Klienci k where k.id_klienta=:id")
+				.setParameter("id", user_id).getSingleResult();
+		klient.getWypozyczenias().size();
+		wypozyczenia = klient.getWypozyczenias();
+		em.close();
+		for (Wypozyczenia wypozyczenie : wypozyczenia) {
+			if (wypozyczenie.getData_zwrotu() != null) {
+				zrealizowaneWypozyczenia.add(wypozyczenie);
+			} else {
+				aktualneWypozyczenia.add(wypozyczenie);
+			}
+
+		}
+		if (status.equals("Zwrocone")) {
+			return zrealizowaneWypozyczenia;
+		} else {
+			return aktualneWypozyczenia;
+		}
 
 	}
+
 	public void przekierowanieszczegoly() {
 		if (zaznaczoneWypozyczenie != null) {
 			try {

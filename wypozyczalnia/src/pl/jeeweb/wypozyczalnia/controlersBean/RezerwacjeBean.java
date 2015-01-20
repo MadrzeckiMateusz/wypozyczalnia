@@ -37,7 +37,7 @@ public class RezerwacjeBean implements Serializable {
 	}
 
 	public List<Rezerwacje> getAllRezerwacje() {
-		
+
 		List<Rezerwacje> list = null;
 		EntityManager em = DBManager.getManager().createEntityManager();
 
@@ -48,8 +48,9 @@ public class RezerwacjeBean implements Serializable {
 		return list;
 
 	}
+
 	public List<Rezerwacje> gethistoriaRezerwacje() {
-	
+
 		List<Rezerwacje> list = null;
 		EntityManager em = DBManager.getManager().createEntityManager();
 
@@ -61,9 +62,12 @@ public class RezerwacjeBean implements Serializable {
 
 	}
 
-	public List<Rezerwacje> getklientbyid() {
+	public List<Rezerwacje> getklientbyid(String status) {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(true);
+		List<Rezerwacje> rezerwacje;
+		List<Rezerwacje> zrealizowaneRezerwacje = new ArrayList<>();
+		List<Rezerwacje> aktualneRezrwacje = new ArrayList<>();
 		int user_id = (int) session.getAttribute("user_id");
 		List lista;
 		EntityManager em = DBManager.getManager().createEntityManager();
@@ -71,17 +75,31 @@ public class RezerwacjeBean implements Serializable {
 				.createQuery("Select k from Klienci k where k.id_klienta=:id")
 				.setParameter("id", user_id).getSingleResult();
 		klient.getRezerwacjes().size();
-		List<Rezerwacje> rezerwacje = klient.getRezerwacjes();
+		rezerwacje = klient.getRezerwacjes();
 		em.close();
+		for (Rezerwacje rezerwacja : rezerwacje) {
+			if (rezerwacja.getStatus_rezerwacji().equals("Zrealizowana")) {
+				zrealizowaneRezerwacje.add(rezerwacja);
+			} else {
+				aktualneRezrwacje.add(rezerwacja);
+			}
 
-		return rezerwacje;
+		}
+		if (status.equals("Zrealizowana")) {
+			return zrealizowaneRezerwacje;
+		} else {
+			return aktualneRezrwacje;
+		}
 
 	}
-	public List<Filmy> getFilmyArchiwum(Rezerwacje rezerwacja) {
+
+	public List<Filmy> getFilmyArchiwum() {
+		if(zaznaczonaRezerwacja != null) {
+			
 		List<Filmy> filmyarchiwum = new ArrayList<>();
 		String[] idfilm = { "0" };
-		if (rezerwacja.getHistoria_rezer() != null) {
-			idfilm = rezerwacja.getHistoria_rezer().split(";");
+		if (this.zaznaczonaRezerwacja.getHistoria_rezer() != null) {
+			idfilm = this.zaznaczonaRezerwacja.getHistoria_rezer().split(";");
 
 			EntityManager em = DBManager.getManager().createEntityManager();
 
@@ -93,7 +111,8 @@ public class RezerwacjeBean implements Serializable {
 			}
 		}
 		return filmyarchiwum;
-
+		}
+		return null;
 	}
 
 	public void przekierowanieszczegoly() {
@@ -117,6 +136,7 @@ public class RezerwacjeBean implements Serializable {
 					"globalmessage", "Nie wybra³eœ rezerwacji", 3);
 		}
 	}
+
 	public void przekierowaniearchiwum() {
 		if (zaznaczonaRezerwacja != null) {
 			try {

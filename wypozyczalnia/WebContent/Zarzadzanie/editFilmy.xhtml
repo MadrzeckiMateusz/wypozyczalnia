@@ -9,7 +9,7 @@
 	template="./SzablonZarzadzanie.xhtml">
 
 
-	<ui:define  name="content">
+	<ui:define name="content">
 		<script type="text/javascript">
 			//<![CDATA[
 			PrimeFaces.locales['pl'] = {
@@ -44,87 +44,87 @@
 			};
 			//]]>
 		</script>
-			<p:growl id="growl" for="globalmessage" showDetail="true"
-				autoUpdate="true" life="2000" />
-			<p:panel id="panel_edit" styleClass="editprofile">
-				<h:outputLabel value="Edycja Filmu" style="font-size:20px; " />
-				<p:separator />
-				<p:messages />
-				<p:panelGrid id="panel_grid"  columns="2" columnClasses="label, value"
-					style="height:80px">
-					<h:outputText value="Numer filmu: *" />
-					<p:outputLabel value="#{FilmEditBean.film.nr_filmu}" />
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:panel id="panel_edit" styleClass="editprofile">
+			<h:outputLabel value="Edycja Filmu" style="font-size:20px; " />
+			<p:separator />
+			<p:messages />
+			<p:panelGrid id="panel_grid" columns="2" columnClasses="label, value"
+				style="height:80px">
+				<h:outputText value="Numer filmu: *" />
+				<p:outputLabel value="#{FilmEditBean.film.nr_filmu}" />
 
-					<h:outputText value="Tytuł: *" />
-					<p:inputTextarea autoResize="true" rows="1" cols="40"
-						value="#{FilmEditBean.film.tytul}" required="true"
-						requiredMessage="Pole wymagane" />
+				<h:outputText value="Tytuł: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{FilmEditBean.film.tytul}" required="true"
+					requiredMessage="Pole wymagane" />
 
-					<h:outputText value="Data wprowadzenia: *" />
-					<p:calendar value="#{FilmEditBean.film.data_dodania}"
-						pattern="yyyy-MM-dd" mask="true" locale="pl" lang="pl" />
+				<h:outputText value="Data wprowadzenia: *" />
+				<p:calendar value="#{FilmEditBean.film.data_dodania}"
+					pattern="yyyy-MM-dd" mask="true" locale="pl" lang="pl" />
 
-					<h:outputText value="Gatunek: *" />
-					<p:selectManyCheckbox id="grid" value="#{FilmEditBean.gatunkiFilm}"
-						layout="grid" columns="3" >
-						<f:selectItems value="#{FilmEditBean.gatunki}" var="gatunek"
-							itemLabel="#{gatunek.gatunek}"
-							itemValue="#{gatunek.id_klasyfikacji}" />
-					</p:selectManyCheckbox>
-
-
-
-					<h:outputText value="Produkcja: *" />
-					<p:inputTextarea autoResize="true" rows="1" cols="40"
-						value="#{FilmEditBean.film.produkcja}" required="true"
-						requiredMessage="Pole wymagane" />
-
-					<h:outputText value="Premiera: *" />
-
-					<p:calendar value="#{FilmEditBean.film.premiera}"
-						pattern="yyyy-MM-dd" mask="true" locale="pl" />
+				<h:outputText value="Gatunek: *" />
+				<p:selectManyCheckbox id="grid" value="#{FilmEditBean.gatunkiFilm}"
+					layout="grid" columns="3">
+					<f:selectItems value="#{FilmEditBean.gatunki}" var="gatunek"
+						itemLabel="#{gatunek.gatunek}"
+						itemValue="#{gatunek.id_klasyfikacji}" />
+				</p:selectManyCheckbox>
 
 
-					<h:outputText value="Rezyseria: *" />
-					<p:inputTextarea autoResize="true" rows="1" cols="40"
-						value="#{FilmEditBean.film.rezyseria}" required="true"
-						requiredMessage="Pole wymagane" />
 
-					<h:outputText value="Scenariusz: *" />
-					<p:inputTextarea autoResize="true" rows="1" cols="40"
-						value="#{FilmEditBean.film.scenariusz}" required="true"
-						requiredMessage="Pole wymagane" />
+				<h:outputText value="Produkcja: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{FilmEditBean.film.produkcja}" required="true"
+					requiredMessage="Pole wymagane" />
 
-					<h:outputText value="Opis: *" />
-					<p:inputTextarea autoResize="true" rows="1" cols="40"
-						value="#{FilmEditBean.film.opis}" required="true"
-						requiredMessage="Pole wymagane" />
+				<h:outputText value="Premiera: *" />
 
-					<h:outputText value="Plakat: *" style="text-align:right"/>
-					<p:graphicImage cache="false" id="image1" value="#{image.image}"
-						width="140px" height="200px" ondblclick="PF('dlg2').show();">
-						<f:param name="id" value="#{FilmEditBean.film.id_filmu}" />
-					</p:graphicImage>
-					
-				</p:panelGrid>
-				<p:separator />
-				<p:commandButton styleClass="button_zapisz" value="Zapisz"
-						action="#{FilmEditBean.zapiszZmiany}" ajax="false" />
-			</p:panel>
+				<p:calendar value="#{FilmEditBean.film.premiera}"
+					pattern="yyyy-MM-dd" mask="true" locale="pl" />
 
-			<p:dialog header="Załaduj plik" widgetVar="dlg2" modal="true"
-				height="300px" width="500px"  closeOnEscape="true"
-				minHeight="200" minWidth="800" >
 
-				<p:fileUpload fileUploadListener="#{FilmEditBean.handleFileUpload}"
-					mode="advanced" dragDropSupport="false" sizeLimit="100000"
-					fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-					uploadLabel="Wczytaj" cancelLabel="Anuluj" update="image1"
-					label="Wybierz" />
+				<h:outputText value="Rezyseria: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{FilmEditBean.film.rezyseria}" required="true"
+					requiredMessage="Pole wymagane" />
 
-				<p:growl id="messages" showDetail="true" />
+				<h:outputText value="Scenariusz: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{FilmEditBean.film.scenariusz}" required="true"
+					requiredMessage="Pole wymagane" />
 
-			</p:dialog>
+				<h:outputText value="Opis: *" />
+				<p:inputTextarea autoResize="true" rows="1" cols="40"
+					value="#{FilmEditBean.film.opis}" required="true"
+					requiredMessage="Pole wymagane" />
+
+				<h:outputText value="Plakat: *" style="text-align:right" />
+				<p:graphicImage cache="false" id="image1" value="#{image.image}"
+					width="140px" height="200px" ondblclick="PF('dlg2').show();">
+					<f:param name="id" value="#{FilmEditBean.film.id_filmu}" />
+				</p:graphicImage>
+
+			</p:panelGrid>
+			<p:separator />
+			<p:commandButton styleClass="button_zapisz" value="Zapisz"
+				action="#{FilmEditBean.zapiszZmiany}" ajax="false" />
+		</p:panel>
+
+		<p:dialog header="Załaduj plik" widgetVar="dlg2" modal="true"
+			height="300px" width="500px" closeOnEscape="true" minHeight="200"
+			minWidth="800">
+
+			<p:fileUpload fileUploadListener="#{FilmEditBean.handleFileUpload}"
+				mode="advanced" dragDropSupport="false" sizeLimit="100000"
+				fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+				uploadLabel="Wczytaj" cancelLabel="Anuluj" update="image1"
+				label="Wybierz" />
+
+			<p:growl id="messages" showDetail="true" />
+
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>

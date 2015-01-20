@@ -66,10 +66,11 @@ public class WypozyczeniaDetailsBean implements Serializable {
 	JasperPrint jasperPrint;
 	private Pracownicy pracownik;
 	private KopieFilmu slelectedkopia = null;
+	private Wypozyczenia selectedwypozyczenie;
 
 	@PostConstruct
 	public void initBean() {
-
+		this.selectedwypozyczenie = null;
 		int id_wypozyczenia = Integer.valueOf(FacesContext.getCurrentInstance()
 				.getExternalContext().getRequestParameterMap().get("wypo"));
 		this.wypozyczenie = findWypozyczenie(id_wypozyczenia).get(0);
@@ -116,6 +117,31 @@ public class WypozyczeniaDetailsBean implements Serializable {
 		em.getTransaction().commit();
 		em.close();
 	}
+	
+	public List<Filmy> getFilmyArchiwum(Wypozyczenia wypozyczenie) {
+		List<Filmy> filmyarchiwum = new ArrayList<>();
+		String[] idfilm = { "0" };
+		if (wypozyczenie != null) {
+			if (wypozyczenie.getHistoria_wypo() != null) {
+				idfilm = wypozyczenie.getHistoria_wypo().split(
+						";");
+
+				EntityManager em = DBManager.getManager().createEntityManager();
+
+				for (int i = 0; i < idfilm.length; i++) {
+					Filmy film = (Filmy) em
+							.createNamedQuery("Filmy.findById")
+							.setParameter("idFilmu",
+									Integer.parseInt(idfilm[i]))
+							.getSingleResult();
+					filmyarchiwum.add(film);
+				}
+			}
+
+		}
+		return filmyarchiwum;
+	}
+
 
 	private String ustawhistorie(Wypozyczenia wypozyczenia) {
 		String historia = "";
@@ -347,5 +373,19 @@ public class WypozyczeniaDetailsBean implements Serializable {
 
 	public void setSlelectedkopia(KopieFilmu slelectedkopia) {
 		this.slelectedkopia = slelectedkopia;
+	}
+
+	/**
+	 * @return the selectedwypozyczenie
+	 */
+	public Wypozyczenia getSelectedwypozyczenie() {
+		return selectedwypozyczenie;
+	}
+
+	/**
+	 * @param selectedwypozyczenie the selectedwypozyczenie to set
+	 */
+	public void setSelectedwypozyczenie(Wypozyczenia selectedwypozyczenie) {
+		this.selectedwypozyczenie = selectedwypozyczenie;
 	}
 }

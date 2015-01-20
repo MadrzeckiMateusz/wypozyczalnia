@@ -9,14 +9,17 @@
 	template="./SzablonZarzadzanie.xhtml">
 
 	<ui:define name="content">
-		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2" >
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2">
 			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
-				<p:commandButton action="#{RezerwacjeBean.przekierowanieDodajRezerwacje()}"
+				<p:commandButton
+					action="#{RezerwacjeBean.przekierowanieDodajRezerwacje()}"
 					image="button_dodaj"
-					style="height:50px; width:50px; margin-right:5px" title="Dodaj rezerwacje" />
-					<p:commandButton action="#{RezerwacjeBean.przekierowanieszczegoly}"
+					style="height:50px; width:50px; margin-right:5px"
+					title="Dodaj rezerwacje" />
+				<p:commandButton action="#{RezerwacjeBean.przekierowanieszczegoly}"
 					image="button_info"
-					style="height:50px; width:50px; margin-right:5px" title="Szczegóły rezerwacji"/>
+					style="height:50px; width:50px; margin-right:5px"
+					title="Szczegóły rezerwacji" />
 			</p:outputPanel>
 			<p:panel styleClass="infologowanie">
 				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
