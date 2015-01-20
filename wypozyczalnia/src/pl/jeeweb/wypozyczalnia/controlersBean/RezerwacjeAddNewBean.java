@@ -14,11 +14,15 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 import javax.swing.text.html.parser.Entity;
+
+import org.primefaces.context.RequestContext;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
@@ -28,6 +32,7 @@ import pl.jeeweb.wypozyczalnia.entity.Pracownicy;
 import pl.jeeweb.wypozyczalnia.entity.Rezerwacje;
 import pl.jeeweb.wypozyczalnia.tools.DateTools;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
+import pl.jeeweb.wypozyczalnia.tools.SendMail;
 
 /**
  * @author Mateusz
@@ -84,6 +89,7 @@ public class RezerwacjeAddNewBean implements Serializable {
 
 		if (!selectedFilmy.isEmpty()) {
 			for (Filmy film : selectedFilmy) {
+
 				Filmy film1 = (Filmy) em.createNamedQuery("Filmy.findById")
 						.setParameter("idFilmu", film.getId_filmu())
 						.getSingleResult();
@@ -135,7 +141,7 @@ public class RezerwacjeAddNewBean implements Serializable {
 	}
 
 	public void zapiszRezerwacje() {
-		
+
 		if (!this.kopiefilmu.isEmpty()) {
 			if (this.klient != null) {
 				dokonajRezerwacjiZmianydoBazy();
@@ -147,47 +153,103 @@ public class RezerwacjeAddNewBean implements Serializable {
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "Nie doda³eœ filmów", 3);
 		}
+	}
 
+	private void wyslijPowiadomienie() {
+		Klienci klient = this.rezerwacja.getKlienci();
+		SendMail mail = new SendMail(klient.getE_mail(), "Rezerwacja numer "
+				+ this.rezerwacja.getNr_rezerwacji(), "Witaj "
+				+ klient.getImie()
+				+ " Twoja rezerwacja zosta³a przyjêta do realizacji");
+
+		try {
+			mail.send();
+		} catch (MessagingException e) {
+			System.out.print("B³ad wysy³ania maila");
+			e.printStackTrace();
+		}
 	}
 
 	private void dokonajRezerwacjiZmianydoBazy() {
-		if(this.rezerwacja.getData_odbioru() != null) {
-			
-		
-		EntityManager em = DBManager.getManager().createEntityManager();
-		em.getTransaction().begin();
-		this.rezerwacja = em.merge(this.rezerwacja);
-		em.getTransaction().commit();
-
-		for (KopieFilmu kf : this.kopiefilmu) {
-			kf.setRezerwacje(this.rezerwacja);
+		if (this.rezerwacja.getData_odbioru() != null) {
+			String historia = "";
+			for (KopieFilmu kf : this.kopiefilmu) {
+				historia = historia + kf.getFilmy().getId_filmu() + ";";
+			}
+			this.rezerwacja.setHistoria_rezer(historia);
+			EntityManager em = DBManager.getManager().createEntityManager();
 			em.getTransaction().begin();
-			em.merge(kf);
+			this.rezerwacja = em.merge(this.rezerwacja);
 			em.getTransaction().commit();
 
+			for (KopieFilmu kf : this.kopiefilmu) {
+
+				kf.setRezerwacje(this.rezerwacja);
+				em.getTransaction().begin();
+				em.merge(kf);
+				em.getTransaction().commit();
+			}
+
+			em.close();
+
+			wyslijPowiadomienie();
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Rezerwacja dodana pomyœlnie", 1);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash()
+					.setKeepMessages(true);
+			try {
+				FacesContext
+						.getCurrentInstance()
+						.getExternalContext()
+						.redirect(
+								"/wypozyczalnia/Zarzadzanie/szczegolyrezerwacji.xhtml?rez="
+										+ this.rezerwacja.getId_rezerwacji());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Podaj date odbioru", 3);
 		}
 
-		em.close();
+	}
 
-		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-				"globalmessage", "Rezerwacja dodana pomyœlnie", 1);
-		FacesContext.getCurrentInstance().getExternalContext().getFlash()
-		.setKeepMessages(true);
+	public void przekierowaniePotwierdz() {
+
 		try {
+			// if (rezerwacja == (null)) {
+			// DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+			// "globalmessage", "B³¹d!!!", 3);
+			//
+			// } else {
 			FacesContext
 					.getCurrentInstance()
 					.getExternalContext()
 					.redirect(
-							"/wypozyczalnia/Zarzadzanie/szczegolyrezerwacji.xhtml?rez="
+							"/wypozyczalnia/Zarzadzanie/editKlient.xhtml?id_klient="
+									+ rezerwacja.getKlienci().getId_klienta()
+									+ "&target="
+									+ FacesContext.getCurrentInstance()
+											.getViewRoot().getViewId()
+									+ "?rez="
 									+ this.rezerwacja.getId_rezerwacji());
+			// }
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}else 
-		{
+			System.out.print("ssadsdassd");
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-					"globalmessage", "Podaj date odbioru", 3);
+					"globalmessage", "B³¹d!!!", 3);
+		}
+	}
+
+	private boolean sprawdzKlienta() {
+		if (klient.getAktywowany().equals("NIE")) {
+
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('DialogDaneKlient').show();");
+			return false;
+		} else {
+			return true;
 		}
 	}
 

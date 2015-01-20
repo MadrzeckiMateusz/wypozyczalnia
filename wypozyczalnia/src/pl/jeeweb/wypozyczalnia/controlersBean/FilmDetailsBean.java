@@ -48,7 +48,18 @@ public class FilmDetailsBean implements Serializable {
 		}
 
 	}
+	
+	private boolean contains(Filmy film, List<Filmy> listafilmy) {
+		boolean wynik = true;
+		for (Filmy filml : listafilmy) {
+			if (filml.equals(film)) {
+				wynik = false;
+			}
 
+		}
+		return wynik;
+
+	}
 	public boolean isListaProponowanychFilmow() {
 		return !this.filmyWedlugGatunkow.isEmpty();
 	}
@@ -69,8 +80,8 @@ public class FilmDetailsBean implements Serializable {
 			em.close();
 			for (KlasyfikacjaGatunku gatunekfilmu : filmyZgatunku) {
 				for (Filmy filmPodobne : gatunekfilmu.getFilmies()) {
-					if (filmSzczegoly.compareTo(filmPodobne) == -1
-							&& !podobnePropozycje.contains(filmPodobne)) {
+					if (!filmSzczegoly.equals(filmPodobne) 
+							&& contains(filmPodobne, podobnePropozycje)) {
 						podobnePropozycje.add(filmPodobne);
 					}
 				}
@@ -94,8 +105,8 @@ public class FilmDetailsBean implements Serializable {
 		for (int i = 0; i <= 3; i++) {
 			Filmy film = filmyDolosowania
 					.get(r.nextInt(filmyDolosowania.size()));
-			if (film.compareTo(filmSzczegoly) == -1
-					&& !filmyWylosowane.contains(film)) {
+			if (!film.equals(filmSzczegoly)
+					&& contains(film, filmyWylosowane)) {
 				filmyWylosowane.add(film);
 			} else {
 

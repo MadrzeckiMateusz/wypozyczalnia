@@ -57,8 +57,8 @@
 					<p:column headerText="Reżyseria">
 						<h:outputText value="#{kopieFilmu.filmy.rezyseria}" />
 					</p:column>
-					<p:column headerText="Reżyseria">
-						<h:outputText value="#{kopieFilmu.filmy.rezyseria}" />
+					<p:column headerText="Scenariusz">
+						<h:outputText value="#{kopieFilmu.filmy.scenariusz}" />
 					</p:column>
 					<p:column headerText="Gatunek">
 						<h:outputText
@@ -69,7 +69,8 @@
 							value="#{RezerwacjeDetailsBean.getNumerkopiiFlmu(kopieFilmu)}" />
 					</p:column>
 
-					<p:column style="width:32px; text-align: center" rendered="#{RezerwacjeDetailsBean.edytowalnarezerwacja}">
+					<p:column style="width:32px; text-align: center"
+						rendered="#{RezerwacjeDetailsBean.edytowalnarezerwacja}">
 						<p:commandButton
 							action="#{RezerwacjeDetailsBean.usunFilm(kopieFilmu)}"
 							icon="ui-icon-minus" update="filmyTable" />
@@ -105,18 +106,21 @@
 
 			</p:panel>
 
-			<p:panel id="panel_button" styleClass="panelNoPadding" style="vertical-align:top">
+			<p:panel id="panel_button" styleClass="panelNoPadding"
+				style="vertical-align:top">
 				<p:panelGrid styleClass="gridNoPadding" columns="1"
 					columnClasses="topAligment">
 					<p:commandButton onclick="PF('DialogDodajFilm').show()"
 						image="button_dodaj" style="height:50px; width:50px; "
-						title="Dodaj film do rezerwacji" rendered="#{RezerwacjeDetailsBean.edytowalnarezerwacja}"/>
+						title="Dodaj film do rezerwacji"
+						rendered="#{RezerwacjeDetailsBean.edytowalnarezerwacja}" />
 
 					<p:commandButton
 						actionListener="#{RezerwacjeDetailsBean.zmienStatusRezerwacji()}"
 						image="button_check"
 						style="height:50px; width:50px; margin-top:5px"
-						title="Obsługa rezerwacji/Zmiana statusu" update="tableRezewacja, panel_button, filmyTable  " />
+						title="Obsługa rezerwacji/Zmiana statusu"
+						update="tableRezewacja, panel_button, filmyTable  " />
 
 					<p:commandButton action="#{RezerwacjeDetailsBean.PDF}"
 						image="button_print"
@@ -134,9 +138,8 @@
 						image="button_daneKlienta"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Dane klienta" />
-						
-						<p:commandButton
-						action="#{RezerwacjeDetailsBean.wypozyczFilmy}"
+
+					<p:commandButton action="#{RezerwacjeDetailsBean.wypozyczFilmy}"
 						image="button_wypozycz"
 						style="height:50px; width:50px; margin-top:5px"
 						title="Wypożycz filmy" />

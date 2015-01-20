@@ -111,7 +111,11 @@ public class RezerwacjeDetailsBean implements Serializable {
 					}
 				}
 			}
+			Rezerwacje rezerw = em.merge(this.rezerwacja);
+
+			this.rezerwacja.setHistoria_rezer(ustawhistorie(rezerw));
 			em.merge(this.rezerwacja);
+
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "Filmy dodane", 1);
 		} else {
@@ -122,12 +126,22 @@ public class RezerwacjeDetailsBean implements Serializable {
 		em.close();
 	}
 
+	private String ustawhistorie(Rezerwacje rezerwacja) {
+		String historia = "";
+		for (Filmy film : rezerwacja.getFilmyTran()) {
+			historia = historia + film.getId_filmu() + ";";
+		}
+		return historia;
+	}
+
 	public void usunFilm(KopieFilmu kopia) {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		em.getTransaction().begin();
 		kopia.setRezerwacje(null);
 		this.rezerwacja.getKopieFilmus().remove(kopia);
 		em.merge(kopia);
+		Rezerwacje rezerw = em.merge(this.rezerwacja);
+		this.rezerwacja.setHistoria_rezer(ustawhistorie(rezerw));
 		em.merge(this.rezerwacja);
 		em.getTransaction().commit();
 		em.close();
@@ -143,10 +157,7 @@ public class RezerwacjeDetailsBean implements Serializable {
 	}
 
 	public void wypozyczFilmy() throws IOException {
-		if (rezerwacja.getKlienci().getAktywowany().equals("NIE")) {
-			RequestContext context = RequestContext.getCurrentInstance();
-			context.execute("PF('DialogDaneKlient').show();");
-		}
+
 		EntityManager em = DBManager.getManager().createEntityManager();
 		em.getTransaction().begin();
 		this.wypozyczenie.setData_wypozyczenia(DateTools.currentDate());
@@ -156,6 +167,7 @@ public class RezerwacjeDetailsBean implements Serializable {
 		this.wypozyczenie.setNr_wypozyczenia(setNumerWypozyczenia());
 		this.wypozyczenie.setOdsetki(0);
 		this.wypozyczenie.setPracownicy(this.pracownik);
+		this.wypozyczenie.setHistoria_wypo(this.rezerwacja.getHistoria_rezer());
 		Wypozyczenia wypozyczenie_merge = em.merge(this.wypozyczenie);
 
 		for (KopieFilmu kopiafilmu : this.rezerwacja.getKopieFilmus()) {
@@ -165,12 +177,12 @@ public class RezerwacjeDetailsBean implements Serializable {
 		}
 		this.rezerwacja.setPracownicy(this.pracownik);
 		em.flush();
-	//	em.remove(em.merge(this.rezerwacja));
+		// em.remove(em.merge(this.rezerwacja));
 		this.rezerwacja.setStatus_rezerwacji("Zrealizowana");
 		em.merge(this.rezerwacja);
 		em.getTransaction().commit();
 
-		//DBManager.getManager().closeEntityManagerFactory();
+		// DBManager.getManager().closeEntityManagerFactory();
 		DBManager.getManager().refresh();
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 				"globalmessage",
@@ -183,6 +195,7 @@ public class RezerwacjeDetailsBean implements Serializable {
 				.redirect(
 						"/wypozyczalnia/Zarzadzanie/szczegolyWypozyczenia.xhtml?wypo="
 								+ wypozyczenie_merge.getId_wypozyczenia());
+		wyslijPowiadomienieWypozyczenia();
 
 	}
 
@@ -216,7 +229,9 @@ public class RezerwacjeDetailsBean implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(true);
 		String rola = (String) session.getAttribute("role-name");
-		if (this.rezerwacja.getStatus_rezerwacji().equals("W REALIZACJI")) {
+		if (this.rezerwacja.getStatus_rezerwacji().equals("W realizacji")
+				|| this.rezerwacja.getStatus_rezerwacji().equals(
+						"Obs³u¿ona. Do odbioru")) {
 			return true;
 		} else {
 			if (rola.equals("admin")) {
@@ -235,6 +250,23 @@ public class RezerwacjeDetailsBean implements Serializable {
 				"<html>Witaj "
 						+ klient.getImie()
 						+ " <br> Twoja rezerwacja zosta³a przygotowana do odbioru</html>");
+		try {
+			mail.send();
+		} catch (MessagingException e) {
+			System.out.print("B³ad wysy³ania maila");
+			e.printStackTrace();
+		}
+	}
+
+	public void wyslijPowiadomienieWypozyczenia() {
+		Klienci klient = this.wypozyczenie.getKlienci();
+		SendMail mail = new SendMail(
+				klient.getE_mail(),
+				"Wpozyczenie numer " + this.wypozyczenie.getNr_wypozyczenia(),
+				"<html>Witaj "
+						+ klient.getImie()
+						+ " Wypozyczenie zosta³o zrealizowane. Dziêkujemy za skorzystanie z naszych us³ug. Termin zwrotu: "
+						+ this.wypozyczenie.getTermin_zwrotu().toString());
 		try {
 			mail.send();
 		} catch (MessagingException e) {

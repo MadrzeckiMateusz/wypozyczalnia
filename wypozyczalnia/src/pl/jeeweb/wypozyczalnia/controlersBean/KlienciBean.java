@@ -108,6 +108,7 @@ public class KlienciBean {
 
 			String tmpPassword = rand.RandomPass();
 			this.klient.setHaslo(SHA256hash.HashText(tmpPassword));
+			this.klient.setAktywowany("NIE");
 
 			this.user.setUsername(this.klient.getE_mail());
 			this.user.setPassword(this.klient.getHaslo());

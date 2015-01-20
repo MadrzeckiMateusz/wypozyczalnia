@@ -97,5 +97,6 @@
 	<classpathentry kind="lib" path="C:/Users/Mateusz/git/jasperreports-6.0.0-project/jasperreports-6.0.0/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Mateusz/git/jasperreports-6.0.0-project/jasperreports-6.0.0/lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Mateusz/git/jasperreports-6.0.0-project/jasperreports-6.0.0/lib/xmlbeans-2.5.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mateusz/git/commons-configuration-1.10.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

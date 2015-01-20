@@ -47,7 +47,9 @@ public class Wypozyczenia implements Serializable {
 
 	@Column(length=500)
 	private String uwagi;
-
+	
+	@Column(length=100)
+	private String historia_wypo;
 	//bi-directional many-to-one association to KopieFilmu
 	@OneToMany(mappedBy="wypozyczenia" , fetch= FetchType.EAGER )
 	private List<KopieFilmu> kopieFilmus;
@@ -175,6 +177,20 @@ public class Wypozyczenia implements Serializable {
 			filmyrez.add(film);
 		}
 		return filmyrez;
+	}
+
+	/**
+	 * @return the historia_wypo
+	 */
+	public String getHistoria_wypo() {
+		return historia_wypo;
+	}
+
+	/**
+	 * @param historia_wypo the historia_wypo to set
+	 */
+	public void setHistoria_wypo(String historia_wypo) {
+		this.historia_wypo = historia_wypo;
 	}
 
 	public void setFilmyTran(List<Filmy> filmyTran) {

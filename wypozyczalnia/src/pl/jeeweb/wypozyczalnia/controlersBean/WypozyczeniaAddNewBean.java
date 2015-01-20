@@ -12,8 +12,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
+
+import org.primefaces.context.RequestContext;
 
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
@@ -23,6 +26,7 @@ import pl.jeeweb.wypozyczalnia.entity.Pracownicy;
 import pl.jeeweb.wypozyczalnia.entity.Wypozyczenia;
 import pl.jeeweb.wypozyczalnia.tools.DateTools;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
+import pl.jeeweb.wypozyczalnia.tools.SendMail;
 
 /**
  * @author Mateusz
@@ -122,10 +126,14 @@ public class WypozyczeniaAddNewBean implements Serializable {
 	}
 
 	public void zapiszWypozyczenie() {
-
+	
 		if (!this.kopiefilmu.isEmpty()) {
 			if (this.klient != null) {
-				dokonajWypozyczeniaZmianydoBazy();
+				if (wypozyczenie.getKlienci().getAktywowany().equals("NIE")) {
+					RequestContext context = RequestContext.getCurrentInstance();
+					context.execute("PF('DialogDaneKlient').show();");
+				}else {
+				dokonajWypozyczeniaZmianydoBazy();}
 			} else {
 				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 						"globalmessage", "Nie doda³eœ klienta", 3);
@@ -138,7 +146,11 @@ public class WypozyczeniaAddNewBean implements Serializable {
 	}
 	private void dokonajWypozyczeniaZmianydoBazy() {
 		if(this.wypozyczenie.getTermin_zwrotu() != null) {
-			
+			String historia = "";
+			for (KopieFilmu kf : this.kopiefilmu) {
+				historia = historia + kf.getFilmy().getId_filmu() + ";";
+			}
+			this.wypozyczenie.setHistoria_wypo(historia);
 		
 		EntityManager em = DBManager.getManager().createEntityManager();
 		em.getTransaction().begin();
@@ -154,9 +166,9 @@ public class WypozyczeniaAddNewBean implements Serializable {
 		}
 
 		em.close();
-
+		wyslijPowiadomienieWypozyczenia();
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-				"globalmessage", "Rezerwacja dodana pomyœlnie", 1);
+				"globalmessage", "Wypo¿yczenie zrealizowane", 1);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash()
 		.setKeepMessages(true);
 		try {
@@ -174,6 +186,22 @@ public class WypozyczeniaAddNewBean implements Serializable {
 		{
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "podaj termin zwrotu", 3);
+		}
+	}
+	public void wyslijPowiadomienieWypozyczenia() {
+	
+		SendMail mail = new SendMail(
+				klient.getE_mail(),
+				"Wpozyczenie numer " + this.wypozyczenie.getNr_wypozyczenia(),
+				"Witaj "
+						+ klient.getImie()
+						+ " Wypozyczenie zosta³o zrealizowane. Dziêkujemy za skorzystanie z naszych us³ug. Termin zwrotu: "
+						+ this.wypozyczenie.getTermin_zwrotu().toString());
+		try {
+			mail.send();
+		} catch (MessagingException e) {
+			System.out.print("B³ad wysy³ania maila");
+			e.printStackTrace();
 		}
 	}
 	

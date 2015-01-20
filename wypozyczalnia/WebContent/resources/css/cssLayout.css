@@ -305,6 +305,13 @@
 	top: 35% !important;
 	left: 35% !important;
 }
+.button_zwrot {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/zwrot.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
 .list_icon {
 	background: url("#{resource['image/list16.png']}") !important;
 	height: 16px;

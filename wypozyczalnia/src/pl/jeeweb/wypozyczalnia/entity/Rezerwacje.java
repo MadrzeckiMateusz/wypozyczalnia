@@ -47,6 +47,9 @@ public class Rezerwacje implements Serializable {
 
 	@Column(length=500)
 	private String uwagi;
+	
+	@Column(length=100)
+	private String historia_rezer;
 
 	//bi-directional many-to-one association to KopieFilmu
 	@OneToMany(mappedBy="rezerwacje" , fetch= FetchType.EAGER)//, cascade = CascadeType.MERGE)
@@ -176,6 +179,20 @@ public class Rezerwacje implements Serializable {
 		List<Klienci> listaKliencis = new ArrayList<>();
 		listaKliencis.add(klienci);
 		return listaKliencis;
+	}
+
+	/**
+	 * @return the historia_rezer
+	 */
+	public String getHistoria_rezer() {
+		return historia_rezer;
+	}
+
+	/**
+	 * @param historia_rezer the historia_rezer to set
+	 */
+	public void setHistoria_rezer(String historia_rezer) {
+		this.historia_rezer = historia_rezer;
 	}
 
 	public void setKlientTran(List<Klienci> klient) {
