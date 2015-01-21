@@ -78,16 +78,23 @@ public class WypozyczeniaAddNewBean implements Serializable {
 				Filmy film1 = (Filmy) em.createNamedQuery("Filmy.findById")
 						.setParameter("idFilmu", film.getId_filmu())
 						.getSingleResult();
+				List<KopieFilmu> kopiaTmp = new ArrayList<>();
 				for (KopieFilmu kopia : film1.getKopieFilmus()) {
 					if (kopia.getRezerwacje() == null
 							&& kopia.getWypozyczenia() == null) {
-						// kopia.setRezerwacje(rezerwacja);
-						this.kopiefilmu.add(kopia);
-						break;
+
+						kopiaTmp.add(kopia);
 					}
 				}
+				if (kopiaTmp.size() > 0) {
+					this.kopiefilmu.add(kopiaTmp.get(0));
+				} else {
+					DisplayMessage.InfoMessage(
+							FacesContext.getCurrentInstance(), "globalmessage",
+							"Brak kopii filmów!!!", 3);
+				}
 			}
-			// em.merge(this.rezerwacja);
+
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "Filmy dodane", 1);
 		} else {
@@ -126,14 +133,16 @@ public class WypozyczeniaAddNewBean implements Serializable {
 	}
 
 	public void zapiszWypozyczenie() {
-	
+
 		if (!this.kopiefilmu.isEmpty()) {
 			if (this.klient != null) {
 				if (wypozyczenie.getKlienci().getAktywowany().equals("NIE")) {
-					RequestContext context = RequestContext.getCurrentInstance();
+					RequestContext context = RequestContext
+							.getCurrentInstance();
 					context.execute("PF('DialogDaneKlient').show();");
-				}else {
-				dokonajWypozyczeniaZmianydoBazy();}
+				} else {
+					dokonajWypozyczeniaZmianydoBazy();
+				}
 			} else {
 				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 						"globalmessage", "Nie doda³eœ klienta", 3);
@@ -144,52 +153,54 @@ public class WypozyczeniaAddNewBean implements Serializable {
 		}
 
 	}
+
 	private void dokonajWypozyczeniaZmianydoBazy() {
-		if(this.wypozyczenie.getTermin_zwrotu() != null) {
+		if (this.wypozyczenie.getTermin_zwrotu() != null) {
 			String historia = "";
 			for (KopieFilmu kf : this.kopiefilmu) {
 				historia = historia + kf.getFilmy().getId_filmu() + ";";
 			}
 			this.wypozyczenie.setHistoria_wypo(historia);
-		
-		EntityManager em = DBManager.getManager().createEntityManager();
-		em.getTransaction().begin();
-		this.wypozyczenie = em.merge(this.wypozyczenie);
-		em.getTransaction().commit();
 
-		for (KopieFilmu kf : this.kopiefilmu) {
-			kf.setWypozyczenia(this.wypozyczenie);
+			EntityManager em = DBManager.getManager().createEntityManager();
 			em.getTransaction().begin();
-			em.merge(kf);
+			this.wypozyczenie = em.merge(this.wypozyczenie);
 			em.getTransaction().commit();
 
-		}
+			for (KopieFilmu kf : this.kopiefilmu) {
+				kf.setWypozyczenia(this.wypozyczenie);
+				em.getTransaction().begin();
+				em.merge(kf);
+				em.getTransaction().commit();
 
-		em.close();
-		wyslijPowiadomienieWypozyczenia();
-		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-				"globalmessage", "Wypo¿yczenie zrealizowane", 1);
-		FacesContext.getCurrentInstance().getExternalContext().getFlash()
-		.setKeepMessages(true);
-		try {
-			FacesContext
-					.getCurrentInstance()
-					.getExternalContext()
-					.redirect(
-							"/wypozyczalnia/Zarzadzanie/szczegolyWypozyczenia.xhtml?wypo="
-									+ this.wypozyczenie.getId_wypozyczenia());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}else 
-		{
+			}
+
+			em.close();
+			wyslijPowiadomienieWypozyczenia();
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Wypo¿yczenie zrealizowane", 1);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash()
+					.setKeepMessages(true);
+			try {
+				FacesContext
+						.getCurrentInstance()
+						.getExternalContext()
+						.redirect(
+								"/wypozyczalnia/Zarzadzanie/szczegolyWypozyczenia.xhtml?wypo="
+										+ this.wypozyczenie
+												.getId_wypozyczenia());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "podaj termin zwrotu", 3);
 		}
 	}
+
 	public void wyslijPowiadomienieWypozyczenia() {
-	
+
 		SendMail mail = new SendMail(
 				klient.getE_mail(),
 				"Wpozyczenie numer " + this.wypozyczenie.getNr_wypozyczenia(),
@@ -204,7 +215,7 @@ public class WypozyczeniaAddNewBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private String setNumerWypozyczenia(int id) {
 		Integer i = id;
 		i += 1;
@@ -228,7 +239,8 @@ public class WypozyczeniaAddNewBean implements Serializable {
 	}
 
 	/**
-	 * @param wypozyczenie the wypozyczenie to set
+	 * @param wypozyczenie
+	 *            the wypozyczenie to set
 	 */
 	public void setWypozyczenie(Wypozyczenia wypozyczenie) {
 		this.wypozyczenie = wypozyczenie;
@@ -242,7 +254,8 @@ public class WypozyczeniaAddNewBean implements Serializable {
 	}
 
 	/**
-	 * @param pracownik the pracownik to set
+	 * @param pracownik
+	 *            the pracownik to set
 	 */
 	public void setPracownik(Pracownicy pracownik) {
 		this.pracownik = pracownik;
@@ -256,7 +269,8 @@ public class WypozyczeniaAddNewBean implements Serializable {
 	}
 
 	/**
-	 * @param selectedFilmy the selectedFilmy to set
+	 * @param selectedFilmy
+	 *            the selectedFilmy to set
 	 */
 	public void setSelectedFilmy(List<Filmy> selectedFilmy) {
 		this.selectedFilmy = selectedFilmy;
@@ -270,7 +284,8 @@ public class WypozyczeniaAddNewBean implements Serializable {
 	}
 
 	/**
-	 * @param klient the klient to set
+	 * @param klient
+	 *            the klient to set
 	 */
 	public void setKlient(Klienci klient) {
 		this.klient = klient;
@@ -284,11 +299,11 @@ public class WypozyczeniaAddNewBean implements Serializable {
 	}
 
 	/**
-	 * @param kopiefilmu the kopiefilmu to set
+	 * @param kopiefilmu
+	 *            the kopiefilmu to set
 	 */
 	public void setKopiefilmu(List<KopieFilmu> kopiefilmu) {
 		this.kopiefilmu = kopiefilmu;
 	}
-	
 
 }

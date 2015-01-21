@@ -33,20 +33,22 @@
 		</p:panelGrid>
 		<p:growl id="growl" for="globalmessage" showDetail="true"
 			autoUpdate="true" life="2000" />
-		<p:dataTable var="filmy" styleClass="zarzadzaj"
+		<p:dataTable var="filmy" styleClass="zarzadzaj" paginator="true" rows="5"
 			value="#{FilmBean.listaFilmy}" widgetVar="filmTables"
 			filteredValue="#{FilmBean.filetredFilmy}"
 			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
-			selection="#{FilmBean.selectedFilm}" rowKey="#{filmy.id_filmu}">
+			selection="#{FilmBean.selectedFilm}" rowKey="#{filmy.id_filmu}"
+			 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+			 rowsPerPageTemplate="5,10,15" lazy="true" >
 
-			<f:facet name="header">
-				<p:outputPanel style="margin-right:67%">
-					<h:outputText value="Wyszukiwanie globalne:"
-						style="margin-right:15px" />
-					<p:inputText id="globalFilter" onkeyup="PF('filmTables').filter()"
-						style="width:150px" placeholder="Wpisz frazę" />
-				</p:outputPanel>
-			</f:facet>
+<!-- 			<f:facet name="header"> -->
+<!-- 				<p:outputPanel style="margin-right:67%"> -->
+<!-- 					<h:outputText value="Wyszukiwanie globalne:" -->
+<!-- 						style="margin-right:15px" /> -->
+<!-- 					<p:inputText id="globalFilter" onkeyup="PF('filmTables').filter()" -->
+<!-- 						style="width:150px" placeholder="Wpisz frazę" /> -->
+<!-- 				</p:outputPanel> -->
+<!-- 			</f:facet> -->
 			<p:column headerText="Numer filmu" filterBy="#{filmy.nr_filmu}"
 				filterMatchMode="contains">
 				<h:outputText value="#{filmy.nr_filmu}" />

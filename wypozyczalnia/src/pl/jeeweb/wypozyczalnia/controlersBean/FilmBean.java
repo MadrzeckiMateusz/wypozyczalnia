@@ -8,6 +8,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -16,10 +17,11 @@ import org.primefaces.event.SelectEvent;
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
+import pl.jeeweb.wypozyczalnia.entity.KopieFilmu;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
 @ManagedBean(name = "FilmBean")
-@RequestScoped
+@ViewScoped
 public class FilmBean implements Serializable {
 
 	/**
@@ -40,10 +42,12 @@ public class FilmBean implements Serializable {
 		em.close();
 		return list;
 	}
-	 public void onRowSelect(SelectEvent event) {
-		 przekierowanieSzczegoly(this.selectedFilm.getId_filmu());
-	        
-	    }
+
+	public void onRowSelect(SelectEvent event) {
+		przekierowanieSzczegoly(this.selectedFilm.getId_filmu());
+
+	}
+
 	public List<Filmy> getTop5filmy() {
 
 		EntityManager em = DBManager.getManager().createEntityManager();
@@ -69,51 +73,58 @@ public class FilmBean implements Serializable {
 	public String iloscKopiiFilmu(Filmy film) {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		Filmy filmId = new Filmy();
-		filmId = em.find(Filmy.class, film.getId_filmu());
+		filmId = (Filmy) em.createNamedQuery("Filmy.findById").setParameter("idFilmu", film.getId_filmu()).getSingleResult();
 		// Filmy filmId = (Filmy)
 		// em.createNamedQuery("Filmy.findById").setParameter("idFilmu",
 		// film.getId_filmu()).getSingleResult();
+		
 		String size = Integer.toString(filmId.getKopieFilmus().size());
+		
+		int licznik = 0;
+		for (KopieFilmu kopia : filmId.getKopieFilmus()) {
+			if (kopia.getRezerwacje() == null
+					&& kopia.getWypozyczenia() == null) {
+				licznik++;
+			}
+		}
 		em.close();
-		return size;
+		return licznik+"/"+size;
 
 	}
 
 	public void przekierowanieEdycjaFilmu() {
 		try {
-			if(selectedFilm == (null)) 
-			{
-				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(), "globalmessage", "Nie wybra쿮s filmu!!!", 3);
+			if (selectedFilm == (null)) {
+				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+						"globalmessage", "Nie wybra쿮s filmu!!!", 3);
 
-			}
-				else {
-			FacesContext
-					.getCurrentInstance()
-					.getExternalContext()
-					.redirect(
-							"/wypozyczalnia/Zarzadzanie/editFilmy.xhtml?id_filmu="
-									+ selectedFilm.getId_filmu());
+			} else {
+				FacesContext
+						.getCurrentInstance()
+						.getExternalContext()
+						.redirect(
+								"/wypozyczalnia/Zarzadzanie/editFilmy.xhtml?id_filmu="
+										+ selectedFilm.getId_filmu());
 			}
 		} catch (IOException e) {
 			System.out.print("ssadsdassd");
-			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(), "globalmessage", "Nie wybra쿮s filmu!!!", 3);
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Nie wybra쿮s filmu!!!", 3);
 		}
 	}
+
 	public void przekierowanieDodajFilm() {
 		try {
-			
-				
-			FacesContext
-					.getCurrentInstance()
-					.getExternalContext()
-					.redirect(
-							"/wypozyczalnia/Zarzadzanie/addFilm.xhtml");
-			
+
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("/wypozyczalnia/Zarzadzanie/addFilm.xhtml");
+
 		} catch (IOException e) {
 			System.out.print("ssadsdassd");
-			
+
 		}
 	}
+
 	public void przekierowanieSzczegoly(int id) {
 		try {
 

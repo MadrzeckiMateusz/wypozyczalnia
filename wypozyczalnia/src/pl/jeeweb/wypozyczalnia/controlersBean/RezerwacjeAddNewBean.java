@@ -93,16 +93,24 @@ public class RezerwacjeAddNewBean implements Serializable {
 				Filmy film1 = (Filmy) em.createNamedQuery("Filmy.findById")
 						.setParameter("idFilmu", film.getId_filmu())
 						.getSingleResult();
+				List<KopieFilmu> kopiaTmp = new ArrayList<>();
 				for (KopieFilmu kopia : film1.getKopieFilmus()) {
 					if (kopia.getRezerwacje() == null
 							&& kopia.getWypozyczenia() == null) {
-						// kopia.setRezerwacje(rezerwacja);
-						this.kopiefilmu.add(kopia);
-						break;
+						kopiaTmp.add(kopia);
+						
+						
 					}
 				}
+				if(kopiaTmp.size()>0) {
+				this.kopiefilmu.add(kopiaTmp.get(0));
+				}
+				else {
+					DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+							"globalmessage", "Brak kopii filmów!!!", 3);
+				}
 			}
-			// em.merge(this.rezerwacja);
+			
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "Filmy dodane", 1);
 		} else {

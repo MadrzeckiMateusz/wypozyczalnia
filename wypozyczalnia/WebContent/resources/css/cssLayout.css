@@ -244,7 +244,20 @@
 	top: 39% !important;
 	left: 40% !important;
 }
-
+.button_empadd {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/empadd.png']}") !important;
+	top: 39% !important;
+	left: 40% !important;
+}
+.button_empedit {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/empedit.png']}") !important;
+	top: 39% !important;
+	left: 40% !important;
+}
 .button_dodaj {
 	height: 35px;
 	width: 35px;
