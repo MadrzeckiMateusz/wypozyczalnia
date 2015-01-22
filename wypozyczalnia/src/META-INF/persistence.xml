@@ -15,7 +15,6 @@
 		<class>pl.jeeweb.wypozyczalnia.entity.KlasyfikatorPK</class>
 		<class>pl.jeeweb.wypozyczalnia.entity.Klienci</class>
 		<class>pl.jeeweb.wypozyczalnia.entity.Role</class>
-		<class>pl.jeeweb.wypozyczalnia.entity.RolePK</class>
 		<class>pl.jeeweb.wypozyczalnia.entity.User</class>
 		<properties>
 			<property name="hibernate.connection.username" value="root" />

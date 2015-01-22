@@ -21,7 +21,6 @@ import javax.transaction.TransactionalException;
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Klienci;
 import pl.jeeweb.wypozyczalnia.entity.Role;
-import pl.jeeweb.wypozyczalnia.entity.RolePK;
 import pl.jeeweb.wypozyczalnia.entity.User;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 import pl.jeeweb.wypozyczalnia.tools.RandomAlphaNum;
@@ -34,7 +33,7 @@ public class KlienciBean {
 	private Klienci klient = new Klienci();
 	private User user = new User();
 	private Role user_role = new Role();
-	private RolePK rolePK = new RolePK();
+	
 	private Klienci selectedKlient = null;
 	private List<Klienci> filteredKlienci = new ArrayList<>();
 
@@ -112,9 +111,9 @@ public class KlienciBean {
 
 			this.user.setUsername(this.klient.getE_mail());
 			this.user.setPassword(this.klient.getHaslo());
-			this.rolePK.setRolename("klient");
-			this.rolePK.setUsername(this.klient.getE_mail());
-			this.user_role.setId(this.rolePK);
+			
+			this.user_role.setRolename("klient");
+			this.user_role.setUsername(this.klient.getE_mail());
 			EntityManager em = DBManager.getManager().createEntityManager();
 			try {
 				em.getTransaction().begin();

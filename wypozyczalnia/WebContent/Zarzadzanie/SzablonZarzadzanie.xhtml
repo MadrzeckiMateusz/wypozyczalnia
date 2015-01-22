@@ -90,12 +90,15 @@
 
 						<p:submenu label="Pracownicy" style=" background-color: #A4BDEF;"
 							rendered="#{AuthorizationBean.adminRole}">
-							<p:menuitem value="Lista pracowników" url="/Zarzadzanie/Admin/listaPracownicy.xhtml"
+							<p:menuitem value="Lista pracowników"
+								url="/Zarzadzanie/Admin/listaPracownicy.xhtml"
 								icon="ui-icon-pencil" />
-							<p:menuitem value="Zmień Hasło" url="/Users/zmianahasla.xhtml"
+							<p:menuitem value="Dodaj pracownika"
+								url="/Zarzadzanie/Admin/addPracownik.xhtml"
 								icon="ui-icon-wrench" />
-							<p:menuitem value="Moje rezerwacje"
-								url="/Users/mojerezerwacje.xhtml" icon="ui-icon-folder-open
+							<p:menuitem value="Edytuj pracownika"
+								action="#{PracownikBean.przekierowanieEdycjaPracownika()}"
+								icon="ui-icon-folder-open
  " />
 						</p:submenu>
 					</p:menu>

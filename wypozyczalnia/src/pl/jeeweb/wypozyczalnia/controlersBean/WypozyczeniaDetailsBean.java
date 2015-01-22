@@ -250,30 +250,39 @@ public class WypozyczeniaDetailsBean implements Serializable {
 
 	public void zwrotfilmow() {
 		EntityManager em = DBManager.getManager().createEntityManager();
-		em.getTransaction().begin();
-		for (KopieFilmu kopiafilmu : this.wypozyczenie.getKopieFilmus()) {
-			kopiafilmu.setWypozyczenia(null);
-			em.merge(kopiafilmu);
-		}
-		
-		this.wypozyczenie.setData_zwrotu(DateTools.currentDate());
-		if (this.wypozyczenie.getTermin_zwrotu().after(DateTools.currentDate())
-				|| this.wypozyczenie.getTermin_zwrotu().equals(
-						DateTools.currentDate())) {
-			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-					"globalmessage", "Film zwrócony w terminie", 1);
+		try {
+			em.getTransaction().begin();
+			for (KopieFilmu kopiafilmu : this.wypozyczenie.getKopieFilmus()) {
+				kopiafilmu.setWypozyczenia(null);
+				em.merge(kopiafilmu);
+			}
+			
+			this.wypozyczenie.setData_zwrotu(DateTools.currentDate());
+			if (this.wypozyczenie.getTermin_zwrotu().after(DateTools.currentDate())
+					|| this.wypozyczenie.getTermin_zwrotu().equals(
+							DateTools.currentDate())) {
+				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+						"globalmessage", "Film zwrócony w terminie", 1);
 
+			}
+			else {
+				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+						"globalmessage", "Film zwrócony po terminie", 3);
+				long diff = DateTools.currentDate().getTime() - this.wypozyczenie.getTermin_zwrotu().getTime() ;
+				long diffdays = diff /(24*60*60*1000);
+				if(diffdays>0) {
+				this.wypozyczenie.setOdsetki(this.wypozyczenie.getKopieFilmus().size()*5*diffdays);
+				}
+			}
+			this.wypozyczenie.setHistoria_wypo(ustawhistorie(this.wypozyczenie));
+			this.wypozyczenie.setKopieFilmus(null);
+			em.merge(this.wypozyczenie);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			em.getTransaction().rollback();
+			e.printStackTrace();
 		}
-		else {
-			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-					"globalmessage", "Film zwrócony po terminie", 3);
-			long diff = this.wypozyczenie.getTermin_zwrotu().getTime() - DateTools.currentDate().getTime();
-			long diffdays = diff /(24*60*60*1000);
-			this.wypozyczenie.setOdsetki(this.wypozyczenie.getKopieFilmus().size()*5*diffdays);
-		}
-		this.wypozyczenie.setKopieFilmus(null);
-		em.merge(this.wypozyczenie);
-		em.getTransaction().commit();
 		em.close();
 	
 	}

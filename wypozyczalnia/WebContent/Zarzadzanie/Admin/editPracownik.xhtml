@@ -22,11 +22,11 @@
 				style="height:80px">
 				<h:outputText value="Numer pracownika: *" />
 				<p:outputLabel id="numer"
-					value="#{PracownikAddBean.pracownik.nr_pracownika}" required="true" />
+					value="#{PracownikEditBean.pracownik.nr_pracownika}" required="true" />
 				<p:message id="ermsg" styleClass="ermsg" for="numer"
 					autoUpdate="true" severity="error" />
 				<h:outputText value="Imie: *" />
-				<p:inputText id="imie" value="#{PracownikAddBean.pracownik.imie}"
+				<p:inputText id="imie" value="#{PracownikEditBean.pracownik.imie}"
 					required="true" label="Imie" requiredMessage="Pole wymagane"
 					validatorMessage="Maksymalna długość pola 30 znaków">
 					<f:validateLength maximum="45" />
@@ -36,7 +36,7 @@
 					autoUpdate="true" severity="error" />
 				<h:outputText value="Nazwisko: *" />
 				<p:inputText id="nazwisko"
-					value="#{PracownikAddBean.pracownik.nazwisko}" required="true"
+					value="#{PracownikEditBean.pracownik.nazwisko}" required="true"
 					label="Nazwsiko" requiredMessage="Pole wymagane"
 					validatorMessage="Maksymalna długość pola 30 znaków">
 					<f:validateLength maximum="45" />
@@ -47,7 +47,7 @@
 
 				<h:outputText value="Pesel: *" />
 				<p:inputMask mask="99999999999" id="pesel"
-					value="#{PracownikAddBean.pracownik.pesel}" required="true"
+					value="#{PracownikEditBean.pracownik.pesel}" required="true"
 					label="Pesel" requiredMessage="Pole wymagane" />
 				<p:message id="ermsgpes" styleClass="ermsg" for="pesel"
 					autoUpdate="true" severity="error" />
@@ -60,7 +60,7 @@
 
 			<h:panelGrid columns="3" columnClasses="label, value">
 				<h:outputText value="Ulica: " />
-				<p:inputText id="Ulica" value="#{PracownikAddBean.pracownik.ulica}"
+				<p:inputText id="Ulica" value="#{PracownikEditBean.pracownik.ulica}"
 					validatorMessage="Pole może mieć max. 45 znaków">
 					<f:validateLength maximum="45" />
 					<p:ajax update="ermsgUl" />
@@ -70,12 +70,12 @@
 
 				<h:outputText value="Kod Pocztowy: " />
 				<p:inputMask id="postcode" mask="99-999"
-					value="#{PracownikAddBean.pracownik.kod_pocztowy}" />
+					value="#{PracownikEditBean.pracownik.kod_pocztowy}" />
 				<p:message for="postcode" />
 
 				<h:outputText id="miasto" value="Miasto: " />
 				<p:inputText id="Miasto"
-					value="#{PracownikAddBean.pracownik.miasto}"
+					value="#{PracownikEditBean.pracownik.miasto}"
 					validatorMessage="Pole może mieć max. 45 znaków">
 					<f:validateLength maximum="45" />
 					<p:ajax update="ermsgMiasto" />
@@ -91,57 +91,24 @@
 
 			<h:panelGrid columns="3" columnClasses="label, value">
 				<h:outputText value="Email: *" />
-				<p:inputText value="#{PracownikAddBean.pracownik.e_mail}"
+				<p:inputText value="#{PracownikEditBean.pracownik.e_mail}"
 					required="true" label="Email" id="email"
 					requiredMessage="Pole wymagane" />
 				<p:messages id="emailer" for="email" />
 				<h:outputText value="Numer Telefonu: *" />
 				<p:inputMask id="telefon" mask="48999999999"
-					value="#{PracownikAddBean.pracownik.nr_telefonu}" required="true"
+					value="#{PracownikEditBean.pracownik.nr_telefonu}" required="true"
 					requiredMessage="Pole wymagane" />
 				<p:message for="telefon" />
 			</h:panelGrid>
 
 			<p:commandButton value="Zapisz" styleClass="button_zapisz"
-				onclick="PF('dialoghaslo').show()" update="contact, address , daneOS" />
+				 update="contact, address , daneOS" action="#{PracownikEditBean.updatePracownik}"/>
 
 
 
 		</p:panel>
 
 
-		<p:dialog header="Hasło i uprawnienia " global="true"
-			showEffect="fade" hideEffect="explode" widgetVar="dialoghaslo"
-			position="center" width="900">
-			<p:panel id="panel" styleClass="editprofile">
-				<h:outputLabel value="Hasło" style="font-size:20px; " />
-				<p:separator />
-				<p:growl id="growl" for="globalmessageDialog" showDetail="true"
-					autoUpdate="true" life="2000" />
-				<h:panelGrid columns="3" columnClasses="label, value">
-					<p:outputLabel for="country" value="Uprawnienia: " />
-					<p:selectOneMenu id="country" value="#{PracownikAddBean.role}"
-						style="width:150px">
-						<f:selectItem itemLabel="Wybierz uprawnienia" itemValue=""
-							noSelectionOption="true" />
-						<f:selectItems value="#{PracownikAddBean.roles}" />
-					</p:selectOneMenu>
-					<p:outputLabel/>
-					<h:outputText value="Hasło: " />
-					<p:password id="nowehaslo" feedback="true"
-						value="#{PracownikAddBean.nowehaslo}" required="true"
-						requiredMessage="Pole wymagane" />
-					<p:message id="mnowehaslo" for="nowehaslo" />
-					<h:outputText value="Powtórz hasło: " />
-					<p:password id="nowehaslo1" feedback="true" 
-						value="#{PracownikAddBean.nowehaslo1}" required="true"
-						requiredMessage="Pole wymagane" />
-					<p:message id="mnowehaslo1" for="nowehaslo1" />
-				</h:panelGrid>
-				<p:commandButton id="zapiszhaslo" value="Zapisz"
-					action="#{PracownikAddBean.savePracownik}"
-					update="growl, mnowehaslo, mnowehaslo1" styleClass="button_zmien" />
-			</p:panel>
-		</p:dialog>
 	</ui:define>
 </ui:composition>

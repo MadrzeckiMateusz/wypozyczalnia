@@ -49,11 +49,11 @@ public class FilmBean implements Serializable {
 	}
 
 	public List<Filmy> getTop5filmy() {
-
+		
 		EntityManager em = DBManager.getManager().createEntityManager();
 
 		List<Filmy> top5ListaFilmy = (List<Filmy>) em.createQuery(
-				"Select f from Filmy f where Data_dodania like '2014-12-%'")
+				"Select f from Filmy f where Data_dodania like '2015-01-%'")
 				.getResultList();
 		em.close();
 
