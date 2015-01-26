@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="../SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2">
+			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
+				<p:commandButton
+					action="#{PracownikBean.przekierowanieDodajPracownika}"
+					image="button_empadd"
+					style="height:50px; width:50px; margin-right:5px"
+					title="dodaj pracownika" />
+				<p:commandButton
+					action="#{PracownikBean.przekierowanieEdycjaPracownika()}"
+					image="button_empedit"
+					style="height:50px; width:50px; margin-right:5px"
+					title="edytuj pracownika" />
+
+
+			</p:outputPanel>
+			<p:panel styleClass="infologowanie" style="text-align:right">
+				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
+				<p:outputLabel value="#{AuthorizationBean.rola}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.imie}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.nazwisko}"
+					style="font-size:16px; margin-left:5px" />
+				<p:commandButton value="Wyloguj"
+					action="#{AuthorizationBean.LogOut()}"
+					style="margin-left:30px; width:90px" />
+			</p:panel>
+		</p:panelGrid>
+
+		<h:panelGrid columns="3" cellpadding="10">
+			
+
+			<p:commandButton id="zapiszuprawnienia" value="Generuj"
+				action="#{StatystykiBean.styatystykiFilmow}"
+				style="margin-left:10px; width:120px; height:35px"
+				update="tabelaStatyFilmu" />
+
+		</h:panelGrid>
+
+
+		<p:dataTable id="tabelaStatyFilmu" styleClass="bordernew"
+			var="statyFilmu" value="#{StatystykiBean.listStatystykiFilmu}">
+			<f:facet name="header">
+				<p:outputPanel style="text-align:left">
+					<h:outputText value="Statystyki filmów" style="text-align:left" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Numer filmu">
+				<h:outputText value="#{statyFilmu.numer}" />
+			</p:column>
+			<p:column headerText="Tytuł filmu">
+				<h:outputText value="#{statyFilmu.tytul}" />
+			</p:column>
+			<p:column headerText="Ilość wypozyczeń">
+				<h:outputText value="#{statyFilmu.iloscWypozyczen}" />
+			</p:column>
+			<p:column headerText="Ilość rezerwacji">
+				<h:outputText value="#{statyFilmu.iloscRezerwacji}" />
+			</p:column>
+
+
+
+		</p:dataTable>
+
+	</ui:define>
+
+</ui:composition>

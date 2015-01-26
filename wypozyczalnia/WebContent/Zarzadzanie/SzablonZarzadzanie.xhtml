@@ -101,6 +101,14 @@
 								icon="ui-icon-folder-open
  " />
 						</p:submenu>
+						<p:submenu label="Statystyki" style=" background-color: #A4BDEF;"
+							rendered="#{AuthorizationBean.adminRole}">
+							<p:menuitem value="Pracownika"
+								url="/Zarzadzanie/Admin/Statystyki.xhtml" icon="ui-icon-pencil" />
+								<p:menuitem value="Filmu"
+								url="/Zarzadzanie/Admin/StatystykiFilm.xhtml" icon="ui-icon-pencil" />
+
+						</p:submenu>
 					</p:menu>
 
 				</div>

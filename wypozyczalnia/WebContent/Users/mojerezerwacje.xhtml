@@ -12,14 +12,14 @@
 				<p:panel styleClass="panelNoPadding">
 
 					<p:dataTable id="basicDt1" var="rezerwacjeList" styleClass="bordernew"
-						value="#{RezerwacjeBean.getklientbyid('inny')}">
+						value="#{RezerwacjeBean.getklientbyid('inny')}" >
 						<f:facet name="header">
 							<p:outputPanel style="text-align:left">
 								<h:outputText value="Aktualne rezerwacje"
 									style="text-align:left" />
 							</p:outputPanel>
 						</f:facet>
-						<p:column headerText="Numer rezerwacji">
+						<p:column headerText="Numer rezerwacji" sortBy="#{rezerwacjeList.nr_rezerwacji}" >
 							<h:outputText value="#{rezerwacjeList.nr_rezerwacji}" />
 						</p:column>
 						<p:column headerText="Data rezerwacji">
