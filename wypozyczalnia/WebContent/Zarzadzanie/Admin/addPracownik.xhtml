@@ -14,7 +14,7 @@
 		<p:growl id="growl1" for="globalmessage" globalOnly="true"
 			showDetail="true" autoUpdate="true" life="4000" />
 
-		<p:panel id="daneOS" styleClass="nowyUserPanel">
+		<p:panel id="daneOS" styleClass="editprofile">
 			<h:outputLabel value="Dane Pracownika" style="font-size:20px; " />
 			<p:separator />
 
@@ -51,14 +51,7 @@
 					label="Pesel" requiredMessage="Pole wymagane" />
 				<p:message id="ermsgpes" styleClass="ermsg" for="pesel"
 					autoUpdate="true" severity="error" />
-			</h:panelGrid>
-		</p:panel>
-
-		<p:panel id="address" styleClass="nowyUserPanel">
-			<h:outputLabel value="Dane Adresowe" style="font-size:20px; " />
-			<p:separator />
-
-			<h:panelGrid columns="3" columnClasses="label, value">
+	
 				<h:outputText value="Ulica: " />
 				<p:inputText id="Ulica" value="#{PracownikAddBean.pracownik.ulica}"
 					validatorMessage="Pole może mieć max. 45 znaków">
@@ -82,14 +75,9 @@
 				</p:inputText>
 				<p:message id="ermsgMiasto" styleClass="ermsg" for="Miasto"
 					autoUpdate="true" severity="error" />
-			</h:panelGrid>
-		</p:panel>
+		
 
-		<p:panel id="contact" styleClass="nowyUserPanel">
-			<h:outputLabel value="Dane kontaktowe" style="font-size:20px; " />
-			<p:separator />
-
-			<h:panelGrid columns="3" columnClasses="label, value">
+			
 				<h:outputText value="Email: *" />
 				<p:inputText value="#{PracownikAddBean.pracownik.e_mail}"
 					required="true" label="Email" id="email"
@@ -101,9 +89,9 @@
 					requiredMessage="Pole wymagane" />
 				<p:message for="telefon" />
 			</h:panelGrid>
-
+			<p:separator/>
 			<p:commandButton value="Zapisz" styleClass="button_zapisz"
-				onclick="PF('dialoghaslo').show()" update="contact, address , daneOS" />
+				onclick="PF('dialoghaslo').show()" update="  daneOS" />
 
 
 

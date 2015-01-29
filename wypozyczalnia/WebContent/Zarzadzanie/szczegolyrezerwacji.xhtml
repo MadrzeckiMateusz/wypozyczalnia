@@ -148,7 +148,7 @@
 
 		</p:panelGrid>
 
-		<p:dialog header="WybierzFilmy" global="true" showEffect="fade"
+		<p:dialog header="Potwierdź tożsamość klienta" global="true" showEffect="fade"
 			hideEffect="explode" widgetVar="DialogDaneKlient" position="center">
 			<p:panelGrid columns="1" styleClass="gridNoPadding"
 				style="text-align:center;">
@@ -161,9 +161,9 @@
 		</p:dialog>
 
 		<p:dialog header="Wyszukaj filmy" global="true"
-			widgetVar="DialogDodajFilm" position="top" width="1200" height="500">
+			widgetVar="DialogDodajFilm" position="top" width="1200" height="500" style="background-color:#D0E0FF">
 			<p:commandButton action="#{RezerwacjeDetailsBean.dodajFilmy()}"
-				image="button_icon" style="height:50px; width:50px;"
+				image="button_dodaj2" style="height:50px; width:50px;"
 				update="filmyTable" />
 			<p:dataTable var="filmy" styleClass="zarzadzaj"
 				value="#{FilmBean.listaFilmy}" widgetVar="filmTables"

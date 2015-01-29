@@ -20,22 +20,22 @@
 			<p:fieldset legend="#{lista.tytul}" toggleable="false"
 				toggleSpeed="500" collapsed="false"
 				style="font-size: 15px ; margin-bottom: 10px">
-				<h:panelGrid columns="2" style="margin-left:750px">
+				<p:panel style="text-align:right" styleClass="panelNoPadding">
 					<p:commandButton
 						action="#{RezerwacjeKoszykBean.dodajDoKoszyka(lista.id_filmu)}"
 						title="Dodaj do koszyka" rendered="#{AuthorizationBean.userLoged}"
-						icon="ui-icon-cart" />
+						image="button_shop"  style="height:50px; width:50px;"/>
 
-					<p:commandButton title="Szczegóły filmu"
-						action="szczegolyFilmu.xhtml" includeViewParams="true"
-						icon="ui-icon-video">
-						<f:param name="id_filmu" value="#{lista.id_filmu}" />
-					</p:commandButton>
-				</h:panelGrid>
+					
+				</p:panel>
 				<h:panelGrid columns="2" cellpadding="5">
+				<h:commandLink title="#{lista.tytul}"
+							action="szczegolyFilmu.xhtml">
+							<f:param name="id_filmu" value="#{lista.id_filmu}" />
 					<p:graphicImage value="#{image.image}" width="140px" height="200px">
 						<f:param name="id" value="#{lista.id_filmu}" />
 					</p:graphicImage>
+						</h:commandLink>
 					<h:panelGrid>
 						<h:inputHidden id="id_hidden" value="#{lista.id_filmu}" />
 						<h:outputText value="Tytul: #{lista.tytul}"></h:outputText>

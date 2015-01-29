@@ -49,9 +49,9 @@
 		<p:panel id="panel_edit" styleClass="editprofile">
 			<h:outputLabel value="Nowy Film" style="font-size:20px; " />
 			<p:separator />
-
+			<center>
 			<p:panelGrid id="panel_grid" columns="2" columnClasses="label, value"
-				style="height:80px">
+				style="height:80px" styleClass="gridNoBorder">
 				<h:outputText value="Numer filmu: *" />
 				<h:outputText value="#{FilmAddNewBean.film.nr_filmu}" />
 
@@ -116,6 +116,7 @@
 				</p:panel>
 
 			</p:panelGrid>
+			</center>
 			<p:separator />
 			<p:commandButton action="#{FilmAddNewBean.dodajFilm()}"
 				styleClass="button_zapisz" value="Dodaj" ajax="false" />

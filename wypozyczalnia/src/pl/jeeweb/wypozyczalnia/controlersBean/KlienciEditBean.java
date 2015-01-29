@@ -101,6 +101,7 @@ public class KlienciEditBean implements Serializable {
 		}else {
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "Daneosobowe zapisane", 1);
+			target ="/Users/editprofile.xhtml";
 		}
 			em.merge(this.klient);
 

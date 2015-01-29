@@ -25,8 +25,8 @@
 						required="true" label="Nazwsiko" requiredMessage="Pole wymagane" />
 
 					<h:outputText value="Pesel: *" />
-					<p:inputText value="#{KlienciEditBean.klient.pesel}"
-						required="true" label="Pesel" requiredMessage="Pole wymagane" />
+					<p:outputLabel value="#{KlienciEditBean.klient.pesel}"
+						 label="Pesel" />
 				</h:panelGrid>
 
 
@@ -35,13 +35,13 @@
 				<h:outputLabel value="Dane Adresowe" style="font-size:20px; " />
 				<p:separator />
 				<h:panelGrid columns="2" columnClasses="label, value">
-					<h:outputText value="Ulica: " />
+					<h:outputText value="Ulica: *" />
 					<p:inputText value="#{KlienciEditBean.klient.ulica}" />
 
-					<h:outputText value="Kod Pocztowy: " />
-					<p:inputText value="#{KlienciEditBean.klient.kod_pocztowy}" />
+					<h:outputText value="Kod Pocztowy: *" />
+					<p:inputMask id="postcode" mask="99-999" value="#{KlienciEditBean.klient.kod_pocztowy}" />
 
-					<h:outputText value="Miasto: " />
+					<h:outputText value="Miasto: *" />
 					<p:inputText value="#{KlienciEditBean.klient.miasto}" />
 				</h:panelGrid>
 			</p:panel>
@@ -53,7 +53,7 @@
 					<p:inputText value="#{KlienciEditBean.klient.e_mail}"
 						required="true" label="Email" requiredMessage="Pole wymagane" />
 
-					<h:outputText value="Numer Telefonu: " />
+					<h:outputText value="Numer Telefonu: *" />
 					<p:inputText value="#{KlienciEditBean.klient.nr_telefonu}" />
 				</h:panelGrid>
 				<p:commandButton id="zapisz2" value="Zapisz"

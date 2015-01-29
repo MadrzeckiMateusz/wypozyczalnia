@@ -50,8 +50,9 @@
 			<h:outputLabel value="Edycja Filmu" style="font-size:20px; " />
 			<p:separator />
 			<p:messages />
+			<center>
 			<p:panelGrid id="panel_grid" columns="2" columnClasses="label, value"
-				style="height:80px">
+				style="height:80px; " styleClass="gridNoBorder">
 				<h:outputText value="Numer filmu: *" />
 				<p:outputLabel value="#{FilmEditBean.film.nr_filmu}" />
 
@@ -107,6 +108,7 @@
 				</p:graphicImage>
 
 			</p:panelGrid>
+			</center>
 			<p:separator />
 			<p:commandButton styleClass="button_zapisz" value="Zapisz"
 				action="#{FilmEditBean.zapiszZmiany}" ajax="false" />

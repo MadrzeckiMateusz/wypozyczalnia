@@ -130,9 +130,9 @@
 		</p:panelGrid>
 
 		<p:dialog header="Dane Klienta" global="true" showEffect="fade"
-			hideEffect="explode" widgetVar="DialogDaneKlient" position="center">
+			hideEffect="explode" widgetVar="DialogDaneKlient" position="center" >
 			<p:panelGrid columns="1" styleClass="gridNoPadding"
-				style="text-align:center;">
+				style="text-align:center;" >
 				<p:outputLabel value="Potwierdź tożsamość klienta!!!"
 					style="color:red; font-size:18px" />
 				<p:commandButton value="Ok" styleClass="ui-confirmdialog-yes"
@@ -142,9 +142,9 @@
 		</p:dialog>
 
 		<p:dialog header="Wyszukaj filmy" global="true"
-			widgetVar="DialogDodajFilm" position="top" width="1200" height="500">
+			widgetVar="DialogDodajFilm" position="top" width="1200" height="500" style="background-color:#D0E0FF">
 			<p:commandButton action="#{RezerwacjeAddNewBean.dodajFilmy()}"
-				image="button_icon" style="height:50px; width:50px;"
+				image="button_dodaj2" style="height:50px; width:50px; margin-bottom:5px"
 				update="filmyTable" />
 			<p:dataTable var="filmy" styleClass="zarzadzaj"
 				value="#{FilmBean.listaFilmy}" widgetVar="filmTables"
@@ -213,7 +213,7 @@
 
 		<p:dialog header="Dodaj klienta" global="true"
 			widgetVar="DialogDodajKlienta" position="top" width="1200"
-			height="500">
+			height="500" style="background-color:#D0E0FF">
 			<p:commandButton action="#{RezerwacjeAddNewBean.dodajKlienta()}"
 				image="button_dodaj2" style="height:50px; width:50px;"
 				update="klienciTable" />

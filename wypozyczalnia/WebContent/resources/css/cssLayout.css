@@ -12,6 +12,10 @@
 	border: none;
 	width: 95%;
 }
+.scroll .ui-datascroller ,.scroll.ui-datascroller-content, .scroll.ui-widget, .scroll.ui-datascroller-list {
+	background-color: #3A6BCD !important;
+	border: none !important;
+}
 
 .ui-icon-myAddFilm {
 	background-image: url(#{ resource [ 'images:shop-cart-16.png' ]
@@ -102,6 +106,12 @@
 	padding: 0;
 }
 
+.ui-panelgrid.gridNoBorder tr,.ui-panelgrid.gridNoBorder td {
+	border-style: none;
+	border: none;
+	background: none;
+	padding: 5;
+}
 .ui-panelgrid.gridNoPaddingszczegoly tr,.ui-panelgrid.gridNoPaddingszczegoly td
 	{
 	border-style: none;
@@ -225,6 +235,7 @@
 	color: white;
 	font-weight: bold;
 	text-decoration: none;
+	vertical-align: 
 }
 
 #top a:link:hover,#top a:visited:hover {
@@ -233,8 +244,12 @@
 	text-decoration: underline;
 }
 
-.ui-icon-editfilm {
-	background-image: !important;
+.button_shop {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/shop-cart.png']}") !important;
+	top: 39% !important;
+	left: 40% !important;
 }
 
 .button_icon {
@@ -343,6 +358,21 @@
 	height: 35px;
 	width: 35px;
 	background-image: url("#{resource['image/zwrot.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+
+.button_editall {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/Edit-icon.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+.button_addall {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/Addfol-icon.png']}") !important;
 	top: 35% !important;
 	left: 35% !important;
 }

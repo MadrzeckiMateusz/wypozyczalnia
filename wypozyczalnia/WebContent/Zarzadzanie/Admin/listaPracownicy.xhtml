@@ -108,7 +108,7 @@
 
 		<p:dialog header="Hasło" global="true" showEffect="fade"
 			hideEffect="explode" widgetVar="dialoghaslo" position="top"
-			width="900">
+			width="900" style="background-color:#D0E0FF">
 			<p:panel id="panel" styleClass="editprofile">
 				<h:outputLabel value="Hasło" style="font-size:20px; " />
 				<p:separator />
@@ -131,16 +131,16 @@
 
 		<p:dialog header="Uprawnienia" global="true" showEffect="fade"
 			hideEffect="explode" widgetVar="dialoguprawnienia" position="top"
-			width="800">
+			width="800" style="background-color:#D0E0FF">
 			<p:panel id="panel2" styleClass="editprofile">
-				<p:outputLabel for="country" value="Uprawnienia: " />
+				<p:outputLabel for="country" value="Uprawnienia: " style="vertical-align: center"/>
 				<p:selectOneMenu id="country" value="#{PracownikBean.role}"
 					style="width:150px">
 					<f:selectItem itemLabel="Wybierz uprawnienia" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{PracownikAddBean.roles}" />
 				</p:selectOneMenu>
-				<p:outputLabel />
+				<p:separator/>
 				<p:commandButton id="zapiszuprawnienia" value="Zapisz"
 					action="#{PracownikBean.changePermission}"
 					styleClass="button_zmien" update="pracownicyTab" />

@@ -14,12 +14,12 @@
 		<p:fieldset legend="#{FilmDetailsBean.filmSzczegoly.tytul}"
 			toggleable="false" collapsed="false"
 			style="font-size: 15px ; margin-bottom: 10px" widgetVar="">
-
-			<p:commandButton
-				action="#{RezerwacjeKoszykBean.dodajDoKoszyka(FilmDetailsBean.id)}"
-				title="Dodaj do koszyka" rendered="#{AuthorizationBean.userLoged}"
-				icon="ui-icon-cart" style="margin-left: 90%" ajax="false" />
-
+			<p:panel style="text-align:right" styleClass="panelNoPadding">
+				<p:commandButton
+					action="#{RezerwacjeKoszykBean.dodajDoKoszyka(FilmDetailsBean.id)}"
+					title="Dodaj do koszyka" rendered="#{AuthorizationBean.userLoged}"
+					image="button_shop" style="height:50px; width:50px;" ajax="false" />
+			</p:panel>
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:graphicImage value="#{image.image}" width="140px" height="200px">
 					<f:param name="id"
@@ -52,7 +52,7 @@
 			collapsed="false" style="font-size: 15px ; margin-bottom: 10px"
 			rendered="#{FilmDetailsBean.listaProponowanychFilmow}">
 			<center>
-				<p:panelGrid columns="3">
+				<p:panelGrid columns="3" styleClass="gridNoPadding">
 
 					<ui:repeat var="filmyPodobne"
 						value="#{FilmDetailsBean.filmyProponowane}">

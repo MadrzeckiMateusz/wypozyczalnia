@@ -17,8 +17,9 @@
 			<h:outputLabel value="Edycja Gatunku" style="font-size:20px; " />
 			<p:separator />
 			<p:messages />
+			<center>
 			<p:panelGrid id="panel_grid" columns="2" columnClasses="label, value"
-				style="height:80px">
+				style="height:80px" styleClass="gridNoBorder">
 				<h:outputText value="Numer Gatunku: *" />
 				<p:outputLabel value="#{GatunkiEditBean.gatunek.id_klasyfikacji}" />
 
@@ -30,6 +31,7 @@
 
 
 			</p:panelGrid>
+			</center>
 			<p:separator />
 			<p:commandButton styleClass="button_zapisz" value="Zapisz"
 				action="#{GatunkiEditBean.saveEditedGatunek}" ajax="false" />
