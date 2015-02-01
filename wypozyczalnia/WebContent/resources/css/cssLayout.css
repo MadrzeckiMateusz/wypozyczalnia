@@ -190,7 +190,7 @@
 	background-color: #D0E0FF;
 	margin-left: 30px;
 	width: 96%;
-	min-height: 90%;
+	min-height: 60%;
 	padding: 0;
 }
 
@@ -207,11 +207,11 @@
 
 #leftmanage {
 	float: left;
-	height: 650px;
+ 	height: 650px; 
 }
 
 #footer {
-	position: relative;
+ 	position: relative; 
 	background-color: #D0E0FF;
 	margin: none;
 	min-height: 70px;
@@ -221,8 +221,8 @@
 .center_content {
 	background-color: #D0E0FF;
 	padding: 5px;
-	margin-left: 250px;
-	margin-right: 100px;
+	margin-left: 180px;
+ 	margin-right: 3px; 
 }
 
 .center_content_zarzadzanie {
@@ -235,7 +235,6 @@
 	color: white;
 	font-weight: bold;
 	text-decoration: none;
-	vertical-align: 
 }
 
 #top a:link:hover,#top a:visited:hover {
