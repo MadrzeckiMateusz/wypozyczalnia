@@ -72,7 +72,7 @@ public class WypozyczeniaBean implements Serializable {
 		return zwrocone;
 
 	}
-	
+
 	public List<Filmy> getFilmyArchiwum() {
 		List<Filmy> filmyarchiwum = new ArrayList<>();
 		String[] idfilm = { "0" };

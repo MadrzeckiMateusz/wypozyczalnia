@@ -196,10 +196,14 @@ public class WypozyczeniaDetailsBean implements Serializable {
 		SendMail mail = new SendMail(
 				klient.getE_mail(),
 				"Wpozyczenie numer " + this.wypozyczenie.getNr_wypozyczenia(),
-				"<html>Witaj "
-						+ klient.getImie()
-						+ " Wypozyczenie zosta³o zrealizowane. Dziêkujemy za skorzystanie z naszych us³ug. Termin zwrotu: "
-						+ this.wypozyczenie.getTermin_zwrotu().toString());
+				"Witaj, "
+						+ klient.getImie()+ "!!! \n"
+						+ " Wypozyczenie zosta³o zrealizowane.\nDziêkujemy za skorzystanie z naszych us³ug. Termin zwrotu: "
+						+ this.wypozyczenie.getTermin_zwrotu().toString()+"\n"
+								+"---------------------------------------------------------------------------------------- \n"
+								+ "www.wypozyczalniadvd.com.pl \n"
+								+ "tel.555 555 555 \n"
+								+ "dvd.wpozyczalnia@gmail.com");
 		try {
 			mail.send();
 		} catch (MessagingException e) {

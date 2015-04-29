@@ -33,7 +33,7 @@ public class KlienciBean {
 	private Klienci klient = new Klienci();
 	private User user = new User();
 	private Role user_role = new Role();
-	
+
 	private Klienci selectedKlient = null;
 	private List<Klienci> filteredKlienci = new ArrayList<>();
 
@@ -111,7 +111,7 @@ public class KlienciBean {
 
 			this.user.setUsername(this.klient.getE_mail());
 			this.user.setPassword(this.klient.getHaslo());
-			
+
 			this.user_role.setRolename("klient");
 			this.user_role.setUsername(this.klient.getE_mail());
 			EntityManager em = DBManager.getManager().createEntityManager();
@@ -128,13 +128,23 @@ public class KlienciBean {
 			}
 
 			try {
+
 				new SendMail(
 						this.klient.getE_mail(),
 						"Rejestracja w serwisie Wypo篡czalnia DVD",
-						this.klient.getImie()
-								+ " witaj  w serwisie Wypo篡czalniaDVD. Tw鎩 e-mail jest loginem. \n "
-								+ "Twoje has這 to: " + tmpPassword
-								+ " Zmien je przy pierwszym logowaniu").send();
+						"Witaj, "
+								+ this.klient.getImie()
+								+ "!!! \n"
+								+ "Witaj  w serwisie Wypo篡czalniaDVD. Tw鎩 e-mail jest loginem. \n "
+								+ "Twoje has這 to: "
+								+ tmpPassword
+								+ "\n"
+								+ "Zmien has這 przy pierwszym logowaniu"
+								+ "---------------------------------------------------------------------------------------- \n"
+								+ "www.wypozyczalniadvd.com.pl \n"
+								+ "tel.555 555 555 \n"
+								+ "dvd.wpozyczalnia@gmail.com").send();
+
 			} catch (MessagingException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -147,11 +157,11 @@ public class KlienciBean {
 								"Uzytkownik zarejestrowany. Has這 pierwszego logowania zosta這 wys豉ne w e-mailu podanym przy rejestracji",
 								2);
 				context.getFlash().setKeepMessages(true);
-				if (fullURI.equals("/wypozyczalnia/nowyuser.xhtml"))  {
+				if (fullURI.equals("/wypozyczalnia/nowyuser.xhtml")) {
 
 					context.redirect(context.getRequestContextPath()
 							+ "/zaloguj.xhtml");
-				} else if(fullURI.contains("editKlient")) {
+				} else if (fullURI.contains("editKlient")) {
 					context.redirect(context.getRequestContextPath()
 							+ "/Zarzadzanie/listaKlienci.xhtml");
 				}
@@ -182,8 +192,8 @@ public class KlienciBean {
 						.getExternalContext()
 						.redirect(
 								"/wypozyczalnia/Zarzadzanie/editKlient.xhtml?id_klient="
-										+ selectedKlient.getId_klienta()+"&target=/Zarzadzanie/listaKlienci.xhtml"
-									);
+										+ selectedKlient.getId_klienta()
+										+ "&target=/Zarzadzanie/listaKlienci.xhtml");
 			}
 		} catch (IOException e) {
 			System.out.print("ssadsdassd");

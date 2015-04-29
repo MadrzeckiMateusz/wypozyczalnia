@@ -270,9 +270,15 @@ public class RezerwacjeDetailsBean implements Serializable {
 		SendMail mail = new SendMail(
 				klient.getE_mail(),
 				"Rezerwacja numer " + this.rezerwacja.getNr_rezerwacji(),
-				"<html>Witaj "
-						+ klient.getImie()
-						+ " <br> Twoja rezerwacja zosta³a przygotowana do odbioru</html>");
+				"Witaj, "
+						+ klient.getImie()+ "!!! \n"
+						+ "Twoja rezerwacja zosta³a przygotowana do odbioru. Data odbioru " + this.rezerwacja.getData_odbioru()+".\n"
+								+ "Wrazie problemów z odbiorem zamówienia w danym dniu, prosimy o kontakt telefoniczny. "
+								+ "\n "
+								+ "---------------------------------------------------------------------------------------- \n"
+								+ "www.wypozyczalniadvd.com.pl \n"
+								+ "tel.555 555 555 \n"
+								+ "dvd.wpozyczalnia@gmail.com");
 		try {
 			mail.send();
 		} catch (MessagingException e) {
@@ -286,10 +292,14 @@ public class RezerwacjeDetailsBean implements Serializable {
 		SendMail mail = new SendMail(
 				klient.getE_mail(),
 				"Wpozyczenie numer " + this.wypozyczenie.getNr_wypozyczenia(),
-				"<html>Witaj "
-						+ klient.getImie()
-						+ " Wypozyczenie zosta³o zrealizowane. Dziêkujemy za skorzystanie z naszych us³ug. Termin zwrotu: "
-						+ this.wypozyczenie.getTermin_zwrotu().toString());
+				"Witaj, "
+						+ klient.getImie()+ "!!! \n"
+						+ "Wypozyczenie zosta³o zrealizowane. Dziêkujemy za skorzystanie z naszych us³ug. Termin zwrotu: "
+						+ this.wypozyczenie.getTermin_zwrotu().toString()
+								+ "---------------------------------------------------------------------------------------- \n"
+								+ "www.wypozyczalniadvd.com.pl \n"
+								+ "tel.555 555 555 \n"
+								+ "dvd.wpozyczalnia@gmail.com");
 		try {
 			mail.send();
 		} catch (MessagingException e) {

@@ -91,10 +91,17 @@ public class RezerwacjeKoszykBean implements Serializable {
 
 	private void wyslijPowiadomienieOdbioru(Klienci klient) {
 
-		SendMail mail = new SendMail(klient.getE_mail(), "Rezerwacja numer "
-				+ this.rezerwacja.getNr_rezerwacji(), "Witaj "
-				+ klient.getImie()
-				+ " Twoja rezerwacja zosta³a przyjêta do realizacji");
+		SendMail mail = new	SendMail(
+				klient.getE_mail(),
+				"Rezerwacja numer " + this.rezerwacja.getNr_rezerwacji(),
+				"Witaj, "
+						+ klient.getImie()+ "!!! \n"
+						+ " Twoja rezerwacja zosta³a przyjêta do realizacji.\n"
+								
+								+ "---------------------------------------------------------------------------------------- \n"
+								+ "www.wypozyczalniadvd.com.pl \n"
+								+ "tel.555 555 555 \n"
+								+ "dvd.wpozyczalnia@gmail.com");
 		try {
 			mail.send();
 		} catch (MessagingException e) {

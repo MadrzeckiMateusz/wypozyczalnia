@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-02-17T22:37:36 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pracownik" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0bd8eea8-f97c-4935-9590-9060edae5fc5">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nr_pracownika" class="java.lang.String">
+		<fieldDescription><![CDATA[nr_pracownika]]></fieldDescription>
+	</field>
+	<field name="imie" class="java.lang.String">
+		<fieldDescription><![CDATA[imie]]></fieldDescription>
+	</field>
+	<field name="nazwisko" class="java.lang.String">
+		<fieldDescription><![CDATA[nazwisko]]></fieldDescription>
+	</field>
+	<field name="data_zatrudnienia" class="java.util.Date">
+		<fieldDescription><![CDATA[data_zatrudnienia]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="100" height="30" uuid="c9bab9f5-8192-42bd-8d21-075d51bbc691"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Numer Pracownika]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="10" width="100" height="30" uuid="2e9b0052-4b8a-49a5-99a0-1864839dfbca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Imię]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="10" width="100" height="30" uuid="be054c2c-1b9d-4a56-900f-857dc9ab08c3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Nazwisko]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="10" width="100" height="30" uuid="23b65e15-f40d-4be0-bebc-e63e806229e3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Data zatrudnienia]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="56" width="100" height="30" uuid="5ded0347-c037-4522-b1e0-82d8acf1e01f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nr_pracownika}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="56" width="100" height="30" uuid="772fe249-2881-40cb-9d88-dfbdc17c8d64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{imie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="56" width="100" height="30" uuid="c684c905-000c-4b6d-a7ad-df139e063a6b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nazwisko}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="56" width="120" height="30" uuid="a3cb7e69-b720-48ca-8fbf-b406da9cd595"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_zatrudnienia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

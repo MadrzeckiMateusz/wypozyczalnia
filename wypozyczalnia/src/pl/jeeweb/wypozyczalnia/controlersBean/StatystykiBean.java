@@ -3,6 +3,8 @@
  */
 package pl.jeeweb.wypozyczalnia.controlersBean;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,8 +16,19 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRPrintPage;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Filmy;
 import pl.jeeweb.wypozyczalnia.entity.Pracownicy;
@@ -46,11 +59,16 @@ public class StatystykiBean implements Serializable {
 	private List<StatystykiWypozyczenModel> listaStatystykiWypozyczenModels;
 	private List<statystykiRezerwacjiModel> listStatystyki;
 	private List<StatystykaFilmuModel> listStatystykiFilmu;
+	private JasperPrint jasperPrint;
+	private String pdfName;
+	private JRBeanCollectionDataSource beanCollectionDataSource;
+	private List<Object> pracownikDodruku;
+	private String nazwapliku;
 
 	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void initBean() {
-
+		
 		this.mapaPracownicy = new HashMap<String, String>();
 
 		EntityManager em = DBManager.getManager().createEntityManager();
@@ -88,7 +106,7 @@ public class StatystykiBean implements Serializable {
 	}
 
 	public void statystykiPracownika() {
-
+		this.pracownikDodruku = new ArrayList<>();
 		listStatystyki = new ArrayList<>();
 		listStatystyki.clear();
 		listaStatystykiWypozyczenModels = new ArrayList<>();
@@ -104,6 +122,12 @@ public class StatystykiBean implements Serializable {
 		pracownik.getWypozyczenias().size();
 		obliczRodzajWypozyczen(pracownik);
 		obliczRodzajRezerwacji(pracownik);
+		List<Pracownicy> pracowniklistwrap = new ArrayList<>();
+			pracowniklistwrap.add(pracownik);
+			this.pracownikDodruku.add( pracowniklistwrap);
+			this.pracownikDodruku.add( this.listaStatystykiWypozyczenModels);
+			this.pracownikDodruku.add( this.listStatystyki);
+		
 
 	}
 
@@ -205,6 +229,53 @@ public class StatystykiBean implements Serializable {
 				licznikOgolnyWypozyczenia, licznikWypozyczeniaZwrocone,
 				licznikWypozyczeniaZrealizowane));
 	}
+	
+//	public void drukujStatystykepracownika() {
+//		beanCollectionDataSource = new JRBeanCollectionDataSource(
+//				this.pracownikDodruku);
+//		this.nazwapliku = "pracownikreport";
+//		this.pdfName = this.pracownik.getNazwisko() + "_Statystyki";
+//		try {
+//			PDF();
+//		} catch (JRException | IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//	private void init() throws JRException {
+//		HttpServletRequest req = (HttpServletRequest) FacesContext
+//				.getCurrentInstance().getExternalContext().getRequest();
+//		ServletContext con = req.getServletContext();
+//		InputStream resourc = con
+//				.getResourceAsStream("/WEB-INF/reports/"+this.nazwapliku+".jasper");
+//		Map<String, Object> parametry = new HashMap<>();
+//		jasperPrint = JasperFillManager.fillReport(resourc, parametry,
+//				beanCollectionDataSource);
+//	}
+//
+//	private void PDF() throws JRException, IOException {
+//		init();
+//		HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext
+//				.getCurrentInstance().getExternalContext().getResponse();
+//		httpServletResponse.addHeader(
+//				"Content-disposition",
+//				"attachment; filename="+ this.pdfName+ ".pdf");
+//		ServletOutputStream servletOutputStream = httpServletResponse
+//				.getOutputStream();
+//		removeBlankPage(jasperPrint.getPages());
+//		JasperExportManager.exportReportToPdfStream(jasperPrint,
+//				servletOutputStream);
+//		FacesContext.getCurrentInstance().responseComplete();
+//
+//	}
+//	private void removeBlankPage(List<JRPrintPage> pages) {
+//
+//		for (Iterator<JRPrintPage> i = pages.iterator(); i.hasNext();) {
+//			JRPrintPage page = i.next();
+//			if (page.getElements().size() == 0)
+//				i.remove();
+//		}
+//	}
 
 	/**
 	 * @return the selectedPracownik

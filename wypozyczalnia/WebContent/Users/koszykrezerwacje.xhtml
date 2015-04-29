@@ -14,6 +14,14 @@
 
 			<p:growl id="growl" for="Globalmessage" showDetail="true"
 				autoUpdate="true" life="2000" />
+				<p:panel styleClass="koszykpanel" style="text-align:right">
+				<p:outputLabel value="Witaj!!! " style="font-size:16px; " />
+				<p:outputLabel value="#{AuthorizationBean.klient.imie}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.klient.nazwisko}"
+					style="font-size:16px; margin-left:5px" />
+				
+			</p:panel>
 			<p:dataTable styleClass="koszyktable" var="filmy"
 				value="#{RezerwacjeKoszykBean.rezerwowaneFilmy}"
 				emptyMessage="Nie dodałeś żadnego filmu !!!">

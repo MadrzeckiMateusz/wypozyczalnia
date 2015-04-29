@@ -41,7 +41,8 @@
 			filteredValue="#{RezerwacjeBean.filteredRezerwacje}"
 			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
 			selection="#{RezerwacjeBean.zaznaczonaRezerwacja}"
-			rowKey="#{rezerwacja.id_rezerwacji}">
+			rowKey="#{rezerwacja.id_rezerwacji}" > 
+			
 
 			<f:facet name="header">
 				<p:outputPanel style="margin-right:67%">
@@ -52,7 +53,7 @@
 						placeholder="Wpisz frazę" />
 				</p:outputPanel>
 			</f:facet>
-			<p:column headerText="Numer rezerwacji"
+			<p:column headerText="Numer rezerwacji" sortBy="#{rezerwacja.nr_rezerwacji}"  
 				filterBy="#{rezerwacja.nr_rezerwacji}" filterMatchMode="contains">
 				<h:outputText value="#{rezerwacja.nr_rezerwacji}" />
 			</p:column>

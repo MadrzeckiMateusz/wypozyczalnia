@@ -98,19 +98,18 @@ public class RezerwacjeAddNewBean implements Serializable {
 					if (kopia.getRezerwacje() == null
 							&& kopia.getWypozyczenia() == null) {
 						kopiaTmp.add(kopia);
-						
-						
+
 					}
 				}
-				if(kopiaTmp.size()>0) {
-				this.kopiefilmu.add(kopiaTmp.get(0));
-				}
-				else {
-					DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-							"globalmessage", "Brak kopii filmów!!!", 3);
+				if (kopiaTmp.size() > 0) {
+					this.kopiefilmu.add(kopiaTmp.get(0));
+				} else {
+					DisplayMessage.InfoMessage(
+							FacesContext.getCurrentInstance(), "globalmessage",
+							"Brak kopii filmów!!!", 3);
 				}
 			}
-			
+
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "Filmy dodane", 1);
 		} else {
@@ -165,10 +164,16 @@ public class RezerwacjeAddNewBean implements Serializable {
 
 	private void wyslijPowiadomienie() {
 		Klienci klient = this.rezerwacja.getKlienci();
-		SendMail mail = new SendMail(klient.getE_mail(), "Rezerwacja numer "
-				+ this.rezerwacja.getNr_rezerwacji(), "Witaj "
-				+ klient.getImie()
-				+ " Twoja rezerwacja zosta³a przyjêta do realizacji");
+		SendMail mail = new SendMail(
+				klient.getE_mail(),
+				"Rezerwacja numer " + this.rezerwacja.getNr_rezerwacji(),
+				"Witaj, "
+						+ klient.getImie()
+						+ "!!! \n"
+						+ "Twoja rezerwacja zosta³a przyjêta do realizacji"
+						+ "---------------------------------------------------------------------------------------- \n"
+						+ "www.wypozyczalniadvd.com.pl \n"
+						+ "tel.555 555 555 \n" + "dvd.wpozyczalnia@gmail.com");
 
 		try {
 			mail.send();
