@@ -14,11 +14,11 @@
 <h:outputStylesheet library="css" name="cssLayout.css" />
 <f:view id="view">
 	<h:form id="form">
-		<h:body>
+		<h:body >
 			<div id="top">
 				<center>
 					<p:panel styleClass="header">
-						<p:panelGrid columns="4">
+						<p:panelGrid styleClass="gridNoPadding" columns="4">
 							<p:graphicImage value="/resources/image/header.png" />
 							<p:outputLabel value="WYPOŻYCZALNIA FILMÓW"
 								style="color:white; font-size:40px; font-align:center;" />
@@ -37,16 +37,18 @@
 								icon="ui-icon-home" />
 							<p:menuitem value="Katalog" url="/katalogFilmow.xhtml"
 								icon="ui-icon-image" />
+								<p:menuitem value="Szukaj film" url="/wyszukiwarkaFilmow.xhtml"
+								icon="ui-icon-image" />
 							<p:menuitem value="Koszyk" url="/Users/koszykrezerwacje.xhtml"
 								icon="ui-icon-cart" rendered="#{AuthorizationBean.userLoged}" />
 						</p:submenu>
 						<p:submenu label="Dostęp" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Zaloguj" url="/zaloguj.xhtml"
-								icon="ui-icon-key" />
+								icon="ui-icon-key" rendered="#{!AuthorizationBean.userLoged}" />
 							<p:menuitem value="Wyloguj" action="#{AuthorizationBean.LogOut}"
-								icon="ui-icon-power" />
+								icon="ui-icon-power" rendered="#{AuthorizationBean.userLoged}" />
 							<p:menuitem value="Utwórz konto" url="/nowyuser.xhtml"
-								icon="ui-icon-person" />
+								icon="ui-icon-person" rendered="#{!AuthorizationBean.userLoged}" />
 						</p:submenu>
 						<p:submenu label="Profil" style=" background-color: #A4BDEF;"
 							rendered="#{AuthorizationBean.userLoged}">
@@ -57,6 +59,10 @@
 							<p:menuitem value="Moje rezerwacje"
 								url="/Users/mojerezerwacje.xhtml" icon="ui-icon-folder-open
  " />
+							<p:menuitem value="Moje wypozyczenia"
+								url="/Users/mojewypozyczenia.xhtml" icon="ui-icon-folder-open " />
+
+
 						</p:submenu>
 					</p:menu>
 
@@ -67,7 +73,7 @@
 
 
 			</div>
-			<div id="footer">
+			<div id="footer" style= "margin-top: 20px">
 				<center>
 					<p:panel styleClass="header">
 						<p:separator />

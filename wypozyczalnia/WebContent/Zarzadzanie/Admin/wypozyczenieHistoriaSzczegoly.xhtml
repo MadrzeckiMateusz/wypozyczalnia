@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="../SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:panelGrid styleClass="gridNoPaddingszczegoly" columns="2">
+			<p:panel styleClass="panelNoPadding">
+
+				<p:dataTable id="tableWypozyczenia" styleClass="bordernew"
+					var="wypozyczenie" value="#{WypozyczeniaDetailsBean.wypozyczenie}">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Wypożyczenie" style="text-align:left" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer wypżyczenia">
+						<h:outputText value="#{wypozyczenie.nr_wypozyczenia}" />
+					</p:column>
+					<p:column headerText="Data wypżyczenia">
+						<h:outputText value="#{wypozyczenie.data_wypozyczenia}" />
+					</p:column>
+					<p:column headerText="Termin zwrotu">
+						<h:outputText value="#{wypozyczenie.termin_zwrotu}" />
+					</p:column>
+
+					<p:column headerText="Data Zwrotu">
+						<h:outputText value="#{wypozyczenie.data_zwrotu}" />
+					</p:column>
+
+					<p:column headerText="Kara za zwłoke">
+						<h:outputText value="#{wypozyczenie.odsetki}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<p:dataTable id="filmyTable" styleClass="bordernew" var="filmy"
+					value="#{WypozyczeniaDetailsBean.getFilmyArchiwum(WypozyczeniaDetailsBean.wypozyczenie)}"
+					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px"
+					selection="#{WypozyczeniaDetailsBean.slelectedkopia}"
+					selectionMode="single" rowKey="#{filmy.id_filmu}">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Filmy" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer filmu">
+						<h:outputText value="#{filmy.nr_filmu}" />
+					</p:column>
+					<p:column headerText="Tytuł">
+						<h:outputText value="#{filmy.tytul}" />
+					</p:column>
+					<p:column headerText="Reżyseria">
+						<h:outputText value="#{filmy.rezyseria}" />
+					</p:column>
+					<p:column headerText="Scenariusz">
+						<h:outputText value="#{filmy.scenariusz}" />
+					</p:column>
+					<p:column headerText="Gatunek">
+						<h:outputText
+							value="#{WypozyczeniaDetailsBean.klasyfikacjaGatunkuToString(filmy)}" />
+					</p:column>
+
+				</p:dataTable>
+				<p:dataTable styleClass="bordernew" var="klient"
+					value="#{WypozyczeniaDetailsBean.wypozyczenie.klienci}"
+					emptyMessage="Brak filmów!!!" style="margin-top:5px">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Dane Klienta" style="text-align:left" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer klienta">
+						<h:outputText value="#{klient.nr_klienta}" />
+					</p:column>
+					<p:column headerText="Imie">
+						<h:outputText value="#{klient.imie}" />
+					</p:column>
+					<p:column headerText="Nazwsiko">
+						<h:outputText value="#{klient.nazwisko}" />
+					</p:column>
+					<p:column headerText="Telefon">
+						<h:outputText value="#{klient.nr_telefonu}" />
+					</p:column>
+					<p:column headerText="Email">
+						<h:outputText value="#{klient.e_mail}" />
+					</p:column>
+
+				</p:dataTable>
+
+
+
+			</p:panel>
+
+
+
+		</p:panelGrid>
+
+
+
+
+
+	</ui:define>
+
+</ui:composition>

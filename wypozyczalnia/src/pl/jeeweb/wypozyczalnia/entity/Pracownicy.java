@@ -1,66 +1,77 @@
 package pl.jeeweb.wypozyczalnia.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
 
 /**
  * The persistent class for the pracownicy database table.
  * 
  */
 @Entity
-@Table(name="pracownicy")
+@Table(name = "pracownicy")
 @NamedQueries({
-@NamedQuery(name="Pracownicy.findAll", query="SELECT p FROM Pracownicy p"),
-@NamedQuery(name="Pracownicy.findByEmail", query="SELECT p FROM Pracownicy p where p.e_mail = :email")})
+		@NamedQuery(name = "Pracownicy.findAll", query = "SELECT p FROM Pracownicy p"),
+		@NamedQuery(name = "Pracownicy.findByEmail", query = "SELECT p FROM Pracownicy p where p.e_mail = :email"),
+		@NamedQuery(name = "Pracownicy.findByid", query = "SELECT p FROM Pracownicy p where p.id_prcownika = :id"),
+		@NamedQuery(name = "Pracownicy.getMaxId", query = "SELECT MAX(p.id_prcownika) FROM Pracownicy p") })
 public class Pracownicy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(unique = true, nullable = false)
 	private int id_prcownika;
 
-	@Column(nullable=false, length=36)
-	private String adres;
+	
 
 	@Temporal(TemporalType.DATE)
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private Date data_zatrudnienia;
 
 	@Temporal(TemporalType.DATE)
 	private Date data_zwolnienia;
 
-	@Column(nullable=false, length=50)
+	@Column(nullable = false, length = 50)
 	private String e_mail;
 
-	@Column(length=64)
+	@Column(length = 64)
 	private String haslo;
 
-	@Column(nullable=false, length=30)
+	@Column(nullable = false, length = 30)
 	private String imie;
 
-	@Column(nullable=false, length=50)
+	@Column(nullable = false, length = 50)
 	private String nazwisko;
 
-	@Column(nullable=false, length=7)
+	@Column(nullable = false, length = 7)
 	private String nr_pracownika;
 
-	@Column(nullable=false, precision=10)
+	@Column(nullable = false, precision = 10)
 	private BigDecimal nr_telefonu;
 
-	@Column(nullable=false, precision=10)
+	@Column(nullable = false, precision = 10)
 	private BigDecimal pesel;
+	@Column(nullable = false, length = 45)
+	private String miasto;
+	@Column(nullable = false, length = 45)
+	private String ulica;
 
-	//bi-directional many-to-one association to Rezerwacje
-	@OneToMany(mappedBy="pracownicy" , fetch= FetchType.EAGER)
+	@Column(nullable = false, length = 6)
+	private String kod_pocztowy;
+
+	// bi-directional many-to-one association to Rezerwacje
+	@OneToMany(mappedBy = "pracownicy")
+	// , fetch= FetchType.EAGER)
 	private List<Rezerwacje> rezerwacjes;
 
-	//bi-directional many-to-one association to Wypozyczenia
-	@OneToMany(mappedBy="pracownicy", fetch= FetchType.EAGER)
+	// bi-directional many-to-one association to Wypozyczenia
+	@OneToMany(mappedBy = "pracownicy")
+	// , fetch= FetchType.EAGER)
 	private List<Wypozyczenia> wypozyczenias;
 
 	public Pracownicy() {
@@ -74,13 +85,6 @@ public class Pracownicy implements Serializable {
 		this.id_prcownika = id_prcownika;
 	}
 
-	public String getAdres() {
-		return this.adres;
-	}
-
-	public void setAdres(String adres) {
-		this.adres = adres;
-	}
 
 	public Date getData_zatrudnienia() {
 		return this.data_zatrudnienia;
@@ -196,6 +200,62 @@ public class Pracownicy implements Serializable {
 		wypozyczenia.setPracownicy(null);
 
 		return wypozyczenia;
+	}
+
+	/**
+	 * @return the haslo
+	 */
+	public String getHaslo() {
+		return haslo;
+	}
+
+	/**
+	 * @param haslo the haslo to set
+	 */
+	public void setHaslo(String haslo) {
+		this.haslo = haslo;
+	}
+
+	/**
+	 * @return the miasto
+	 */
+	public String getMiasto() {
+		return miasto;
+	}
+
+	/**
+	 * @param miasto the miasto to set
+	 */
+	public void setMiasto(String miasto) {
+		this.miasto = miasto;
+	}
+
+	/**
+	 * @return the ulica
+	 */
+	public String getUlica() {
+		return ulica;
+	}
+
+	/**
+	 * @param ulica the ulica to set
+	 */
+	public void setUlica(String ulica) {
+		this.ulica = ulica;
+	}
+
+	/**
+	 * @return the kod_pocztowy
+	 */
+	public String getKod_pocztowy() {
+		return kod_pocztowy;
+	}
+
+	/**
+	 * @param kod_pocztowy the kod_pocztowy to set
+	 */
+	public void setKod_pocztowy(String kod_pocztowy) {
+		this.kod_pocztowy = kod_pocztowy;
 	}
 
 }

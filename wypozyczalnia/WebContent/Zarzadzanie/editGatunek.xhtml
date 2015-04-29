@@ -17,22 +17,24 @@
 			<h:outputLabel value="Edycja Gatunku" style="font-size:20px; " />
 			<p:separator />
 			<p:messages />
+			<center>
 			<p:panelGrid id="panel_grid" columns="2" columnClasses="label, value"
-				style="height:80px">
+				style="height:80px" styleClass="gridNoBorder">
 				<h:outputText value="Numer Gatunku: *" />
-				<p:outputLabel value="#{editGatunek.gatunek.id_klasyfikacji}" />
+				<p:outputLabel value="#{GatunkiEditBean.gatunek.id_klasyfikacji}" />
 
 				<h:outputText value="Nazwa Gatunk: *" />
 				<p:inputTextarea autoResize="true" rows="1" cols="40"
-					value="#{editGatunek.gatunek.gatunek}" required="true"
+					value="#{GatunkiEditBean.gatunek.gatunek}" required="true"
 					requiredMessage="Pole wymagane" />
 
 
 
 			</p:panelGrid>
+			</center>
 			<p:separator />
 			<p:commandButton styleClass="button_zapisz" value="Zapisz"
-				action="#{editGatunek.saveEditedGatunek}" ajax="false" />
+				action="#{GatunkiEditBean.saveEditedGatunek}" ajax="false" />
 		</p:panel>
 
 

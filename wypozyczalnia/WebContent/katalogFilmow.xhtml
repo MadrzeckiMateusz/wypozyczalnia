@@ -12,26 +12,28 @@
 		<p:growl id="growl" for="globalmessage" showDetail="true"
 			autoUpdate="true" life="2000" />
 
-		<ui:repeat var="lista" value="#{FilmyBean.listaFilmy}"
+		<ui:repeat var="lista" value="#{FilmBean.listaFilmy}"
 			varStatus="listavar">
 			<p:fieldset legend="#{lista.tytul}" toggleable="false"
 				toggleSpeed="500" collapsed="false"
 				style="font-size: 15px ; margin-bottom: 10px">
-				<h:panelGrid columns="2" style="margin-left:750px">
-					<p:commandButton action="#{koszyk.dodajDoKoszyka(lista.id_filmu)}"
+				<p:panel style="text-align:right" styleClass="panelNoPadding">
+					<p:commandButton
+						action="#{RezerwacjeKoszykBean.dodajDoKoszyka(lista.id_filmu)}"
 						title="Dodaj do koszyka" rendered="#{AuthorizationBean.userLoged}"
-						icon="ui-icon-cart" />
+						image="button_shop" style=" height:50px; width:50px;" />
 
-					<p:commandButton title="Szczegóły filmu"
-						action="#{FilmyBean.przekierowanieSzczegoly(lista.id_filmu)}"
-						includeViewParams="true" icon="ui-icon-video" ajax="false">
-					</p:commandButton>
-				</h:panelGrid>
+
+				</p:panel>
 
 				<h:panelGrid columns="2" cellpadding="5">
-					<p:graphicImage value="#{image.image}" width="140px" height="200px">
-						<f:param name="id" value="#{lista.id_filmu}" />
-					</p:graphicImage>
+					<h:commandLink title="#{lista.tytul}" action="szczegolyFilmu.xhtml">
+						<f:param name="id_filmu" value="#{lista.id_filmu}" />
+						<p:graphicImage value="#{image.image}" width="140px"
+							height="200px">
+							<f:param name="id" value="#{lista.id_filmu}" />
+						</p:graphicImage>
+					</h:commandLink>
 					<h:panelGrid>
 
 						<h:outputText value="Tytul: #{lista.tytul}" />

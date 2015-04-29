@@ -10,9 +10,9 @@
 
 
 
-		<p:growl id="growl" for="globalmessage" globalOnly="true" showDetail="true"
-			autoUpdate="true" life="4000" />
-	
+		<p:growl id="growl" for="globalmessage" globalOnly="true"
+			showDetail="true" autoUpdate="true" life="4000" />
+
 		<p:panel id="daneOS" styleClass="nowyUserPanel">
 			<h:outputLabel value="Dane Osobowe" style="font-size:20px; " />
 			<p:separator />
@@ -21,7 +21,7 @@
 			<h:panelGrid id="grid1" columns="3" columnClasses="label, value"
 				style="height:80px">
 				<h:outputText value="Imie: *" />
-				<p:inputText id="imie" value="#{klienciBean.klient.imie}"
+				<p:inputText id="imie" value="#{KlienciBean.klient.imie}"
 					required="true" label="Imie" requiredMessage="Pole wymagane"
 					validatorMessage="Maksymalna długość pola 30 znaków">
 					<f:validateLength maximum="30" />
@@ -31,7 +31,7 @@
 					autoUpdate="true" severity="error" />
 
 				<h:outputText value="Nazwisko: *" />
-				<p:inputText id="nazwisko" value="#{klienciBean.klient.nazwisko}"
+				<p:inputText id="nazwisko" value="#{KlienciBean.klient.nazwisko}"
 					required="true" label="Nazwsiko" requiredMessage="Pole wymagane"
 					validatorMessage="Maksymalna długość pola 30 znaków">
 					<f:validateLength maximum="45" />
@@ -41,11 +41,12 @@
 					autoUpdate="true" severity="error" />
 
 				<h:outputText value="Pesel: *" />
-				<p:inputMask mask="99999999999" id="pesel" value="#{klienciBean.klient.pesel}"
-					required="true" label="Pesel" requiredMessage="Pole wymagane"/>
+				<p:inputMask mask="99999999999" id="pesel"
+					value="#{KlienciBean.klient.pesel}" required="true" label="Pesel"
+					requiredMessage="Pole wymagane" />
 
 
-				
+
 				<p:message id="ermsg1" styleClass="ermsg" for="pesel"
 					autoUpdate="true" severity="error" />
 			</h:panelGrid>
@@ -60,7 +61,7 @@
 
 			<h:panelGrid columns="3" columnClasses="label, value">
 				<h:outputText value="Ulica: " />
-				<p:inputText id="Ulica" value="#{klienciBean.klient.ulica}"
+				<p:inputText id="Ulica" value="#{KlienciBean.klient.ulica}"
 					validatorMessage="Pole może mieć max. 45 znaków">
 					<f:validateLength maximum="45" />
 					<p:ajax update=":form:ermsgUl" />
@@ -70,11 +71,11 @@
 
 				<h:outputText value="Kod Pocztowy: " />
 				<p:inputMask id="postcode" mask="99-999"
-					value="#{klienciBean.klient.kod_pocztowy}" />
+					value="#{KlienciBean.klient.kod_pocztowy}" />
 				<p:message for="postcode" />
 
 				<h:outputText id="miasto" value="Miasto: " />
-				<p:inputText id="Miasto" value="#{klienciBean.klient.miasto}"
+				<p:inputText id="Miasto" value="#{KlienciBean.klient.miasto}"
 					validatorMessage="Pole może mieć max. 45 znaków">
 					<f:validateLength maximum="45" />
 					<p:ajax update=":form:ermsgMiasto" />
@@ -93,17 +94,18 @@
 
 			<h:panelGrid columns="3" columnClasses="label, value">
 				<h:outputText value="Email: *" />
-				<p:inputText value="#{klienciBean.klient.e_mail}" required="true"
+				<p:inputText value="#{KlienciBean.klient.e_mail}" required="true"
 					label="Email" id="email" requiredMessage="Pole wymagane" />
 				<p:messages id="emailer" for="email" />
 				<h:outputText value="Numer Telefonu: *" />
 				<p:inputMask id="telefon" mask="48999999999"
-					value="#{klienciBean.klient.nr_telefonu}" required="true"
+					value="#{KlienciBean.klient.nr_telefonu}" required="true"
 					requiredMessage="Pole wymagane" />
 				<p:message for="telefon" />
 			</h:panelGrid>
-			<p:commandButton value="Zapisz" actionListener="#{klienciBean.save(user)}"
-				styleClass="button_zapisz" update="form" ajax="false" />
+			<p:commandButton value="Zapisz"
+				actionListener="#{KlienciBean.save()}" styleClass="button_zapisz"
+				update="form" ajax="false" />
 		</p:panel>
 
 

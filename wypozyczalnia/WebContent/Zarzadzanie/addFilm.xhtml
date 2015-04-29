@@ -49,27 +49,27 @@
 		<p:panel id="panel_edit" styleClass="editprofile">
 			<h:outputLabel value="Nowy Film" style="font-size:20px; " />
 			<p:separator />
-			
+			<center>
 			<p:panelGrid id="panel_grid" columns="2" columnClasses="label, value"
-				style="height:80px">
+				style="height:80px" styleClass="gridNoBorder">
 				<h:outputText value="Numer filmu: *" />
-				<h:outputText value="#{addFilmBean.film.nr_filmu}" />
+				<h:outputText value="#{FilmAddNewBean.film.nr_filmu}" />
 
 				<h:outputText value="Tytuł: *" />
 				<p:inputTextarea autoResize="true" rows="1" cols="40"
-					value="#{addFilmBean.film.tytul}" required="true"
+					value="#{FilmAddNewBean.film.tytul}" required="true"
 					requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Data wprowadzenia: *" />
-				<p:calendar value="#{addFilmBean.film.data_dodania}"
+				<p:calendar value="#{FilmAddNewBean.film.data_dodania}"
 					pattern="yyyy-MM-dd" mask="true" locale="pl" lang="pl"
 					required="true" requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Gatunek: *" />
-				<p:selectManyCheckbox id="grid" value="#{addFilmBean.gatunkiFilm}"
-					layout="grid" columns="3" required="true"
-					requiredMessage="Pole wymagane">
-					<f:selectItems value="#{addFilmBean.gatunki}" var="gatunek"
+				<p:selectManyCheckbox id="grid"
+					value="#{FilmAddNewBean.gatunkiFilm}" layout="grid" columns="3"
+					required="true" requiredMessage="Pole wymagane">
+					<f:selectItems value="#{FilmAddNewBean.gatunki}" var="gatunek"
 						itemLabel="#{gatunek.gatunek}"
 						itemValue="#{gatunek.id_klasyfikacji}" />
 				</p:selectManyCheckbox>
@@ -78,60 +78,62 @@
 
 				<h:outputText value="Produkcja: *" />
 				<p:inputTextarea autoResize="true" rows="1" cols="40"
-					value="#{addFilmBean.film.produkcja}" required="true"
+					value="#{FilmAddNewBean.film.produkcja}" required="true"
 					requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Premiera: *" />
 
-				<p:calendar value="#{addFilmBean.film.premiera}"
+				<p:calendar value="#{FilmAddNewBean.film.premiera}"
 					pattern="yyyy-MM-dd" mask="true" locale="pl" required="true"
 					requiredMessage="Pole wymagane" />
 
 
 				<h:outputText value="Rezyseria: *" />
 				<p:inputTextarea autoResize="true" rows="1" cols="40"
-					value="#{addFilmBean.film.rezyseria}" required="true"
+					value="#{FilmAddNewBean.film.rezyseria}" required="true"
 					requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Scenariusz: *" />
 				<p:inputTextarea autoResize="true" rows="1" cols="40"
-					value="#{addFilmBean.film.scenariusz}" required="true"
+					value="#{FilmAddNewBean.film.scenariusz}" required="true"
 					requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Opis: *" />
 				<p:inputTextarea autoResize="true" rows="1" cols="40"
-					value="#{addFilmBean.film.opis}" required="true"
+					value="#{FilmAddNewBean.film.opis}" required="true"
 					requiredMessage="Pole wymagane" />
 				<h:outputText value="Ilość kopii: *" />
 				<p:inputTextarea autoResize="true" rows="1" cols="40"
-					value="#{addFilmBean.iloscKopii}" required="true"
+					value="#{FilmAddNewBean.iloscKopii}" required="true"
 					requiredMessage="Pole wymagane" />
 
 				<h:outputText value="Plakat: " style="text-align:right" />
 				<p:panel>
-				<p:commandButton value="Wybierz plakat" onclick="PF('dlg2').show();"/>
-				<p:outputLabel id="labelPlakat" value="#{addFilmBean.labelPlakat}"/>
-				</p:panel>	
+					<p:commandButton value="Wybierz plakat"
+						onclick="PF('dlg2').show();" />
+					<p:outputLabel id="labelPlakat"
+						value="#{FilmAddNewBean.labelPlakat}" />
+				</p:panel>
 
 			</p:panelGrid>
+			</center>
 			<p:separator />
-			<p:commandButton action="#{addFilmBean.dodajFilm()}" styleClass="button_zapisz" value="Dodaj"
-				 ajax="false" />
+			<p:commandButton action="#{FilmAddNewBean.dodajFilm()}"
+				styleClass="button_zapisz" value="Dodaj" ajax="false" />
 		</p:panel>
 		<p:dialog header="Załaduj plik" widgetVar="dlg2" modal="true"
-				height="300px" width="500px"  closeOnEscape="true"
-				minHeight="200" minWidth="800" position="center" >
+			height="300px" width="500px" closeOnEscape="true" minHeight="200"
+			minWidth="800" position="center">
 
-				<p:fileUpload fileUploadListener="#{addFilmBean.handleFileUpload}"
-					mode="advanced" dragDropSupport="false" sizeLimit="100000"
-					fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-					uploadLabel="Wczytaj" cancelLabel="Anuluj"
-					label="Wybierz"  />
+			<p:fileUpload fileUploadListener="#{FilmAddNewBean.handleFileUpload}"
+				mode="advanced" dragDropSupport="false" sizeLimit="100000"
+				fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+				uploadLabel="Wczytaj" cancelLabel="Anuluj" label="Wybierz" />
 
-				<p:growl id="messages" showDetail="true" />
+			<p:growl id="messages" showDetail="true" />
 
-			</p:dialog>
-		
+		</p:dialog>
+
 	</ui:define>
 
 </ui:composition>

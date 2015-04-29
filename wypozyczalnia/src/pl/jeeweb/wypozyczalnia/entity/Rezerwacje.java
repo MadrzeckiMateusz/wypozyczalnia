@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import pl.jeeweb.wypozyczalnia.tools.Converters;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +19,10 @@ import java.util.List;
 @Table(name="rezerwacje")
 @NamedQueries({
 @NamedQuery(name="Rezerwacje.findAll", query="SELECT r FROM Rezerwacje r"),
-@NamedQuery(name="Rezerwacje.findById", query="SELECT r FROM Rezerwacje r where r.id_rezerwacji = :id_rezerwacji")
+@NamedQuery(name="Rezerwacje.findById", query="SELECT r FROM Rezerwacje r where r.id_rezerwacji = :id_rezerwacji"),
+@NamedQuery(name="Rezerwacje.findDifferentStatus", query="SELECT r FROM Rezerwacje r where r.status_rezerwacji <> :status"),
+@NamedQuery(name="Rezerwacje.findDiByStatus", query="SELECT r FROM Rezerwacje r where r.status_rezerwacji = :status"),
+@NamedQuery(name="Rezerwacje.getMaxId",query="SELECT MAX(r.id_rezerwacji) FROM Rezerwacje r")
 })
 public class Rezerwacje implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -43,18 +48,21 @@ public class Rezerwacje implements Serializable {
 
 	@Column(length=500)
 	private String uwagi;
+	
+	@Column(length=100)
+	private String historia_rezer;
 
 	//bi-directional many-to-one association to KopieFilmu
-	@OneToMany(mappedBy="rezerwacje" , fetch= FetchType.EAGER, cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy="rezerwacje" , fetch= FetchType.EAGER)//, cascade = CascadeType.MERGE)
 	private List<KopieFilmu> kopieFilmus;
 
 	//bi-directional many-to-one association to Klienci
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="Id_klienta")
 	private Klienci klienci;
 
 	//bi-directional many-to-one association to Pracownicy
-	@ManyToOne(cascade = {CascadeType.ALL},fetch= FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.MERGE},fetch= FetchType.EAGER)
 	@JoinColumn(name="Id_prcownika")
 	private Pracownicy pracownicy;
 
@@ -153,7 +161,15 @@ public class Rezerwacje implements Serializable {
 	}
 
 	public List<Filmy> getFilmyTran() {
-		return filmyTran;
+		List<Filmy> filmyrez = new ArrayList<>();
+		for (KopieFilmu kopia : getKopieFilmus()) {
+			Filmy film = kopia.getFilmy();
+			film.setGatunek_string(Converters.klasyfikacjaGatunkuToString(film));
+			film.setNumerKopiifilmu(film.getNr_filmu() + "/"
+					+ kopia.getId().getId_kopii());
+			filmyrez.add(film);
+		}
+		return filmyrez;
 	}
 
 	public void setFilmyTran(List<Filmy> filmy) {
@@ -164,6 +180,20 @@ public class Rezerwacje implements Serializable {
 		List<Klienci> listaKliencis = new ArrayList<>();
 		listaKliencis.add(klienci);
 		return listaKliencis;
+	}
+
+	/**
+	 * @return the historia_rezer
+	 */
+	public String getHistoria_rezer() {
+		return historia_rezer;
+	}
+
+	/**
+	 * @param historia_rezer the historia_rezer to set
+	 */
+	public void setHistoria_rezer(String historia_rezer) {
+		this.historia_rezer = historia_rezer;
 	}
 
 	public void setKlientTran(List<Klienci> klient) {

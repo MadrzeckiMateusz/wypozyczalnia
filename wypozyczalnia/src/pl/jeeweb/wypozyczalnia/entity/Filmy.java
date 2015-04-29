@@ -36,7 +36,7 @@ import org.primefaces.model.DefaultStreamedContent;
 @NamedQuery(name="Filmy.findAll", query="SELECT f FROM Filmy f"),
 @NamedQuery(name="Filmy.findById", query="SELECT F FROM Filmy F where F.id_filmu = :idFilmu"),
 @NamedQuery(name="Filmy.findByNumer", query="SELECT F FROM Filmy F where F.nr_filmu = :numer")})
-public class Filmy implements Serializable ,Comparable<Filmy> {
+public class Filmy implements Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -234,13 +234,13 @@ public class Filmy implements Serializable ,Comparable<Filmy> {
 		this.numerKopiifilmu = numerKopiifilmu;
 	}
 
-	@Override
-	public int compareTo(Filmy o) {
-		if (this.id_filmu != o.id_filmu) {
-			return -1;
+	public boolean equals(Filmy o) {
+		if (this.id_filmu == o.id_filmu) {
+			return true;
 		}
-		return 0;
+		return false;
 	}
+	
 	
 
 }

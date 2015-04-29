@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="Wypozyczalnia" transaction-type="RESOURCE_LOCAL">
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="Wypozyczalnia"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <non-jta-data-source>java:comp/env/jdbc/Wypozyczalnia</non-jta-data-source>
 		<class>pl.jeeweb.wypozyczalnia.entity.Filmy</class>
 		<class>pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku</class>
 		<class>pl.jeeweb.wypozyczalnia.entity.KopieFilmu</class>
@@ -12,18 +17,9 @@
 		<class>pl.jeeweb.wypozyczalnia.entity.KlasyfikatorPK</class>
 		<class>pl.jeeweb.wypozyczalnia.entity.Klienci</class>
 		<class>pl.jeeweb.wypozyczalnia.entity.Role</class>
-		<class>pl.jeeweb.wypozyczalnia.entity.RolePK</class>
 		<class>pl.jeeweb.wypozyczalnia.entity.User</class>
 		<properties>
-			<property name="hibernate.connection.username" value="root"/>
-			<property name="hibernate.connection.password" value="44rr5t"/>
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/wypozyczalnia"/>
-			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/wypozyczalnia"/>
-			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="44rr5t"/>
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />
 		</properties>
 	</persistence-unit>
 </persistence>

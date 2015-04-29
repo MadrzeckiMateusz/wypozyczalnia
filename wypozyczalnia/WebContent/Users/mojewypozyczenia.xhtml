@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html" template="../szablonApp.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:panelGrid styleClass="gridNoPaddingszczegoly" columns="1">
+				<p:panel styleClass="panelNoPadding">
+
+					<p:dataTable id="basicDt1" var="wypozyczeniaList" styleClass="bordernew"
+						value="#{WypozyczeniaBean.getklientbyid('inny')}">
+						<f:facet name="header">
+							<p:outputPanel style="text-align:left">
+								<h:outputText value="Aktualne wypożyczenia"
+									style="text-align:left" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="Numer wypożyczenia">
+							<h:outputText value="#{wypozyczeniaList.nr_wypozyczenia}" />
+						</p:column>
+						<p:column headerText="Data wypożyczenia">
+							<h:outputText value="#{wypozyczeniaList.data_wypozyczenia}" />
+						</p:column>
+						<p:column headerText="Termin zwrotu">
+							<h:outputText value="#{wypozyczeniaList.termin_zwrotu}" />
+						</p:column>
+						
+						<p:column headerText="Odsetki karne">
+							<h:outputText value="#{wypozyczeniaList.odsetki}" />
+						</p:column>
+						<p:column style="width:32px; text-align: center">
+							<p:commandButton oncomplete="PF('carDialog').show()"
+								icon="ui-icon-search" title="Wyświetl szczegóły">
+								<f:setPropertyActionListener value="#{wypozyczeniaList}"
+									target="#{WypozyczeniaBean.zaznaczoneWypozyczenie}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
+
+				<p:panel styleClass="panelNoPadding">
+
+					<p:dataTable id="basicDt2" var="wypozyczeniaList1" styleClass="bordernew"
+						value="#{WypozyczeniaBean.getklientbyid('Zwrocone')}" > 
+						<f:facet name="header">
+							<p:outputPanel style="text-align:left">
+								<h:outputText value="Wypożyczenia zrealizowane - historia"
+									style="text-align:left" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="Numer wypozyczenia">
+							<h:outputText value="#{wypozyczeniaList1.nr_wypozyczenia}" />
+						</p:column>
+						<p:column headerText="Data wypozyczenia">
+							<h:outputText value="#{wypozyczeniaList1.data_wypozyczenia}" />
+						</p:column>
+						<p:column headerText="Termin zwrotu">
+							<h:outputText value="#{wypozyczeniaList1.termin_zwrotu}" />
+						</p:column>
+						<p:column headerText="Data zwrotu">
+							<h:outputText value="#{wypozyczeniaList1.data_zwrotu}" />
+						</p:column>
+						<p:column headerText="Odsetki karne">
+							<h:outputText value="#{wypozyczeniaList1.odsetki}" />
+						</p:column>
+						<p:column style="width:32px;text-align: center">
+							<p:commandButton oncomplete="PF('fimyArchiwum').show()"
+								icon="ui-icon-search" title="Wyświetl szczegóły">
+								<f:setPropertyActionListener value="#{wypozyczeniaList1}"
+									target="#{WypozyczeniaBean.zaznaczoneWypozyczenie}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:panelGrid>
+
+			<p:dialog header="Szczegóły wypożyczenia" widgetVar="carDialog"
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+				width="80%"  height="400" position="top" style="background-color:#D0E0FF">
+				<p:outputPanel id="carDetail" style="text-align: center; "
+					autoUpdate="true">
+					<p:dataTable var="kopiefilmy"
+						value="#{WypozyczeniaBean.zaznaczoneWypozyczenie.kopieFilmus}" emptyMessage="Brak filmów">
+						<p:column headerText="Numer filmu">
+							<h:outputText value="#{kopiefilmy.filmy.nr_filmu}" />
+						</p:column>
+						<p:column headerText="Tytuł">
+							<h:outputText value="#{kopiefilmy.filmy.tytul}" />
+						</p:column>
+						<p:column headerText="Rezyseria">
+							<h:outputText value="#{kopiefilmy.filmy.rezyseria}" />
+						</p:column>
+
+						<p:column headerText="Data premiery">
+							<h:outputText value="#{kopiefilmy.filmy.premiera}" />
+						</p:column>
+
+
+					</p:dataTable>
+
+				</p:outputPanel>
+			</p:dialog>  
+			
+			<p:dialog header="Szczegóły wypożyczenia" widgetVar="fimyArchiwum"
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+				width="80%"  height="400" position="top"  style="background-color:#D0E0FF">
+				<p:outputPanel id="carDetail1" style="text-align: center; "
+					autoUpdate="true">
+					<p:dataTable var="filmy"
+						value="#{WypozyczeniaBean.filmyArchiwum}" emptyMessage="Brak filmów">
+						<p:column headerText="Numer filmu">
+							<h:outputText value="#{filmy.nr_filmu}" />
+						</p:column>
+						<p:column headerText="Tytuł">
+							<h:outputText value="#{filmy.tytul}" />
+						</p:column>
+						<p:column headerText="Rezyseria">
+							<h:outputText value="#{filmy.rezyseria}" />
+						</p:column>
+
+						<p:column headerText="Data premiery">
+							<h:outputText value="#{filmy.premiera}" />
+						</p:column>
+
+
+					</p:dataTable>
+
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

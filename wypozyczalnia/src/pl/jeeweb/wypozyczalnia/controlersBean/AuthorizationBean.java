@@ -140,7 +140,7 @@ public class AuthorizationBean {
 				.setKeepMessages(true);
 		try {
 			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect("/wypozyczalnia/Zarzadzanie/listafilmow.xhtml");
+					.redirect("/wypozyczalnia/Zarzadzanie/listaRezerwacji.xhtml");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

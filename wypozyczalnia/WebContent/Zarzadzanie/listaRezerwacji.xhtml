@@ -9,19 +9,19 @@
 	template="./SzablonZarzadzanie.xhtml">
 
 	<ui:define name="content">
-		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2" >
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2">
 			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
-				<p:commandButton action="#{FilmyBean.przekierowanieEdycjaFilmu()}"
-					image="button_icon"
-					style="height:50px; width:50px; margin-right:5px" />
-				<p:commandButton action="#{FilmyBean.przekierowanieDodajFilm()}"
-					image="button_dodaj"
-					style="height:50px; width:50px; margin-right:5px" />
-					<p:commandButton action="#{RezerwacjeBean.przekierowanieszczegoly}"
+				<p:commandButton
+					action="#{RezerwacjeBean.przekierowanieDodajRezerwacje()}"
+					image="button_addall"
+					style="height:50px; width:50px; margin-right:5px"
+					title="Dodaj rezerwacje" />
+				<p:commandButton action="#{RezerwacjeBean.przekierowanieszczegoly}"
 					image="button_info"
-					style="height:50px; width:50px; margin-right:5px" title="Szczegóły rezerwacji"/>
+					style="height:50px; width:50px; margin-right:5px"
+					title="Szczegóły rezerwacji" />
 			</p:outputPanel>
-			<p:panel styleClass="infologowanie">
+			<p:panel styleClass="infologowanie" style="text-align:right; width:960" >
 				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
 				<p:outputLabel value="#{AuthorizationBean.rola}"
 					style="font-size:16px" />
@@ -41,7 +41,8 @@
 			filteredValue="#{RezerwacjeBean.filteredRezerwacje}"
 			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
 			selection="#{RezerwacjeBean.zaznaczonaRezerwacja}"
-			rowKey="#{rezerwacja.id_rezerwacji}">
+			rowKey="#{rezerwacja.id_rezerwacji}" > 
+			
 
 			<f:facet name="header">
 				<p:outputPanel style="margin-right:67%">
@@ -52,7 +53,7 @@
 						placeholder="Wpisz frazę" />
 				</p:outputPanel>
 			</f:facet>
-			<p:column headerText="Numer rezerwacji"
+			<p:column headerText="Numer rezerwacji" sortBy="#{rezerwacja.nr_rezerwacji}"  
 				filterBy="#{rezerwacja.nr_rezerwacji}" filterMatchMode="contains">
 				<h:outputText value="#{rezerwacja.nr_rezerwacji}" />
 			</p:column>

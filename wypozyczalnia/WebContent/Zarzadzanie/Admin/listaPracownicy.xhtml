@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="../SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2">
+			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
+				<p:commandButton
+					action="#{PracownikBean.przekierowanieDodajPracownika}"
+					image="button_empadd"
+					style="height:50px; width:50px; margin-right:5px"
+					title="dodaj pracownika" />
+				<p:commandButton
+					action="#{PracownikBean.przekierowanieEdycjaPracownika()}"
+					image="button_empedit"
+					style="height:50px; width:50px; margin-right:5px"
+					title="edytuj pracownika" />
+				<p:commandButton onclick="PF('dialoguprawnienia').show()" image="button_premission"
+					style="height:50px; width:50px; margin-right:5px"
+					title="edycja uprawnień pracownika" />
+					<p:commandButton onclick="PF('dialoghaslo').show()" image="button_userpass"
+					style="height:50px; width:50px; margin-right:5px"
+					title="zmiana hasła" />
+					
+			</p:outputPanel>
+			<p:panel styleClass="infologowanie" style="text-align:right; width:850">
+				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
+				<p:outputLabel value="#{AuthorizationBean.rola}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.imie}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.nazwisko}"
+					style="font-size:16px; margin-left:5px" />
+				<p:commandButton value="Wyloguj"
+					action="#{AuthorizationBean.LogOut()}"
+					style="margin-left:30px; width:90px" />
+			</p:panel>
+		</p:panelGrid>
+		<p:growl id="growl1" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:dataTable id="pracownicyTab" var="pracownik" styleClass="zarzadzaj"
+			value="#{PracownikBean.allPracownicy}" widgetVar="pracownicyTables"
+			filteredValue="#{PracownikBean.filteredPracownicy}"
+			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
+			selection="#{PracownikBean.selectedPracownik}"
+			rowKey="#{pracownik.id_prcownika}">
+
+			<f:facet name="header">
+				<p:outputPanel style="margin-right:67%">
+					<h:outputText value="Wyszukiwanie globalne:"
+						style="margin-right:15px" />
+					<p:inputText id="globalFilter"
+						onkeyup="PF('pracownicyTables').filter()" style="width:150px"
+						placeholder="Wpisz frazę" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Numer pracownika"
+				filterBy="#{pracownik.nr_pracownika}" filterMatchMode="contains">
+				<h:outputText value="#{pracownik.nr_pracownika}" />
+			</p:column>
+
+			<p:column headerText="Data Zatrudnienia"
+				filterBy="#{pracownik.data_zatrdnienia}" filterMatchMode="contains">
+				<h:outputText value="#{pracownik.data_zatrudnienia}" />
+			</p:column>
+
+			<p:column headerText="Imie" filterBy="#{pracownik.imie}"
+				filterStyle="width:60px" filterMatchMode="contains"
+				style="width:80px">
+				<h:outputText value="#{pracownik.imie}" />
+			</p:column>
+
+			<p:column headerText="Nazwisko" filterBy="#{pracownik.nazwisko}"
+				filterStyle="width:60px" filterMatchMode="contains"
+				style="width:80px">
+				<h:outputText value="#{pracownik.nazwisko}" />
+			</p:column>
+
+			<p:column headerText="PESEL" filterBy="#{pracownik.pesel}"
+				filterMatchMode="contains">
+				<h:outputText value="#{pracownik.pesel}" />
+			</p:column>
+
+			<p:column headerText="E-mail" filterBy="#{pracownik.e_mail}"
+				filterStyle="width:200px" style="width:220px"
+				filterMatchMode="contains">
+				<h:outputText value="#{pracownik.e_mail}" />
+			</p:column>
+
+			<p:column headerText="Telefon" style="width:80px"
+				filterStyle="width:60px" filterBy="#{pracownik.nr_telefonu}"
+				filterMatchMode="contains">
+				<h:outputText value="#{pracownik.nr_telefonu}" />
+			</p:column>
+			<p:column headerText="Uprawnienia" style="width:80px"
+				filterStyle="width:60px"
+				filterBy="#{PracownikBean.getRole(pracownik)}"
+				filterMatchMode="contains">
+				<h:outputText value="#{PracownikBean.getRole(pracownik)}" />
+			</p:column>
+		</p:dataTable>
+
+		<p:dialog header="Hasło" global="true" showEffect="fade"
+			hideEffect="explode" widgetVar="dialoghaslo" position="top"
+			width="900" style="background-color:#D0E0FF">
+			<p:panel id="panel" styleClass="editprofile">
+				<h:outputLabel value="Hasło" style="font-size:20px; " />
+				<p:separator />
+
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="Hasło: " />
+					<p:password id="nowehaslo" feedback="true"
+						value="#{PracownikBean.haslo}" />
+
+					<h:outputText value="Powtórz hasło: " />
+					<p:password id="nowehaslo1" feedback="true"
+						value="#{PracownikBean.haslo1}" />
+
+				</h:panelGrid>
+				<p:commandButton id="zapiszhaslo" value="Zapisz"
+					action="#{PracownikBean.saveHaslo}"
+					styleClass="button_zmien" update="pracownicyTab, panel" />
+			</p:panel>
+		</p:dialog>
+
+		<p:dialog header="Uprawnienia" global="true" showEffect="fade"
+			hideEffect="explode" widgetVar="dialoguprawnienia" position="top"
+			width="800" style="background-color:#D0E0FF">
+			<p:panel id="panel2" styleClass="editprofile">
+				<p:outputLabel for="country" value="Uprawnienia: " style="vertical-align: center"/>
+				<p:selectOneMenu id="country" value="#{PracownikBean.role}"
+					style="width:150px">
+					<f:selectItem itemLabel="Wybierz uprawnienia" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{PracownikAddBean.roles}" />
+				</p:selectOneMenu>
+				<p:separator/>
+				<p:commandButton id="zapiszuprawnienia" value="Zapisz"
+					action="#{PracownikBean.changePermission}"
+					styleClass="button_zmien" update="pracownicyTab" />
+			</p:panel>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

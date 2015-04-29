@@ -8,36 +8,80 @@
 	xmlns:h="http://java.sun.com/jsf/html" template="../szablonApp.xhtml">
 	<ui:define name="content">
 		<h:form id="form">
-			<p:dataTable id="basicDt" var="rezerwacjeList"
-				value="#{RezerwacjeBean.getklientbyid()}">
-				<p:column headerText="Numer rezerwacji">
-					<h:outputText value="#{rezerwacjeList.nr_rezerwacji}" />
-				</p:column>
-				<p:column headerText="Data rezerwacji">
-					<h:outputText value="#{rezerwacjeList.data_rezerwacji}" />
-				</p:column>
-				<p:column headerText="Status rezerwacji">
-					<h:outputText value="#{rezerwacjeList.status_rezerwacji}" />
-				</p:column>
-				<p:column headerText="Data odbioru">
-					<h:outputText value="#{rezerwacjeList.data_odbioru}" />
-				</p:column>
-				<p:column style="width:32px;text-align: center">
-					<p:commandButton oncomplete="PF('carDialog').show()"
-						icon="ui-icon-search" title="Wyświetl szczegóły">
-						<f:setPropertyActionListener value="#{rezerwacjeList}"
-							target="#{RezerwacjeBean.zaznaczonaRezerwacja}" />
-					</p:commandButton>
-				</p:column>
-			</p:dataTable>
+			<p:panelGrid styleClass="gridNoPaddingszczegoly" columns="1">
+				<p:panel styleClass="panelNoPadding">
+
+					<p:dataTable id="basicDt1" var="rezerwacjeList" styleClass="bordernew"
+						value="#{RezerwacjeBean.getklientbyid('inny')}" >
+						<f:facet name="header">
+							<p:outputPanel style="text-align:left">
+								<h:outputText value="Aktualne rezerwacje"
+									style="text-align:left" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="Numer rezerwacji" sortBy="#{rezerwacjeList.nr_rezerwacji}" >
+							<h:outputText value="#{rezerwacjeList.nr_rezerwacji}" />
+						</p:column>
+						<p:column headerText="Data rezerwacji">
+							<h:outputText value="#{rezerwacjeList.data_rezerwacji}" />
+						</p:column>
+						<p:column headerText="Status rezerwacji">
+							<h:outputText value="#{rezerwacjeList.status_rezerwacji}" />
+						</p:column>
+						<p:column headerText="Data odbioru">
+							<h:outputText value="#{rezerwacjeList.data_odbioru}" />
+						</p:column>
+						<p:column style="width:32px;text-align: center">
+							<p:commandButton oncomplete="PF('carDialog').show()"
+								icon="ui-icon-search" title="Wyświetl szczegóły">
+								<f:setPropertyActionListener value="#{rezerwacjeList}"
+									target="#{RezerwacjeBean.zaznaczonaRezerwacja}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
+
+				<p:panel styleClass="panelNoPadding">
+
+					<p:dataTable id="basicDt2" var="rezerwacjeList1" styleClass="bordernew"
+						value="#{RezerwacjeBean.getklientbyid('Zrealizowana')}" sortBy="#{rezerwacjeList.status_rezerwacji}"> 
+						<f:facet name="header">
+							<p:outputPanel style="text-align:left">
+								<h:outputText value="Rezerwacje zrealizowane - historia"
+									style="text-align:left" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="Numer rezerwacji">
+							<h:outputText value="#{rezerwacjeList1.nr_rezerwacji}" />
+						</p:column>
+						<p:column headerText="Data rezerwacji">
+							<h:outputText value="#{rezerwacjeList1.data_rezerwacji}" />
+						</p:column>
+						<p:column headerText="Status rezerwacji">
+							<h:outputText value="#{rezerwacjeList1.status_rezerwacji}" />
+						</p:column>
+						<p:column headerText="Data odbioru">
+							<h:outputText value="#{rezerwacjeList1.data_odbioru}" />
+						</p:column>
+						<p:column style="width:32px;text-align: center">
+							<p:commandButton oncomplete="PF('fimyArchiwum').show()"
+								icon="ui-icon-search" title="Wyświetl szczegóły">
+								<f:setPropertyActionListener value="#{rezerwacjeList1}"
+									target="#{RezerwacjeBean.zaznaczonaRezerwacja}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:panelGrid>
 
 			<p:dialog header="Szczegóły rezerwacji" widgetVar="carDialog"
 				modal="true" showEffect="fade" hideEffect="fade" resizable="false"
-				width="80%" position="center">
+				width="80%"  height="400" position="top" style="background-color:#D0E0FF">
 				<p:outputPanel id="carDetail" style="text-align: center; "
 					autoUpdate="true">
 					<p:dataTable var="kopiefilmy"
-						value="#{RezerwacjeBean.zaznaczonaRezerwacja.kopieFilmus}">
+						value="#{RezerwacjeBean.zaznaczonaRezerwacja.kopieFilmus}" emptyMessage="brak rezerwacji">
 						<p:column headerText="Numer filmu">
 							<h:outputText value="#{kopiefilmy.filmy.nr_filmu}" />
 						</p:column>
@@ -56,8 +100,34 @@
 					</p:dataTable>
 
 				</p:outputPanel>
-			</p:dialog>
+			</p:dialog>  
+			
+			<p:dialog header="Szczegóły rezerwacji" widgetVar="fimyArchiwum"
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+				width="80%"  height="400" position="top"  style="background-color:#D0E0FF">
+				<p:outputPanel id="carDetail1" style="text-align: center; "
+					autoUpdate="true">
+					<p:dataTable var="filmy"
+						value="#{RezerwacjeBean.filmyArchiwum}" emptyMessage="Brak zarchiwizowanych rezerwacji">
+						<p:column headerText="Numer filmu">
+							<h:outputText value="#{filmy.nr_filmu}" />
+						</p:column>
+						<p:column headerText="Tytuł">
+							<h:outputText value="#{filmy.tytul}" />
+						</p:column>
+						<p:column headerText="Rezyseria">
+							<h:outputText value="#{filmy.rezyseria}" />
+						</p:column>
 
+						<p:column headerText="Data premiery">
+							<h:outputText value="#{filmy.premiera}" />
+						</p:column>
+
+
+					</p:dataTable>
+
+				</p:outputPanel>
+			</p:dialog>
 
 		</h:form>
 	</ui:define>

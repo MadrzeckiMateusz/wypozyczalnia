@@ -9,31 +9,38 @@
 	template="./SzablonZarzadzanie.xhtml">
 
 	<ui:define name="content">
-	<p:panelGrid styleClass="gridNoPaddinglogin" columns="2" >
-		<p:outputPanel style="margin-bottom:10px; margin-top:5px">
-			<p:commandButton
-				action="#{klienciBean.przekierowanieEdycjaKlienta()}"
-				image="button_icon"
-				style="height:50px; width:50px; margin-right:5px" />
-			<p:commandButton action="#{klienciBean.przekierowanieDodajKlienta()}"
-				image="button_dodaj"
-				style="height:50px; width:50px; margin-right:5px" />
-		</p:outputPanel>
-		<p:panel styleClass="infologowanie">
-	<p:outputLabel  value="Zalogowany " style="font-size:16px; "/>
-	<p:outputLabel value="#{AuthorizationBean.rola}" style="font-size:16px"/>
-	<p:outputLabel value="#{AuthorizationBean.pracownik.imie}" style="font-size:16px"/>
-	<p:outputLabel value="#{AuthorizationBean.pracownik.nazwisko}" style="font-size:16px; margin-left:5px"/>
-	<p:commandButton value="Wyloguj" action="#{AuthorizationBean.LogOut()}" style="margin-left:30px; width:90px"/>
-	</p:panel>
-	</p:panelGrid>
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2">
+			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
+				<p:commandButton
+					action="#{KlienciBean.przekierowanieEdycjaKlienta()}"
+					image="button_empedit"
+					style="height:50px; width:50px; margin-right:5px" 
+					title="Edytuj klienta"/>
+				<p:commandButton
+					action="#{KlienciBean.przekierowanieDodajKlienta()}"
+					image="button_empadd"
+					style="height:50px; width:50px; margin-right:5px" title="Dodaj Klienta"/>
+			</p:outputPanel>
+			<p:panel styleClass="infologowanie" style="text-align:right; width:960">
+				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
+				<p:outputLabel value="#{AuthorizationBean.rola}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.imie}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.nazwisko}"
+					style="font-size:16px; margin-left:5px" />
+				<p:commandButton value="Wyloguj"
+					action="#{AuthorizationBean.LogOut()}"
+					style="margin-left:30px; width:90px" />
+			</p:panel>
+		</p:panelGrid>
 		<p:growl id="growl" for="globalmessage" showDetail="true"
 			autoUpdate="true" life="2000" />
 		<p:dataTable var="klient" styleClass="zarzadzaj"
-			value="#{klienciBean.allKlienci}" widgetVar="klienciTables"
-			filteredValue="#{klienciBean.filteredKlienci}"
+			value="#{KlienciBean.allKlienci}" widgetVar="klienciTables"
+			filteredValue="#{KlienciBean.filteredKlienci}"
 			emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
-			selection="#{klienciBean.selectedKlient}"
+			selection="#{KlienciBean.selectedKlient}"
 			rowKey="#{klient.id_klienta}">
 
 			<f:facet name="header">

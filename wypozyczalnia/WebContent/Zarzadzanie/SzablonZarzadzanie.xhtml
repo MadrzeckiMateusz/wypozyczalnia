@@ -32,13 +32,38 @@
 			<div id="page">
 				<div id="leftmanage">
 					<p:menu styleClass="menumanage" toggleable="true" >
+						<p:submenu label="Rezerwacje" style=" background-color: #A4BDEF;" >
+							<p:menuitem value="Lista rezerwacji"
+								url="/Zarzadzanie/listaRezerwacji.xhtml" icon="ui-icon-home" />
+							<p:menuitem value="Arciwum rezerwacji"
+								rendered="#{AuthorizationBean.adminRole}"
+								url="/Zarzadzanie/Admin/rezerwacjeHistoria.xhtml"
+								icon="ui-icon-home" />
+							<p:menuitem value="Nowa rezerwacja"
+								action="#{RezerwacjeBean.przekierowanieDodajRezerwacje()}"
+								icon="ui-icon-home" />
+
+						</p:submenu>
+						<p:submenu label="Wypożyczenia"
+							style=" background-color: #A4BDEF;">
+							<p:menuitem value="Lista wypożyczeń"
+								url="/Zarzadzanie/listaWypozyczen.xhtml" icon="ui-icon-home" />
+							<p:menuitem value="Archiwum wypożyczeń"
+								rendered="#{AuthorizationBean.adminRole}"
+								url="/Zarzadzanie/Admin/wypozyczeniaHistoria.xhtml"
+								icon="ui-icon-home" />
+							<p:menuitem value="Nowe wypożyczenie"
+								action="#{WypozyczeniaBean.przekierowanieDodajWypozyczenie()}"
+								icon="ui-icon-home" />
+
+						</p:submenu>
 						<p:submenu label="Filmy" style=" background-color: #A4BDEF;">
 							<p:menuitem value="Lista filmów"
 								url="/Zarzadzanie/listafilmow.xhtml" icon="list-icon" />
 							<p:menuitem value="Dodaj film" url="/Zarzadzanie/addFilm.xhtml"
 								icon="ui-icon-home" />
 							<p:menuitem value="Edytuj film"
-								action="#{FilmyBean.przekierowanieEdycjaFilmu}"
+								action="#{FilmBean.przekierowanieEdycjaFilmu}"
 								icon="ui-icon-home" />
 						</p:submenu>
 						<p:submenu label="Gatunki" style=" background-color: #A4BDEF;">
@@ -55,32 +80,34 @@
 							<p:menuitem value="Lista klienci"
 								url="/Zarzadzanie/listaKlienci.xhtml" icon="ui-icon-home" />
 							<p:menuitem value="Dodaj klienta"
-								action="#{klienciBean.przekierowanieDodajKlienta}"
+								action="#{KlienciBean.przekierowanieDodajKlienta}"
 								icon="ui-icon-home" />
 							<p:menuitem value="Edytuj klienta"
-								action="#{klienciBean.przekierowanieEdycjaKlienta}"
+								action="#{KlienciBean.przekierowanieEdycjaKlienta}"
 								icon="ui-icon-home" />
 						</p:submenu>
-						<p:submenu label="Rezerwacje" style=" background-color: #A4BDEF;">
-							<p:menuitem value="Lista rezerwacji"
-								url="/Zarzadzanie/listaRezerwacji.xhtml" icon="ui-icon-home" />
-							<p:menuitem value="Dodaj klienta"
-								action="#{klienciBean.przekierowanieDodajKlienta}"
-								icon="ui-icon-home" />
-							<p:menuitem value="Edytuj klienta"
-								action="#{klienciBean.przekierowanieEdycjaKlienta}"
-								icon="ui-icon-home" />
-						</p:submenu>
-						
-						<p:submenu label="Admin" style=" background-color: #A4BDEF;"
+
+
+						<p:submenu label="Pracownicy" style=" background-color: #A4BDEF;"
 							rendered="#{AuthorizationBean.adminRole}">
-							<p:menuitem value="Edytuj Dane" url="/Users/editprofile.xhtml"
+							<p:menuitem value="Lista pracowników"
+								url="/Zarzadzanie/Admin/listaPracownicy.xhtml"
 								icon="ui-icon-pencil" />
-							<p:menuitem value="Zmień Hasło" url="/Users/zmianahasla.xhtml"
+							<p:menuitem value="Dodaj pracownika"
+								url="/Zarzadzanie/Admin/addPracownik.xhtml"
 								icon="ui-icon-wrench" />
-							<p:menuitem value="Moje rezerwacje"
-								url="/Users/mojerezerwacje.xhtml" icon="ui-icon-folder-open
+							<p:menuitem value="Edytuj pracownika"
+								action="#{PracownikBean.przekierowanieEdycjaPracownika()}"
+								icon="ui-icon-folder-open
  " />
+						</p:submenu>
+						<p:submenu label="Statystyki" style=" background-color: #A4BDEF;"
+							rendered="#{AuthorizationBean.adminRole}">
+							<p:menuitem value="Pracownika"
+								url="/Zarzadzanie/Admin/Statystyki.xhtml" icon="ui-icon-pencil" />
+								<p:menuitem value="Filmu"
+								url="/Zarzadzanie/Admin/StatystykiFilm.xhtml" icon="ui-icon-pencil" />
+
 						</p:submenu>
 					</p:menu>
 

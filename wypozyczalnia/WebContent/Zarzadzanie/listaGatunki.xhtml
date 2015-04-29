@@ -9,26 +9,30 @@
 	template="./SzablonZarzadzanie.xhtml">
 
 	<ui:define name="content">
-		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2"  >
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2">
 
 			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
 				<p:commandButton
 					action="#{gatunkiBean.przekierowanieEdycjaGatunku()}"
-					image="button_icon"
-					style="height:50px; width:50px; margin-right:5px" />
+					image="button_editall"
+					style="height:50px; width:50px; margin-right:5px" 
+					title="Edytuj gatunki"/>
 				<p:commandButton
 					action="#{gatunkiBean.przekierowanieDodajGatunek()}"
-					image="button_dodaj"
-					style="height:50px; width:50px; margin-right:5px" />
+					image="button_addall"
+					style="height:50px; width:50px; margin-right:5px" 
+					title="Dodaj nowy gatunek"/>
 			</p:outputPanel>
-			<p:panel styleClass="infologowanie">
+			<p:panel styleClass="infologowanie" style="text-align:right; width:960">
 				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
-				<p:outputLabel value="#{AuthorizationBean.rola}" style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.rola}"
+					style="font-size:16px" />
 				<p:outputLabel value="#{AuthorizationBean.pracownik.imie}"
 					style="font-size:16px" />
 				<p:outputLabel value="#{AuthorizationBean.pracownik.nazwisko}"
 					style="font-size:16px; margin-left:5px" />
-				<p:commandButton value="Wyloguj" action="#{AuthorizationBean.LogOut()}"
+				<p:commandButton value="Wyloguj"
+					action="#{AuthorizationBean.LogOut()}"
 					style="margin-left:30px; width:90px" />
 			</p:panel>
 		</p:panelGrid>

@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html" template="./szablonApp.xhtml">
 	<ui:define name="content">
-		<h:form name="loginForm">
+		<h:form name="loginForm" >
 			#{AuthorizationBean.readCookieMessage()}
 			<p:outputPanel>
 				<p:growl id="growl" for="globalmessage" showDetail="true"
@@ -17,16 +17,17 @@
 				<p:separator style="width:290px ;margin-top:100px" />
 				<center>
 					<h:panelGrid columns="3" cellpadding="5" style="width:210px">
-						<h:outputLabel value="Login:" for="usernameinput" style="width:30px" />
+						<h:outputLabel value="Login:" for="usernameinput"
+							style="width:30px" />
 
-						<h:inputText id="usernameinput" value="#{AuthorizationBean.username}"
-							style="width:200px" />
+						<h:inputText id="usernameinput"
+							value="#{AuthorizationBean.username}" style="width:200px" />
 						<p:tooltip id="toolTipFocus" for="usernameinput"
 							value="Podaj nazwe użytkownika, lub e-mail" />
 						<h:outputText value="Hasło:" for="passwordinput"
 							style="width:65px" />
-						<h:inputSecret id="passwordinput" value="#{AuthorizationBean.password}"
-							style="width:200px" />
+						<h:inputSecret id="passwordinput"
+							value="#{AuthorizationBean.password}" style="width:200px" />
 						<p:tooltip id="toolTipFocus1" for="passwordinput"
 							value="Podaj hasło" />
 					</h:panelGrid>

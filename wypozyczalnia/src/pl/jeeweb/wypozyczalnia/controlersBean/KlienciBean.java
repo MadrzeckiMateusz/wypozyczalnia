@@ -21,20 +21,19 @@ import javax.transaction.TransactionalException;
 import pl.jeeweb.wypozyczalnia.config.DBManager;
 import pl.jeeweb.wypozyczalnia.entity.Klienci;
 import pl.jeeweb.wypozyczalnia.entity.Role;
-import pl.jeeweb.wypozyczalnia.entity.RolePK;
 import pl.jeeweb.wypozyczalnia.entity.User;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 import pl.jeeweb.wypozyczalnia.tools.RandomAlphaNum;
 import pl.jeeweb.wypozyczalnia.tools.SHA256hash;
 import pl.jeeweb.wypozyczalnia.tools.SendMail;
 
-@ManagedBean(name = "klienciBean")
+@ManagedBean(name = "KlienciBean")
 @RequestScoped
-public class klienciBean {
+public class KlienciBean {
 	private Klienci klient = new Klienci();
 	private User user = new User();
 	private Role user_role = new Role();
-	private RolePK rolePK = new RolePK();
+
 	private Klienci selectedKlient = null;
 	private List<Klienci> filteredKlienci = new ArrayList<>();
 
@@ -45,17 +44,21 @@ public class klienciBean {
 	public void setKlient(Klienci klient) {
 		this.klient = klient;
 	}
+
 	@PostConstruct
 	public void initBean() {
 		this.klient.setNr_klienta(setNumerKlienta());
 		this.klient.setData_rejestracji(currentDate());
 	}
-	public List<Klienci> getAllKlienci(){
+
+	public List<Klienci> getAllKlienci() {
 		EntityManager em = DBManager.getManager().createEntityManager();
-		List<Klienci> klienci = em.createNamedQuery("Klienci.findAll").getResultList();
+		List<Klienci> klienci = em.createNamedQuery("Klienci.findAll")
+				.getResultList();
 		em.close();
-		return  klienci;
+		return klienci;
 	}
+
 	public String setNumerKlienta() {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		List<Integer> id = em.createNativeQuery(
@@ -101,16 +104,16 @@ public class klienciBean {
 			RandomAlphaNum rand = new RandomAlphaNum();
 			ExternalContext context = FacesContext.getCurrentInstance()
 					.getExternalContext();
-			
-			
+
 			String tmpPassword = rand.RandomPass();
 			this.klient.setHaslo(SHA256hash.HashText(tmpPassword));
+			this.klient.setAktywowany("NIE");
 
 			this.user.setUsername(this.klient.getE_mail());
 			this.user.setPassword(this.klient.getHaslo());
-			this.rolePK.setRolename("klient");
-			this.rolePK.setUsername(this.klient.getE_mail());
-			this.user_role.setId(this.rolePK);
+
+			this.user_role.setRolename("klient");
+			this.user_role.setUsername(this.klient.getE_mail());
 			EntityManager em = DBManager.getManager().createEntityManager();
 			try {
 				em.getTransaction().begin();
@@ -125,13 +128,23 @@ public class klienciBean {
 			}
 
 			try {
+
 				new SendMail(
 						this.klient.getE_mail(),
 						"Rejestracja w serwisie Wypo¿yczalnia DVD",
-						this.klient.getImie()
-								+ " witaj  w serwisie Wypo¿yczalniaDVD. Twój e-mail jest loginem. \n "
-								+ "Twoje has³o to: " + tmpPassword
-								+ " Zmien je przy pierwszym logowaniu").send();
+						"Witaj, "
+								+ this.klient.getImie()
+								+ "!!! \n"
+								+ "Witaj  w serwisie Wypo¿yczalniaDVD. Twój e-mail jest loginem. \n "
+								+ "Twoje has³o to: "
+								+ tmpPassword
+								+ "\n"
+								+ "Zmien has³o przy pierwszym logowaniu"
+								+ "---------------------------------------------------------------------------------------- \n"
+								+ "www.wypozyczalniadvd.com.pl \n"
+								+ "tel.555 555 555 \n"
+								+ "dvd.wpozyczalnia@gmail.com").send();
+
 			} catch (MessagingException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -148,9 +161,9 @@ public class klienciBean {
 
 					context.redirect(context.getRequestContextPath()
 							+ "/zaloguj.xhtml");
-				} else {
+				} else if (fullURI.contains("editKlient")) {
 					context.redirect(context.getRequestContextPath()
-							+ "/Zarzadzanie/listafilmow.xhtml");
+							+ "/Zarzadzanie/listaKlienci.xhtml");
 				}
 
 			} catch (IOException e) {
@@ -179,7 +192,8 @@ public class klienciBean {
 						.getExternalContext()
 						.redirect(
 								"/wypozyczalnia/Zarzadzanie/editKlient.xhtml?id_klient="
-										+ selectedKlient.getId_klienta());
+										+ selectedKlient.getId_klienta()
+										+ "&target=/Zarzadzanie/listaKlienci.xhtml");
 			}
 		} catch (IOException e) {
 			System.out.print("ssadsdassd");
@@ -187,13 +201,11 @@ public class klienciBean {
 					"globalmessage", "Nie wybra³es klienta!!!", 3);
 		}
 	}
+
 	public void przekierowanieDodajKlienta() {
 		try {
-			FacesContext
-			.getCurrentInstance()
-			.getExternalContext()
-			.redirect(
-					"/wypozyczalnia/Zarzadzanie/addKlient.xhtml");
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("/wypozyczalnia/Zarzadzanie/addKlient.xhtml");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

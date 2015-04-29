@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="../SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="4000" />
+		<p:panelGrid styleClass="gridNoPaddingszczegoly" columns="2">
+			<p:panel styleClass="panelNoPadding">
+
+				<p:dataTable id="tableRezewacja" styleClass="bordernew"
+					var="rezerwacja" value="#{RezerwacjeDetailsBean.rezerwacja}">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Rezerwacja" style="text-align:left" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer rezerwacji">
+						<h:outputText value="#{rezerwacja.nr_rezerwacji}" />
+					</p:column>
+					<p:column headerText="Data rezerwacji">
+						<h:outputText value="#{rezerwacja.data_rezerwacji}" />
+					</p:column>
+					<p:column headerText="Data odbioru">
+						<h:outputText value="#{rezerwacja.data_odbioru}" />
+					</p:column>
+
+					<p:column headerText="Status">
+						<h:outputText value="#{rezerwacja.status_rezerwacji}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<p:dataTable id="filmyTable" styleClass="bordernew" var="filmy"
+					value="#{RezerwacjeDetailsBean.getFilmyArchiwum(RezerwacjeDetailsBean.rezerwacja)}"
+					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px"
+					selection="#{RezerwacjeDetailsBean.slelectedFilm}"
+					selectionMode="single" rowKey="#kopieFilmu.filmy.id_filmu}">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Filmy" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer filmu">
+						<h:outputText value="#{filmy.nr_filmu}" />
+					</p:column>
+					<p:column headerText="Tytuł">
+						<h:outputText value="#{filmy.tytul}" />
+					</p:column>
+					<p:column headerText="Reżyseria">
+						<h:outputText value="#{filmy.rezyseria}" />
+					</p:column>
+					<p:column headerText="Scenariusz">
+						<h:outputText value="#{filmy.scenariusz}" />
+					</p:column>
+					<p:column headerText="Gatunek">
+						<h:outputText
+							value="#{RezerwacjeDetailsBean.klasyfikacjaGatunkuToString(filmy)}" />
+					</p:column>
+
+
+				</p:dataTable>
+				<p:dataTable styleClass="bordernew" var="klient"
+					value="#{RezerwacjeDetailsBean.rezerwacja.klienci}"
+					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Dane Klienta" style="text-align:left" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer klienta">
+						<h:outputText value="#{klient.nr_klienta}" />
+					</p:column>
+					<p:column headerText="Imie">
+						<h:outputText value="#{klient.imie}" />
+					</p:column>
+					<p:column headerText="Nazwsiko">
+						<h:outputText value="#{klient.nazwisko}" />
+					</p:column>
+					<p:column headerText="Telefon">
+						<h:outputText value="#{klient.nr_telefonu}" />
+					</p:column>
+					<p:column headerText="Email">
+						<h:outputText value="#{klient.e_mail}" />
+					</p:column>
+
+				</p:dataTable>
+
+
+
+			</p:panel>
+
+		</p:panelGrid>
+
+
+	</ui:define>
+
+</ui:composition>

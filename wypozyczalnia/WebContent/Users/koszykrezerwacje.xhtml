@@ -5,8 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" 
-	template="../szablonApp.xhtml">
+	xmlns:f="http://java.sun.com/jsf/core" template="../szablonApp.xhtml">
 	<ui:define name="content">
 
 
@@ -14,9 +13,17 @@
 			autoUpdate="true">
 
 			<p:growl id="growl" for="Globalmessage" showDetail="true"
-				 autoUpdate="true" life="2000" />
+				autoUpdate="true" life="2000" />
+				<p:panel styleClass="koszykpanel" style="text-align:right">
+				<p:outputLabel value="Witaj!!! " style="font-size:16px; " />
+				<p:outputLabel value="#{AuthorizationBean.klient.imie}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.klient.nazwisko}"
+					style="font-size:16px; margin-left:5px" />
+				
+			</p:panel>
 			<p:dataTable styleClass="koszyktable" var="filmy"
-				value="#{koszyk.rezerwowaneFilmy}"
+				value="#{RezerwacjeKoszykBean.rezerwowaneFilmy}"
 				emptyMessage="Nie dodałeś żadnego filmu !!!">
 				<p:column headerText="Numer filmu">
 					<h:outputText value="#{filmy.nr_filmu}" />
@@ -32,13 +39,13 @@
 					<h:outputText value="#{filmy.premiera}" />
 				</p:column>
 				<p:column style="width:32px;text-align: center">
-					<p:commandButton action="#{koszyk.usunFilm(filmy)}"
+					<p:commandButton action="#{RezerwacjeKoszykBean.usunFilm(filmy)}"
 						icon="ui-icon-minus" />
 				</p:column>
 			</p:dataTable>
 
 			<p:commandButton value="Zarezerwuj"
-				action="#{koszyk.dokonajRezerwacji()}"
+				action="#{RezerwacjeKoszykBean.dokonajRezerwacji()}"
 				style="margin-left:80%; margin-top:10px"
 				styleClass="button_zarezerwuj" />
 

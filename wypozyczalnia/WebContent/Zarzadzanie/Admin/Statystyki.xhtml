@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="../SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="2000" />
+		<p:panelGrid styleClass="gridNoPaddinglogin" columns="2">
+			<p:outputPanel style="margin-bottom:10px; margin-top:5px">
+				
+
+
+			</p:outputPanel>
+			<p:panel styleClass="infologowanie" style="text-align:right; width:960">
+				<p:outputLabel value="Zalogowany " style="font-size:16px; " />
+				<p:outputLabel value="#{AuthorizationBean.rola}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.imie}"
+					style="font-size:16px" />
+				<p:outputLabel value="#{AuthorizationBean.pracownik.nazwisko}"
+					style="font-size:16px; margin-left:5px" />
+				<p:commandButton value="Wyloguj"
+					action="#{AuthorizationBean.LogOut()}"
+					style="margin-left:30px; width:90px" />
+			</p:panel>
+		</p:panelGrid>
+
+		<h:panelGrid columns="3" cellpadding="10">
+			<p:outputLabel for="country" value="Pracownik: " />
+			<p:selectOneMenu id="country"
+				value="#{StatystykiBean.selectedPracownik}" style="width:300px">
+				<f:selectItem itemLabel="Wybierz Pracownika" itemValue=""
+					noSelectionOption="true" />
+				<f:selectItems value="#{StatystykiBean.mapaPracownicy}" />
+			</p:selectOneMenu>
+			<p:commandButton id="zapiszuprawnienia" value="Generuj"
+				action="#{StatystykiBean.statystykiPracownika}"
+				style="margin-left:10px; width:120px; height:35px"
+				update="tabStatRezerwacje, tabelaPracownik, tabStatWypozyczenia" />
+
+		</h:panelGrid>
+
+		<p:dataTable id="tabelaPracownik" styleClass="bordernew"
+			var="pracownik" value="#{StatystykiBean.pracownik}">
+			<f:facet name="header">
+				<p:outputPanel style="text-align:left">
+					<h:outputText value="Pracownik" style="text-align:left" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Numer pracownika">
+				<h:outputText value="#{pracownik.nr_pracownika}" />
+			</p:column>
+			<p:column headerText="Imię">
+				<h:outputText value="#{pracownik.imie}" />
+			</p:column>
+			<p:column headerText="Nazwisko">
+				<h:outputText value="#{pracownik.nazwisko}" />
+			</p:column>
+			<p:column headerText="Data zatrudnienia">
+				<h:outputText value="#{pracownik.data_zatrudnienia}" />
+			</p:column>
+			<p:column headerText="Email">
+				<h:outputText value="#{pracownik.e_mail}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<p:dataTable id="tabStatRezerwacje" styleClass="bordernew"
+			var="statyRezeracji" value="#{StatystykiBean.listStatystyki}">
+			<f:facet name="header">
+				<p:outputPanel style="text-align:left">
+					<h:outputText value="Rezerwacje" style="text-align:left" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Ilość ogółem">
+				<h:outputText value="#{statyRezeracji.liczbaogolem}" />
+			</p:column>
+			<p:column headerText="Ilość Obsługiwanych">
+				<h:outputText value="#{statyRezeracji.liczbaWobsludze}" />
+			</p:column>
+			<p:column headerText="Ilość zrealizowanych">
+				<h:outputText value="#{statyRezeracji.liczbazrealizowanych}" />
+			</p:column>
+
+
+		</p:dataTable>
+
+
+
+		<p:dataTable id="tabStatWypozyczenia" styleClass="bordernew"
+			var="statyWypozyczen" value="#{StatystykiBean.listaStatystykiWypozyczenModels}">
+			<f:facet name="header">
+				<p:outputPanel style="text-align:left">
+					<h:outputText value="Wypozyczenia" style="text-align:left" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Ilość ogółem">
+				<h:outputText value="#{statyWypozyczen.licznikOgolnyWypozyczenia}" />
+			</p:column>
+			<p:column headerText="Ilość zrealizowanych">
+				<h:outputText
+					value="#{statyWypozyczen.licznikWypozyczeniaZrealizowane}" />
+			</p:column>
+			<p:column headerText="Ilość zwroconych">
+				<h:outputText value="#{statyWypozyczen.licznikWypozyczeniaZwrocone}" />
+			</p:column>
+
+
+		</p:dataTable>
+
+
+
+
+
+
+	</ui:define>
+
+</ui:composition>

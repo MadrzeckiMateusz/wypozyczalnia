@@ -24,9 +24,9 @@ import pl.jeeweb.wypozyczalnia.entity.User;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 import pl.jeeweb.wypozyczalnia.tools.SHA256hash;
 
-@ManagedBean(name = "editBean")
+@ManagedBean(name = "KlienciEditBean")
 @ViewScoped
-public class editProfilKlient implements Serializable {
+public class KlienciEditBean implements Serializable {
 
 	/**
 	 * 
@@ -45,7 +45,7 @@ public class editProfilKlient implements Serializable {
 	private int id = 0;
 	private String target = "";
 
-	public editProfilKlient() {
+	public KlienciEditBean() {
 
 	}
 
@@ -91,16 +91,21 @@ public class editProfilKlient implements Serializable {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		em.merge(this.klient);
+		
 
-		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-				"globalmessage", "Daneosobowe zapisane", 1);
+		
 		if (!target.isEmpty()) {
 			this.klient.setAktywowany("TAK");
-			em.merge(this.klient);
-
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 					"globalmessage", "To¿samoœæ klienta potwierdzona", 1);
+		}else {
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Daneosobowe zapisane", 1);
+			target ="/Users/editprofile.xhtml";
+		}
+			em.merge(this.klient);
+
+			
 			FacesContext.getCurrentInstance().getExternalContext().getFlash()
 					.setKeepMessages(true);
 			try {
@@ -110,7 +115,7 @@ public class editProfilKlient implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		
 		tx.commit();
 		em.close();
 		return null;

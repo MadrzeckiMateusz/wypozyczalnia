@@ -1,0 +1,278 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="./SzablonZarzadzanie.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="growl" for="globalmessage" showDetail="true"
+			autoUpdate="true" life="4000" />
+		<p:panelGrid styleClass="gridNoPaddingszczegoly" columns="2">
+			<p:panel styleClass="panelNoPadding">
+
+				<p:dataTable id="tableRezewacja" styleClass="bordernew"
+					var="rezerwacja" value="#{RezerwacjeAddNewBean.rezerwacja}">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Rezerwacja" style="text-align:left" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer rezerwacji">
+						<h:outputText value="#{rezerwacja.nr_rezerwacji}" />
+					</p:column>
+					<p:column headerText="Data rezerwacji">
+						<h:outputText value="#{rezerwacja.data_rezerwacji}" />
+					</p:column>
+					<p:column headerText="Data odbioru">
+						<p:calendar value="#{rezerwacja.data_odbioru}"
+							pattern="yyyy-MM-dd" mask="true" locale="pl" lang="pl" />
+
+					</p:column>
+
+					<p:column headerText="Status">
+						<h:outputText value="#{rezerwacja.status_rezerwacji}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<p:dataTable id="filmyTable" styleClass="bordernew" var="kopieFilmu"
+					value="#{RezerwacjeAddNewBean.kopiefilmu}"
+					emptyMessage="Nie dodałeś żadnego filmu !!!" style="margin-top:5px">
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Filmy" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer filmu">
+						<h:outputText value="#{kopieFilmu.filmy.nr_filmu}" />
+					</p:column>
+					<p:column headerText="Tytuł">
+						<h:outputText value="#{kopieFilmu.filmy.tytul}" />
+					</p:column>
+					<p:column headerText="Reżyseria">
+						<h:outputText value="#{kopieFilmu.filmy.rezyseria}" />
+					</p:column>
+					<p:column headerText="Reżyseria">
+						<h:outputText value="#{kopieFilmu.filmy.rezyseria}" />
+					</p:column>
+					<p:column headerText="Gatunek">
+						<h:outputText
+							value="#{Converters.klasyfikacjaGatunkuToString(kopieFilmu.filmy)}" />
+					</p:column>
+					<p:column headerText="Numer kopii filmu">
+						<h:outputText value="#{Converters.getNumerkopiiFlmu(kopieFilmu)}" />
+					</p:column>
+
+					<p:column style="width:32px; text-align: center">
+						<p:commandButton
+							action="#{RezerwacjeAddNewBean.usunFilm(kopieFilmu)}"
+							icon="ui-icon-minus" update="filmyTable" />
+					</p:column>
+				</p:dataTable>
+				<p:dataTable id="klienciTable" styleClass="bordernew" var="klient"
+					value="#{RezerwacjeAddNewBean.rezerwacja.klienci}"
+					emptyMessage="Brak klienta!!!" style="margin-top:5px">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<h:outputText value="Dane Klienta" style="text-align:left" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="Numer klienta">
+						<h:outputText value="#{klient.nr_klienta}" />
+					</p:column>
+					<p:column headerText="Imie">
+						<h:outputText value="#{klient.imie}" />
+					</p:column>
+					<p:column headerText="Nazwsiko">
+						<h:outputText value="#{klient.nazwisko}" />
+					</p:column>
+					<p:column headerText="Telefon">
+						<h:outputText value="#{klient.nr_telefonu}" />
+					</p:column>
+					<p:column headerText="Email">
+						<h:outputText value="#{klient.e_mail}" />
+					</p:column>
+
+				</p:dataTable>
+
+
+
+			</p:panel>
+
+			<p:panel id="panel_button" styleClass="panelNoPadding"
+				style="vertical-align:top">
+				<p:panelGrid styleClass="gridNoPadding" columns="1"
+					columnClasses="topAligment">
+					<p:commandButton onclick="PF('DialogDodajFilm').show()"
+						image="button_dodaj" style="height:50px; width:50px; "
+						title="Dodaj film " />
+
+					<p:commandButton onclick="PF('DialogDodajKlienta').show()"
+						image="button_daneKlienta"
+						style="height:50px; width:50px; margin-top:5px"
+						title="Dodaj Klienta" />
+
+
+
+					<p:commandButton action="#{RezerwacjeAddNewBean.zapiszRezerwacje}"
+						image="button_wypozycz"
+						style="height:50px; width:50px; margin-top:5px"
+						title="zapisz rezerwacje" />
+				</p:panelGrid>
+			</p:panel>
+
+		</p:panelGrid>
+
+		<p:dialog header="Dane Klienta" global="true" showEffect="fade"
+			hideEffect="explode" widgetVar="DialogDaneKlient" position="center" >
+			<p:panelGrid columns="1" styleClass="gridNoPadding"
+				style="text-align:center;" >
+				<p:outputLabel value="Potwierdź tożsamość klienta!!!"
+					style="color:red; font-size:18px" />
+				<p:commandButton value="Ok" styleClass="ui-confirmdialog-yes"
+					icon="ui-icon-check" style="text-align:center; width:80px;"
+					action="#{RezerwacjeAddNewBean.przekierowaniePotwierdz()}" />
+			</p:panelGrid>
+		</p:dialog>
+
+		<p:dialog header="Wyszukaj filmy" global="true"
+			widgetVar="DialogDodajFilm" position="top" width="1200" height="500" style="background-color:#D0E0FF">
+			<p:commandButton action="#{RezerwacjeAddNewBean.dodajFilmy()}"
+				image="button_dodaj2" style="height:50px; width:50px; margin-bottom:5px"
+				update="filmyTable" />
+			<p:dataTable var="filmy" styleClass="zarzadzaj"
+				value="#{FilmBean.listaFilmy}" widgetVar="filmTables"
+				filteredValue="#{FilmBean.filetredFilmy}"
+				emptyMessage="Brak wyników dla wyszukiwania"
+				selectionMode="multiple"
+				selection="#{RezerwacjeAddNewBean.selectedFilmy}"
+				rowKey="#{filmy.id_filmu}">
+
+				<f:facet name="header">
+					<p:outputPanel style="margin-right:67%">
+						<h:outputText value="Wyszukiwanie globalne:"
+							style="margin-right:15px" />
+						<p:inputText id="globalFilter" onkeyup="PF('filmTables').filter()"
+							style="width:150px" placeholder="Wpisz frazę" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column headerText="Numer filmu" filterBy="#{filmy.nr_filmu}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.nr_filmu}" />
+				</p:column>
+
+				<p:column headerText="Tytuł" filterBy="#{filmy.tytul}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.tytul}" />
+				</p:column>
+
+				<p:column headerText="Rezyseria" filterBy="#{filmy.rezyseria}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.rezyseria}" />
+				</p:column>
+
+				<p:column headerText="Scenariusz" filterBy="#{filmy.scenariusz}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.scenariusz}" />
+				</p:column>
+
+				<p:column headerText="Produkcja" filterBy="#{filmy.produkcja}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.produkcja}" />
+				</p:column>
+
+				<p:column headerText="Data premiery" filterBy="#{filmy.premiera}"
+					filterMatchMode="contains">
+					<h:outputText value="#{filmy.premiera}" />
+				</p:column>
+
+				<p:column headerText="Gatunek"
+					filterBy="#{FilmBean.klasyfikacjaGatunkuToString(filmy)}"
+					filterMatchMode="contains">
+					<h:outputText
+						value="#{FilmBean.klasyfikacjaGatunkuToString(filmy)}" />
+				</p:column>
+				<p:column headerText="Data wprowadzenia"
+					filterBy="#{filmy.data_dodania}" filterMatchMode="contains">
+					<h:outputText value="#{filmy.data_dodania}" />
+				</p:column>
+				<p:column headerText="Ilość kopii filmu"
+					filterBy="#{FilmBean.iloscKopiiFilmu(filmy)}"
+					filterMatchMode="contains">
+					<h:outputText value="#{FilmBean.iloscKopiiFilmu(filmy)}" />
+				</p:column>
+
+			</p:dataTable>
+		</p:dialog>
+
+		<p:dialog header="Dodaj klienta" global="true"
+			widgetVar="DialogDodajKlienta" position="top" width="1200"
+			height="500" style="background-color:#D0E0FF">
+			<p:commandButton action="#{RezerwacjeAddNewBean.dodajKlienta()}"
+				image="button_dodaj2" style="height:50px; width:50px;"
+				update="klienciTable" />
+			<p:dataTable var="klient" styleClass="zarzadzaj"
+				value="#{KlienciBean.allKlienci}" widgetVar="klienciTables"
+				filteredValue="#{KlienciBean.filteredKlienci}"
+				emptyMessage="Brak wyników dla wyszukiwania" selectionMode="single"
+				selection="#{RezerwacjeAddNewBean.klient}"
+				rowKey="#{klient.id_klienta}">
+
+				<f:facet name="header">
+					<p:outputPanel style="margin-right:67%">
+						<h:outputText value="Wyszukiwanie globalne:"
+							style="margin-right:15px" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('klienciTables').filter()" style="width:150px"
+							placeholder="Wpisz frazę" />
+					</p:outputPanel>
+				</f:facet>
+				<p:column headerText="Numer Klienta" filterBy="#{klient.nr_klienta}"
+					filterMatchMode="contains" style="width:55px"
+					filterStyle="width:60px">
+					<h:outputText value="#{klient.nr_klienta}" />
+				</p:column>
+
+				<p:column headerText="Data Rejestracji"
+					filterBy="#{klient.data_rejestracji}" filterMatchMode="contains"
+					style="width:80px" filterStyle="width:60px">
+					<h:outputText value="#{klient.data_rejestracji}" />
+				</p:column>
+
+				<p:column headerText="Imie" filterBy="#{klient.imie}"
+					filterMatchMode="contains" style="width:60px"
+					filterStyle="width:60px">
+					<h:outputText value="#{klient.imie}" />
+				</p:column>
+
+				<p:column headerText="Nazwisko" filterBy="#{klient.nazwisko}"
+					filterMatchMode="contains" style="width:70px"
+					filterStyle="width:60px">
+					<h:outputText value="#{klient.nazwisko}" />
+				</p:column>
+
+
+				<p:column headerText="E-mail" filterBy="#{klient.e_mail}"
+					filterMatchMode="contains" style="width:190px; "
+					filterStyle="width:185px ">
+					<h:outputText value="#{klient.e_mail}" />
+				</p:column>
+
+				<p:column headerText="Numer telefonu"
+					filterBy="#{klient.nr_telefonu}" filterMatchMode="contains"
+					style="width:80px" filterStyle="width:75px">
+					<h:outputText value="#{klient.nr_telefonu}" />
+				</p:column>
+
+
+			</p:dataTable>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

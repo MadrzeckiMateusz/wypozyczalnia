@@ -9,6 +9,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
 
@@ -18,10 +19,11 @@ import pl.jeeweb.wypozyczalnia.entity.Klienci;
 import pl.jeeweb.wypozyczalnia.entity.KopieFilmu;
 import pl.jeeweb.wypozyczalnia.entity.Rezerwacje;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
+import pl.jeeweb.wypozyczalnia.tools.SendMail;
 
-@ManagedBean(name = "koszyk")
+@ManagedBean(name = "RezerwacjeKoszykBean")
 @SessionScoped
-public class rezerwacjeKoszyk implements Serializable {
+public class RezerwacjeKoszykBean implements Serializable {
 	/**
 	 * 
 	 */
@@ -30,7 +32,7 @@ public class rezerwacjeKoszyk implements Serializable {
 	private Rezerwacje rezerwacja = new Rezerwacje();
 	private Filmy filmDoKoszyka = new Filmy();
 
-	public rezerwacjeKoszyk() {
+	public RezerwacjeKoszykBean() {
 	}
 
 	public void dodajDoKoszyka(int id_filmu) {
@@ -38,11 +40,41 @@ public class rezerwacjeKoszyk implements Serializable {
 		EntityManager em = DBManager.getManager().createEntityManager();
 		filmDoKoszyka = em.find(Filmy.class, id_filmu);
 		filmDoKoszyka.getKopieFilmus().size();// Lazy init
-		rezerwowaneFilmy.add(filmDoKoszyka);
-		em.close();
-		filmDoKoszyka = new Filmy();
-		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
-				"globalmessage", "Film dodano do koszyka !!!", 1);
+		int licznik_kopii = 0;
+		for (KopieFilmu kf : filmDoKoszyka.getKopieFilmus()) {
+			if (kf.getRezerwacje() == null && kf.getWypozyczenia() == null) {
+				licznik_kopii++;
+			}
+		}
+		if (licznik_kopii > 0) {
+			if (contains(filmDoKoszyka, rezerwowaneFilmy)
+					|| rezerwowaneFilmy.isEmpty()) {
+				rezerwowaneFilmy.add(filmDoKoszyka);
+				em.close();
+				filmDoKoszyka = new Filmy();
+				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+						"globalmessage", "Film dodano do koszyka !!!", 1);
+			} else {
+				DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+						"globalmessage",
+						"Mo¿esz dodaæ tylko jedn¹ kopie danego filmu !!!", 3);
+			}
+		} else {
+			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
+					"globalmessage", "Film aktualnie nie dostêpny !!!", 3);
+		}
+
+	}
+
+	public boolean contains(Filmy film, List<Filmy> listafilmy) {
+		boolean wynik = true;
+		for (Filmy filml : listafilmy) {
+			if (filml.equals(film)) {
+				wynik = false;
+			}
+
+		}
+		return wynik;
 
 	}
 
@@ -55,6 +87,27 @@ public class rezerwacjeKoszyk implements Serializable {
 		DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
 				"Globalmessage", "Film usuniêty z koszyka !!!", 1);
 		return "";
+	}
+
+	private void wyslijPowiadomienieOdbioru(Klienci klient) {
+
+		SendMail mail = new	SendMail(
+				klient.getE_mail(),
+				"Rezerwacja numer " + this.rezerwacja.getNr_rezerwacji(),
+				"Witaj, "
+						+ klient.getImie()+ "!!! \n"
+						+ " Twoja rezerwacja zosta³a przyjêta do realizacji.\n"
+								
+								+ "---------------------------------------------------------------------------------------- \n"
+								+ "www.wypozyczalniadvd.com.pl \n"
+								+ "tel.555 555 555 \n"
+								+ "dvd.wpozyczalnia@gmail.com");
+		try {
+			mail.send();
+		} catch (MessagingException e) {
+			System.out.print("B³ad wysy³ania maila");
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -76,13 +129,13 @@ public class rezerwacjeKoszyk implements Serializable {
 		i += 1;
 		String numerKlienta = "";
 		if (i < 10)
-			numerKlienta = "RE/000" + i.toString();
+			numerKlienta = "R0/000" + i.toString();
 		if (i >= 10 && i < 100)
-			numerKlienta = "RE/00" + i.toString();
+			numerKlienta = "R0/00" + i.toString();
 		if (i >= 100 && i < 1000)
-			numerKlienta = "RE/0" + i.toString();
+			numerKlienta = "R0/0" + i.toString();
 		if (i >= 1000)
-			numerKlienta = "RE/" + i.toString();
+			numerKlienta = "R0/" + i.toString();
 		return numerKlienta;
 	}
 
@@ -95,15 +148,21 @@ public class rezerwacjeKoszyk implements Serializable {
 					.getCurrentInstance().getExternalContext().getSession(true);
 			int user_id = (int) session.getAttribute("user_id");
 			EntityManager em = DBManager.getManager().createEntityManager();
-			this.rezerwacja.setKlienci(em.find(Klienci.class, user_id));
+			Klienci klienci = em.find(Klienci.class, user_id);
+			this.rezerwacja.setKlienci(klienci);
 			this.rezerwacja.setNr_rezerwacji(setNumerRezerwacji());
 			this.rezerwacja.setData_rezerwacji(currentDate());
 			this.rezerwacja.setData_odbioru(nextDate(3));
-			this.rezerwacja.setStatus_rezerwacji("W REALIZACJI");
-
+			this.rezerwacja.setStatus_rezerwacji("W realizacji");
+			String historia = "";
+			for (Filmy film : rezerwowaneFilmy) {
+				historia = historia + film.getId_filmu() + ";";
+			}
+			this.rezerwacja.setHistoria_rezer(historia);
 			em.getTransaction().begin();
-			em.persist(rezerwacja);
+			this.rezerwacja = em.merge(rezerwacja);
 			em.getTransaction().commit();
+			wyslijPowiadomienieOdbioru(klienci);
 			oznaczKopieFilmu(em);
 
 			DisplayMessage.InfoMessage(FacesContext.getCurrentInstance(),
@@ -116,26 +175,31 @@ public class rezerwacjeKoszyk implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void oznaczKopieFilmu(EntityManager em1) {
 		EntityManager em = em1;
-		List<Integer> maxid = em.createNativeQuery(
-				"Select Id_rezerwacji from rezerwacje").getResultList();
-		this.rezerwacja = new Rezerwacje();
-		int maxID = Collections.max(maxid);
-		this.rezerwacja = em.find(Rezerwacje.class, maxID);
-
+		// List<Integer> maxid = em.createNativeQuery(
+		// "Select Id_rezerwacji from rezerwacje").getResultList();
+		// this.rezerwacja = new Rezerwacje();
+		// int maxID = Collections.max(maxid);
+		// this.rezerwacja = em.find(Rezerwacje.class, maxID);
+		
 		for (Filmy film : rezerwowaneFilmy) {
-
+			
 			for (KopieFilmu kf : film.getKopieFilmus()) {
-				if (kf.getRezerwacje() == null) {
+				if (kf.getRezerwacje() == null && kf.getWypozyczenia() == null) {
 					kf.setRezerwacje(rezerwacja);
 					em.getTransaction().begin();
 					em.merge(kf);
 					em.getTransaction().commit();
 					break;
 				}
+
 			}
+
 		}
+		
+	
 		this.rezerwowaneFilmy = new ArrayList<>();
 		em.close();
+		DBManager.getManager().refresh();
 		this.rezerwacja = new Rezerwacje();
 	}
 

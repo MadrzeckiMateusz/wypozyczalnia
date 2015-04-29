@@ -10,22 +10,36 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="roles")
-@NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")
+@NamedQueries({
+@NamedQuery(name="Role.findAll", query="SELECT r FROM Role r"),
+@NamedQuery(name="Role.findByusername", query="SELECT r FROM Role r where r.username = :username")})
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private RolePK id;
+	@Id
+	@Column(unique=true, nullable=false, length=50)
+	private String username;
+
+	@Column(length=50)
+	private String rolename;
 
 	public Role() {
 	}
 
-	public RolePK getId() {
-		return this.id;
+	public String getUsername() {
+		return this.username;
 	}
 
-	public void setId(RolePK id) {
-		this.id = id;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getRolename() {
+		return this.rolename;
+	}
+
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
 	}
 
 }

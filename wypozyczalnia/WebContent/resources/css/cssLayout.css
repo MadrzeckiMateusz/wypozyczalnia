@@ -12,9 +12,16 @@
 	border: none;
 	width: 95%;
 }
+.scroll .ui-datascroller ,.scroll.ui-datascroller-content, .scroll.ui-widget, .scroll.ui-datascroller-list {
+	background-color: #3A6BCD !important;
+	border: none !important;
+}
 
 .ui-icon-myAddFilm {
-	background-image: url(#{ resource [ 'images:shop-cart-16.png' ]});
+	background-image: url(#{ resource [ 'images:shop-cart-16.png' ]
+}
+
+);
 }
 .editprofile.ui-panel {
 	background-color: #E3E5E7;
@@ -30,20 +37,25 @@
 	text-size: 20px;
 	border: none;
 	margin-bottom: 10px;
-	margin-left: 20%
+	margin-left: 20%;
+	margin-right:20%
 }
 
 .infologowanie.ui-panel {
-	background-color: #E3E5E7; 
-	margin-left:440px; 
-	width:470px; 
-	height:45px; 
-	position:relative;
-	margin-bottom:10px; 
-	margin-top:5px;
+	background-color: #E3E5E7;
 	
+	height: 40px;
+	position: relative;
+	margin-bottom: 10px;
+	margin-top: 5px;
 }
-
+.koszykpanel.ui-panel {
+	background-color: #E3E5E7;
+	height: 40px;
+	position: relative;
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
 .naglowek.ui-panel {
 	background-color: #3A6BCD;
 	border: none;
@@ -87,82 +99,83 @@
 	font-family: monospace;
 }
 
-.ui-panelgrid.headerGrid tr,
-.ui-panelgrid.headerGrid td {
-	border-style: none ;
+.ui-panelgrid.headerGrid tr,.ui-panelgrid.headerGrid td {
+	border-style: none;
 	border: none;
 	background: none;
 }
 
-.ui-panelgrid.gridNoPadding tr,
-.ui-panelgrid.gridNoPadding td {
-	border-style: none ;
+.ui-panelgrid.gridNoPadding tr,.ui-panelgrid.gridNoPadding td {
+	border-style: none;
 	border: none;
 	background: none;
 	padding: 0;
-	
-}
-.ui-panelgrid.gridNoPaddingszczegoly tr,
-.ui-panelgrid.gridNoPaddingszczegoly td {
-	border-style: none ;
-	border: none;
-	background: none;
-	padding: 0;
-	vertical-align: top;
-	
-}
-.ui-panelgrid.gridNoPaddinglogin tr,
-.ui-panelgrid.gridNoPaddinglogin td, 
-.ui-panelgrid.gridNoPaddinglogin  {
-	border-style: none ;
-	border: none;
-	background: none;
-	padding: 0;
-	width:100%;
-	
-}
-.ui-panel.panelNoPadding,
-.ui-panel-content.panelNoPadding{
-	padding: 0;
-	background: none;
-	border:none;
-}
-.ui-datatable.bordernew thead th,
-.ui-datatable.bordernew tbody,
-.ui-datatable.bordernew tbody tr,
-.ui-datatable.bordernew tbody td {
-    border: 1px solid gray;
-    padding: 5;
-    position: relative;
 }
 
-.topAligment{
+.ui-panelgrid.gridNoBorder tr,.ui-panelgrid.gridNoBorder td {
+	border-style: none;
+	border: none;
+	background: none;
+	padding: 5;
+}
+.ui-panelgrid.gridNoPaddingszczegoly tr,.ui-panelgrid.gridNoPaddingszczegoly td
+	{
+	border-style: none;
+	border: none;
+	background: none;
+	padding: 0;
 	vertical-align: top;
 }
+
+.ui-panelgrid.gridNoPaddinglogin tr,.ui-panelgrid.gridNoPaddinglogin td,.ui-panelgrid.gridNoPaddinglogin
+	{
+	border-style: none;
+	border: none;
+	background: none;
+	padding: 0;
+	width: 100%;
+}
+
+.ui-panel.panelNoPadding,.ui-panel-content.panelNoPadding {
+	padding: 0;
+	background: none;
+	border: none;
+}
+
+.ui-datatable.bordernew thead th,.ui-datatable.bordernew tbody,.ui-datatable.bordernew tbody tr,.ui-datatable.bordernew tbody td
+	{
+	border: 1px solid gray;
+	padding: 5;
+	position: relative;
+}
+
+.topAligment {
+	vertical-align: top;
+}
+
 .menu {
 	background-color: #A4BDEF;
 	position: relative;
-	height: 400px;
+	height: px;
 	margin-top: 10px;
 }
+
 .menumanage {
 	background-color: #A4BDEF;
-	position: relative;
-	height: Auto;
 	margin-top: 10px;
 }
 
 .ui-menu-list {
 	background-color: #A4BDEF;
-	
 }
-.menumanage ..ui-menuitem-text{
-	color: black;
-}
-.menu .ui-menuitem-text {
+
+.menumanage ..ui-menuitem-text {
 	color: black;
 }
 
+.menu .ui-menuitem-text {
+	color: black;
+}
 
 .ui-datatable th {
 	background-color: #A4BDEF !important;
@@ -181,10 +194,10 @@
 
 #page {
 	background-color: #D0E0FF;
-	margin-left:30px;
+	margin-left: 30px;
 	width: 96%;
-	min-height: 90%;
-	padding:0;
+	min-height: 60%;
+	padding: 0;
 }
 
 #bottom {
@@ -193,18 +206,18 @@
 	padding: 5px;
 	margin: 10px 0px 0px 0px;
 }
-#left{
+
+#left {
 	float: left;
-	
 }
+
 #leftmanage {
 	float: left;
-	
-	
+ 	height: 650px; 
 }
 
 #footer {
-	position: relative;
+ 	position: relative; 
 	background-color: #D0E0FF;
 	margin: none;
 	min-height: 70px;
@@ -214,14 +227,20 @@
 .center_content {
 	background-color: #D0E0FF;
 	padding: 5px;
-	margin-left: 250px;
-	margin-right: 100px;
+	margin-left: 180px;
+ 	margin-right: 3px; 
+ 	height:500px !important;
+ 	overflow :auto; 
+}
+::-webkit-scrollbar { 
+    display: none; 
 }
 
 .center_content_zarzadzanie {
 	background-color: #D0E0FF;
 	padding: 5px;
 	margin-left: 180px;
+	height:500px !important;
 }
 
 #top a:link,#top a:visited {
@@ -236,8 +255,12 @@
 	text-decoration: underline;
 }
 
-.ui-icon-editfilm {
-	background-image: !important;
+.button_shop {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/shop-cart.png']}") !important;
+	top: 39% !important;
+	left: 40% !important;
 }
 
 .button_icon {
@@ -247,7 +270,27 @@
 	top: 39% !important;
 	left: 40% !important;
 }
-
+.button_empadd {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/empadd.png']}") !important;
+	top: 39% !important;
+	left: 40% !important;
+}
+.button_empedit {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/empedit.png']}") !important;
+	top: 39% !important;
+	left: 40% !important;
+}
+.button_premission {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/premission.png']}") !important;
+	top: 39% !important;
+	left: 40% !important;
+}
 .button_dodaj {
 	height: 35px;
 	width: 35px;
@@ -263,6 +306,88 @@
 	top: 35% !important;
 	left: 35% !important;
 }
+.button_userpass {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/userpass.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+
+
+.button_check {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/ok-icon.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+
+.button_print {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/print-report.png']}")
+		!important;
+	top: 35% !important;
+	left: 35% !important;
+}
+
+.button_szczegol {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/Mes-videos-icon.png']}")
+		!important;
+	top: 35% !important;
+	left: 35% !important;
+}
+
+.button_daneKlienta {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/klient.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+
+.button_dodaj2 {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/Add-icon.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+
+.button_wypozycz {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/wypozycz.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+
+.button_zwrot {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/zwrot.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+
+.button_editall {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/Edit-icon.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+.button_addall {
+	height: 35px;
+	width: 35px;
+	background-image: url("#{resource['image/Addfol-icon.png']}") !important;
+	top: 35% !important;
+	left: 35% !important;
+}
+
 .list_icon {
 	background: url("#{resource['image/list16.png']}") !important;
 	height: 16px;

@@ -15,22 +15,22 @@
 					autoUpdate="true" life="2000" />
 				<h:panelGrid columns="3" columnClasses="label, value">
 					<h:outputText value="Stare hasło: *" />
-					<p:password id="starehaslo" value="#{editBean.stareHaslo}"
+					<p:password id="starehaslo" value="#{KlienciEditBean.stareHaslo}"
 						required="true" requiredMessage="Pole wymagane" />
 					<p:message id="mstarehaslo" for="starehaslo" />
 					<h:outputText value="Nowe hasło: " />
 					<p:password id="nowehaslo" feedback="true"
-						value="#{editBean.noweHaslo1}" required="true"
+						value="#{KlienciEditBean.noweHaslo1}" required="true"
 						requiredMessage="Pole wymagane" />
 					<p:message id="mnowehaslo" for="nowehaslo" />
 					<h:outputText value="Potwierdz nowe hasło: " />
 					<p:password id="nowehaslo1" feedback="true"
-						value="#{editBean.noweHaslo2}" required="true"
+						value="#{KlienciEditBean.noweHaslo2}" required="true"
 						requiredMessage="Pole wymagane" />
 					<p:message id="mnowehaslo1" for="nowehaslo1" />
 				</h:panelGrid>
 				<p:commandButton id="zapiszhaslo" value="Zmień hasło"
-					action="#{editBean.edithaslo}"
+					action="#{KlienciEditBean.edithaslo}"
 					update="growl, mstarehaslo, mnowehaslo, mnowehaslo1"
 					styleClass="button_zmien" />
 			</p:panel>

@@ -28,7 +28,7 @@ public class KopieFilmu implements Serializable {
 	private Wypozyczenia wypozyczenia;
 
 	//bi-directional many-to-one association to Rezerwacje
-	@ManyToOne
+	@ManyToOne// (cascade = CascadeType.MERGE)
 	@JoinColumn(name="Id_rezerwacji")
 	private Rezerwacje rezerwacje;
 

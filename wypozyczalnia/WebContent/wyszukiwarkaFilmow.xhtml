@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" template="/szablonApp.xhtml">
+
+	<ui:define name="content">
+
+		<p:dataTable var="filmy" styleClass="zarzadzaj" paginator="true"
+			rows="10"
+			paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+			rowsPerPageTemplate="5,10,15" value="#{FilmBean.lazyModel}"
+			widgetVar="filmTables" emptyMessage="Brak wyników dla wyszukiwania"
+			selectionMode="single" selection="#{FilmBean.selectedFilm}"
+			lazy="true">
+			<p:ajax event="rowSelect" listener="#{FilmBean.onRowSelect}" />
+
+
+
+
+			<p:column headerText="Tytuł" filterBy="#{filmy.tytul}"
+				>
+				<h:outputText value="#{filmy.tytul}" />
+			</p:column>
+
+			<p:column headerText="Rezyseria" filterBy="#{filmy.rezyseria}"
+				>
+				<h:outputText value="#{filmy.rezyseria}" />
+			</p:column>
+
+			<p:column headerText="Scenariusz" filterBy="#{filmy.scenariusz}"
+				>
+				<h:outputText value="#{filmy.scenariusz}" />
+			</p:column>
+
+			<p:column headerText="Produkcja" filterBy="#{filmy.produkcja}"
+				>
+				<h:outputText value="#{filmy.produkcja}" />
+			</p:column>
+
+			<p:column headerText="Data premiery" filterBy="#{filmy.premiera}"
+				>
+				<h:outputText value="#{filmy.premiera}" />
+			</p:column>
+
+			<p:column headerText="Gatunek"
+				filterBy="#{filmy.gatunek_string}"
+				>
+				<h:outputText value="#{filmy.gatunek_string}" />
+			</p:column>
+
+
+		</p:dataTable>
+
+	</ui:define>
+
+</ui:composition>

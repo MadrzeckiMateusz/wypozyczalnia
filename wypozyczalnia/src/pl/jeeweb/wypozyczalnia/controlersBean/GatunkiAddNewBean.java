@@ -13,13 +13,13 @@ import pl.jeeweb.wypozyczalnia.entity.KlasyfikacjaGatunku;
 import pl.jeeweb.wypozyczalnia.tools.DisplayMessage;
 
 
-@ManagedBean(name="addGatunek")
+@ManagedBean(name="GatunkiAddNewBean")
 @SessionScoped
-public class addGatunek implements Serializable {
+public class GatunkiAddNewBean implements Serializable {
 	
 	private KlasyfikacjaGatunku gatunek;
 	
-	public addGatunek() {
+	public GatunkiAddNewBean() {
 		
 	}
 	@PostConstruct
